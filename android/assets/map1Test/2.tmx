@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="35" height="35" tilewidth="32" tileheight="32" nextobjectid="1">
+ <tileset firstgid="1" name="tree" tilewidth="60" tileheight="63">
+  <image source="tree.png" width="60" height="63"/>
+  <tile id="0">
+   <properties>
+    <property name="blocked" value=""/>
+   </properties>
+  </tile>
+ </tileset>
+ <tileset firstgid="2" name="house" tilewidth="124" tileheight="96">
+  <image source="house.png" width="124" height="96"/>
+  <tile id="0">
+   <properties>
+    <property name="blocked" value=""/>
+   </properties>
+  </tile>
+ </tileset>
+ <tileset firstgid="3" name="Wall" tilewidth="25" tileheight="40">
+  <image source="Wall.png" width="25" height="40"/>
+  <tile id="0">
+   <properties>
+    <property name="blocked" value=""/>
+   </properties>
+  </tile>
+ </tileset>
+ <tileset firstgid="4" name="grass" tilewidth="32" tileheight="32">
+  <image source="grass.png" width="32" height="32"/>
+ </tileset>
+ <layer name="Tile Layer 1" width="35" height="35">
+  <data encoding="base64" compression="zlib">
+   eJztmM0SgCAIhOnn/Z+5Q5ciLdhdHA85wyVJPwE3pt3M9t9ebbFzRJ/PYtsEDFeWZQKObFxWuw81xyw5Qjm2jo1m6e3L8qAsyNxXrWVZ/Nm9XinjwrBHc9SrNSQuynyzOWJiMoqF4VCwKLUls0bLX6XbmXXefBme6J3K3DdUp77Oh9QAm2vGD+0PW7qtijXCUuGrrA80P2xesuyqPqnifKguKr+9ET+0H/fvqe86GudMHKty7hlGsES10e/T6mGrNTC6V2uu8h9Bhbb89rQDzWsSFg==
+  </data>
+ </layer>
+</map>
