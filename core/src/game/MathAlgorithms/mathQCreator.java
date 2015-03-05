@@ -21,6 +21,7 @@ import java.util.Random;
  */
 public class mathQCreator{
 
+	
 	private int numOfDoors;
 	private int mode;
 	private int operations[];
@@ -84,7 +85,7 @@ public class mathQCreator{
 	/*
 	 * this method gets the operations based on the path chosen by user. returns int array
 	 * int[] operations: first index is adding, second index is subtracting, third is multiplying, fourth is division
-	 * each index holds 1 or 0, where 1 means present, 0 means not present
+	 * each index holds an integer, where -1 means not present
 	 */
 	private int[] getPathsArray(int path){
 		int[] operations = new int[4];			//the math operations
@@ -92,8 +93,8 @@ public class mathQCreator{
 		case 1:
 			operations[0] = 1;
 			operations[1] = 2;
-			operations[2] = 0;
-			operations[3] = 0;
+			operations[2] = -1;
+			operations[3] = -1;
 			break;
 		case 2:
 			operations[0] = 0;

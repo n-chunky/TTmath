@@ -7,6 +7,7 @@ import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer.Cell;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.scenes.scene2d.ui.Touchpad;
 import com.badlogic.gdx.utils.Array;
 
 public class EntityManager {
@@ -16,10 +17,10 @@ public class EntityManager {
 	TiledMap map;
 	TiledMapTileLayer tiles;
 	
-	public EntityManager(int amount, OrthoCamera camera, TiledMap tiledMap){
+	public EntityManager(int amount, OrthoCamera camera, TiledMap tiledMap, Touchpad touch){
 		map = tiledMap;
 		tiles = (TiledMapTileLayer) map.getLayers().get(1);
-		player = new Player(findStartPosition(), new Vector2(0,0), camera, (TiledMapTileLayer) tiles);
+		player = new Player(findStartPosition(), new Vector2(0,0), camera, (TiledMapTileLayer) tiles, touch);
 	}
 	
 	public void update(){

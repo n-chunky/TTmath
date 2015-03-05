@@ -11,11 +11,13 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer.Cell;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.scenes.scene2d.ui.Touchpad;
 
 public class Player extends Entity{
 	private OrthoCamera camera;
 	private TextureRegion s;
 	private TiledMapTileLayer collisionLayer;
+	private Touchpad touch;
 	static float playerHeight;
 	static float playerWidth;
 	static float tileWidth;
@@ -27,22 +29,23 @@ public class Player extends Entity{
 	//end
 	//math
 
-	public Player(Vector2 pos, Vector2 direction, OrthoCamera camera, TiledMapTileLayer collLayer) {
+	public Player(Vector2 pos, Vector2 direction, OrthoCamera camera, TiledMapTileLayer collLayer, Touchpad touch) {
 		super(TextureManager.PLAYER, pos, direction);
 		this.camera = camera;
 		this.collisionLayer = collLayer;
+		this.touch = touch;
 		tileWidth = collisionLayer.getTileWidth();
 		tileHeight = collisionLayer.getTileHeight();
-		setTextureRegion(15, 651, 32, 64);
-		playerHeight = 64;
-		playerWidth = 32;
-		//15,651
+		setTextureRegion(16, 651, 30, 52);
+		playerHeight = 30;
+		playerWidth = 30;
+		//16,651
 	}
 
 	@Override
 	public void update() {
 		pos.add(direction);
-
+		
 		if(Gdx.input.isKeyPressed(Keys.DPAD_LEFT) && !collisionExist(Keys.DPAD_LEFT)){
 			setDirection(-300,0);
 		}
@@ -102,31 +105,35 @@ public class Player extends Entity{
 
 	/*
 	 * collision check
+	 * added +3y more for tile detection right and left.
+	 * added +5x more for tile detection top and bottom
+	 * added -2y for tile detection bottom
+	 * for making collision detection better
 	 */
 	public boolean collidesRight() {
 		for(float step = 0; step < playerHeight; step += collisionLayer.getTileHeight() / 2)
-			if(isCellBlocked((this.getPosition().x + playerWidth) / tileWidth, (this.getPosition().y + step) / tileHeight))
+			if(isCellBlocked((this.getPosition().x+ + playerWidth) / tileWidth, ((this.getPosition().y + step)+3) / tileHeight))
 				return true;
 		return false;
 	}
 
 	public boolean collidesLeft() {
 		for(float step = 0; step < playerHeight; step += collisionLayer.getTileHeight() / 2)
-			if(isCellBlocked((this.getPosition().x) / tileWidth, (this.getPosition().y + step) / tileHeight))
+			if(isCellBlocked((this.getPosition().x) / tileWidth, ((this.getPosition().y + step)+3) / tileHeight))
 				return true;
 		return false;
 	}
 
 	public boolean collidesTop() {
 		for(float step = 0; step < playerWidth; step += collisionLayer.getTileWidth() / 2)
-			if(isCellBlocked((this.getPosition().x + step) / tileWidth, (this.getPosition().y + playerHeight) / tileHeight))
+			if(isCellBlocked(((this.getPosition().x + step)+5) / tileWidth, ((this.getPosition().y + playerHeight)) / tileHeight))
 				return true;
 		return false;
 	}
 
 	public boolean collidesBottom() {
 		for(float step = 0; step < playerWidth; step += collisionLayer.getTileWidth() / 2)
-			if(isCellBlocked((this.getPosition().x + step) / tileWidth, (this.getPosition().y) / tileHeight))
+			if(isCellBlocked(((this.getPosition().x + step)+5) / tileWidth, ((this.getPosition().y)-2) / tileHeight))
 				return true;
 		return false;
 	}

@@ -1,9 +1,11 @@
 package game.Screen;
 
 import game.TTmath;
+import game.TextureManager;
 import game.Camera.OrthoCamera;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
@@ -14,7 +16,7 @@ public class ProblemScreen extends Screen{
 	
 	public ProblemScreen(OrthoCamera camera) {
 		this.camera = camera;
-		problem = new Texture(Gdx.files.internal("resources/mathExample.png"));
+		problem = TextureManager.PROBLEM;
 	}
 
 	@Override
@@ -26,6 +28,9 @@ public class ProblemScreen extends Screen{
 	@Override
 	public void update() {
 		camera.update();
+		if(Gdx.input.isKeyPressed(Keys.SPACE)){
+			ScreenManager.setScreen(new MenuScreen(camera));
+		}
 	}
 
 	@Override
