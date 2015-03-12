@@ -4,21 +4,18 @@ import game.Camera.OrthoCamera;
 
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapRenderer;
-import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 
 public class LevelManager{
-
-	String mapFileName;
+;
 	TiledMap map;
 	TiledMapRenderer render;
 
-	public LevelManager(String mapFileName) {
-		this.mapFileName = mapFileName;
+	public LevelManager(TiledMap map) {
+		this.map = map;
 	}
 
 	public void createMap(){
-		map = new TmxMapLoader().load(mapFileName);	
 		render = new OrthogonalTiledMapRenderer(map);
 	}
 	
@@ -28,10 +25,7 @@ public class LevelManager{
 	}
 
 	public TiledMap getMap() {
-
 		return map;
 	}
-	
-	
 	
 }

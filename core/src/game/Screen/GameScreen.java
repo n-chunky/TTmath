@@ -1,5 +1,6 @@
 package game.Screen;
 
+import game.TextureManager;
 import game.Camera.OrthoCamera;
 import game.Entity.EntityManager;
 import game.Level.LevelManager;
@@ -21,7 +22,7 @@ public class GameScreen extends Screen{
 
 	@Override
 	public void create() {
-		levelManager = new LevelManager("map1Test/level1.tmx");
+		levelManager = new LevelManager(TextureManager.mapTutorial);
 		levelManager.createMap();
 		entityManager = new EntityManager(2, camera, levelManager.getMap());
 	}

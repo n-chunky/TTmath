@@ -22,8 +22,11 @@ public abstract class Entity{
 	public abstract void update();
 	
 	public void setTextureRegion(int x, int y, int width, int height){
-		textureReg = new TextureRegion(texture, x, y, width, height);
-		
+		textureReg = new TextureRegion(texture, x, y, width, height);	
+	}
+	
+	public void setTextureRegion(TextureRegion region){
+		textureReg = new TextureRegion(region);	
 	}
 	
 	public void render(SpriteBatch sb){
