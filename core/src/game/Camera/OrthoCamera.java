@@ -42,10 +42,10 @@ public class OrthoCamera extends OrthographicCamera {
  
     @Override
     public void update() {
-        float left = zoom * -viewportWidth / 2 + virtualViewport.getVirtualWidth() * origin.x;
-        float right = zoom * viewportWidth / 2 + virtualViewport.getVirtualWidth() * origin.x;
-        float top = zoom * viewportHeight / 2 + virtualViewport.getVirtualHeight() * origin.y;
-        float bottom = zoom * -viewportHeight / 2 + virtualViewport.getVirtualHeight() * origin.y;
+        float left = (float) (zoom * -viewportWidth / 4 + virtualViewport.getVirtualWidth() * origin.x);
+        float right = (float) (zoom * viewportWidth / 4 + virtualViewport.getVirtualWidth() * origin.x);
+        float top = (float) (zoom * viewportHeight / 4 + virtualViewport.getVirtualHeight() * origin.y);
+        float bottom = (float) (zoom * -viewportHeight / 4 + virtualViewport.getVirtualHeight() * origin.y);
  
         projection.setToOrtho(left, right, bottom, top, Math.abs(near), Math.abs(far));
         view.setToLookAt(position, tmp.set(position).add(direction), up);

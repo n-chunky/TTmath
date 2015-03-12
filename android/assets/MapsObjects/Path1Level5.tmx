@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="11" height="9" tilewidth="32" tileheight="32" nextobjectid="1">
+ <tileset firstgid="1" name="End" tilewidth="32" tileheight="32">
+  <image source="End.png" width="32" height="32"/>
+  <tile id="0">
+   <properties>
+    <property name="end" value=""/>
+   </properties>
+  </tile>
+ </tileset>
+ <tileset firstgid="2" name="grass" tilewidth="32" tileheight="32">
+  <image source="grass.png" width="32" height="32"/>
+ </tileset>
+ <tileset firstgid="3" name="Start" tilewidth="32" tileheight="32">
+  <image source="Start.png" width="32" height="32"/>
+  <tile id="0">
+   <properties>
+    <property name="start" value=""/>
+   </properties>
+  </tile>
+ </tileset>
+ <tileset firstgid="4" name="Wall" tilewidth="32" tileheight="32">
+  <image source="Wall.png" width="32" height="32"/>
+  <tile id="0">
+   <properties>
+    <property name="blocked" value=""/>
+   </properties>
+  </tile>
+ </tileset>
+ <tileset firstgid="5" name="Key" tilewidth="32" tileheight="32">
+  <image source="Key.png" width="32" height="32"/>
+  <tile id="0">
+   <properties>
+    <property name="item" value="key"/>
+   </properties>
+  </tile>
+ </tileset>
+ <tileset firstgid="6" name="DoorClosed" tilewidth="32" tileheight="32">
+  <image source="DoorClosed.png" width="32" height="32"/>
+  <tile id="0">
+   <properties>
+    <property name="door" value=""/>
+   </properties>
+  </tile>
+ </tileset>
+ <tileset firstgid="7" name="ShiftL" tilewidth="32" tileheight="32">
+  <image source="ShiftL.png" width="32" height="32"/>
+  <tile id="0">
+   <properties>
+    <property name="left" value=""/>
+   </properties>
+  </tile>
+ </tileset>
+ <tileset firstgid="8" name="ShiftR" tilewidth="32" tileheight="32">
+  <image source="ShiftR.png" width="32" height="32"/>
+  <tile id="0">
+   <properties>
+    <property name="right" value=""/>
+   </properties>
+  </tile>
+ </tileset>
+ <layer name="Terrain" width="11" height="9">
+  <data encoding="base64" compression="zlib">
+   eJxjYmBgYBrFgwIDAJw8AMc=
+  </data>
+ </layer>
+ <layer name="Objects" width="11" height="9">
+  <data encoding="base64" compression="zlib">
+   eJxjYMAOWLBgGGDHohYfH5scIwlqkflsONyGjtnwmEsqwBYOzGhqWJHUsjIQB9D9BwBykACK
+  </data>
+ </layer>
+</map>
