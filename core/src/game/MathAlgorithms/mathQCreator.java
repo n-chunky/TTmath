@@ -32,7 +32,7 @@ public class mathQCreator{
 	private static final int initial = 6;
 	
 	//gamemode: regular maze is 1, mental math is 2, future endless maze 3
-	mathQCreator(int path, int level, int doors, int gamemode){
+	public mathQCreator(int path, int level, int doors, int gamemode){
 		//if needed
 		numOfDoors = doors;
 		answers = new int[numOfDoors][5];
@@ -283,7 +283,7 @@ public class mathQCreator{
 			answers[i] = rand.nextInt(max-min+1)+min;
 		}
 		answers[realA] = answer;
-		answers[5] = realA;
+		answers[4] = realA;
 		return answers;
 	}
 

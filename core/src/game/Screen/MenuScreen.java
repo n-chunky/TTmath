@@ -5,59 +5,83 @@ import game.TextureManager;
 import game.Camera.OrthoCamera;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
-public class MenuScreen extends Screen{
+public class MenuScreen implements Screen{
 	
+	private TTmath game;
+	private SpriteBatch sb;
 	private OrthoCamera camera;
 	private Texture Menu;
 
-	public MenuScreen(OrthoCamera camera){
+	// constructor to keep a reference to the main Game class
+    public MenuScreen(TTmath game, OrthoCamera camera, SpriteBatch sb){
 		Menu = TextureManager.MENUSCREEN;
 		this.camera = camera;
-	}
+    	this.game = game;
+		this.sb = sb;
+    }
 	
 	@Override
-	public void create() {
-		camera = new OrthoCamera();
-		camera.resize();
-	}
-
-	@Override
-	public void update() {
-		camera.update();
+	public void show() {
+		// TODO Auto-generated method stub
 		
-		if(Gdx.input.isTouched()){
-			ScreenManager.setScreen(new GameScreen(camera));
-		}
 	}
 
 	@Override
-	public void render(SpriteBatch sb) {
+	public void render(float delta) {
+		game.clear();
+
+		camera.setPosition(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+		camera.update();
 		sb.setProjectionMatrix(camera.combined);
 		sb.begin();
-		sb.draw(Menu, TTmath.WIDTH / 2 - Menu.getWidth() / 2, TTmath.HEIGHT / 2 - Menu.getHeight() / 2);
+		sb.draw(Menu, camera.position.x - Menu.getWidth() / 2, camera.position.y - Menu.getHeight() / 2);
 		sb.end();
+
+		
+		if(Gdx.input.isTouched()){
+			if(game.previousScreen != null){
+				game.setScreen(game.previousScreen);
+			}
+			else{
+				game.setScreen(new GameScreen(game, camera, sb));
+			}
+//			game.setScreen(new ProblemScreen(game, camera, sb));
+			this.dispose();
+		}
+		
 	}
 
 	@Override
 	public void resize(int width, int height) {
-		camera.resize();
-	}
-
-	@Override
-	public void dispose() {
+		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
 	public void pause() {
+		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
 	public void resume() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void hide() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void dispose() {
+		// TODO Auto-generated method stub
 		
 	}
 
