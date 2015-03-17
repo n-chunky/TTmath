@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" renderorder="right-down" width="30" height="9" tilewidth="32" tileheight="32" nextobjectid="1">
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="19" height="15" tilewidth="32" tileheight="32" nextobjectid="1">
  <tileset firstgid="1" name="End" tilewidth="32" tileheight="32">
   <image source="End.png" width="32" height="32"/>
   <tile id="0">
@@ -43,14 +43,14 @@
    </properties>
   </tile>
  </tileset>
- <layer name="Terrain" width="30" height="9">
+ <layer name="Terrain" width="19" height="15">
   <data encoding="base64" compression="zlib">
-   eJxjYmBgYBrFo3gUj2ISMAB7vAId
+   eJxjYmBgYBrFo3gUj2I6YQD+SAI7
   </data>
  </layer>
- <layer name="Objects" width="30" height="9">
+ <layer name="Objects" width="19" height="15">
   <data encoding="base64" compression="zlib">
-   eJxjYCAdsCCxWZHYbETqZSGoirC9xIhjs5cZTZwVi1pceglhbObSwr/Y1OBzFxuRbibGXlY0NehqsZlLrL3Eph9samHmMpJgL7Hxis/dlPiXEjDQ9gIA3eYBdQ==
+   eJxjYBjcgIUCjM0sct1AL7NI8Rchs9gI2E2KWejy+Mwm1Sx8fHR7sJlFrfAiBdDDLGql+8EGALAyATM=
   </data>
  </layer>
 </map>
