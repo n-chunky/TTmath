@@ -24,6 +24,7 @@ public class ProblemScreen implements Screen{
 
 		text = new BitmapFont();
 		text.setColor(Color.RED);
+		// Some of what I tried to make it bigger and look better. 
 //		text.setScale(1);
 //		text.getRegion().getTexture().setFilter(TextureFilter.Linear, TextureFilter.Linear);
 
@@ -46,7 +47,8 @@ public class ProblemScreen implements Screen{
 		
 		sb.begin();
 		for(int i = 0; i < questions.length; i++){
-			text.draw(sb, questions[i], camera.position.x, camera.position.y + i*10);
+			//Text to small. Needs to be fixed. 
+//			text.draw(sb, questions[i], camera.position.x, camera.position.y + i*10);
 		}
         sb.end();
 	}
