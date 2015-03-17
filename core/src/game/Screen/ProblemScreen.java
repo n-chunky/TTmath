@@ -1,63 +1,85 @@
 package game.Screen;
 
 import game.TTmath;
-import game.TextureManager;
 import game.Camera.OrthoCamera;
+import game.MathAlgorithms.mathQCreator;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input.Keys;
-import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
-public class ProblemScreen extends Screen{
-	
+public class ProblemScreen implements Screen{
+	private BitmapFont text;
 	private OrthoCamera camera;
-	private Texture problem;
-	
-	public ProblemScreen(OrthoCamera camera) {
+	private TTmath game;
+	private int[][] answers;
+	private String[] questions;
+	SpriteBatch sb;
+
+	public ProblemScreen(TTmath game, OrthoCamera camera, SpriteBatch sb){
 		this.camera = camera;
-		problem = TextureManager.PROBLEM;
+		this.game = game;
+		this.sb = sb;
+
+		text = new BitmapFont();
+		text.setColor(Color.RED);
+		// Some of what I tried to make it bigger and look better. 
+//		text.setScale(1);
+//		text.getRegion().getTexture().setFilter(TextureFilter.Linear, TextureFilter.Linear);
+
+//		mathQCreator QA = new mathQCreator(1, 1, 1, 1);
+//		answers = QA.getAnswers();
+//		questions = QA.getQuestions();
+	}
+	
+	@Override
+	public void show() {
+		// TODO Auto-generated method stub
+		
 	}
 
 	@Override
-	public void create() {
-		camera = new OrthoCamera();
-		camera.resize();
-	}
-
-	@Override
-	public void update() {
+	public void render(float delta) {
+		game.clear();
+		
 		camera.update();
-		if(Gdx.input.isKeyPressed(Keys.SPACE)){
-			ScreenManager.setScreen(new MenuScreen(camera));
-		}
-	}
-
-	@Override
-	public void render(SpriteBatch sb) {
-		sb.setProjectionMatrix(camera.combined);
+		
 		sb.begin();
-		sb.draw(problem, TTmath.WIDTH / 2 - problem.getWidth() / 2, TTmath.HEIGHT / 2 - problem.getHeight() / 2);
-		sb.end();
+		for(int i = 0; i < questions.length; i++){
+			//Text to small. Needs to be fixed. 
+//			text.draw(sb, questions[i], camera.position.x, camera.position.y + i*10);
+		}
+        sb.end();
 	}
 
 	@Override
 	public void resize(int width, int height) {
-		camera.resize();
-	}
-
-	@Override
-	public void dispose() {
+		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
 	public void pause() {
+		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
 	public void resume() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void hide() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void dispose() {
+		// TODO Auto-generated method stub
 		
 	}
 

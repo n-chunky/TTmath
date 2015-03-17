@@ -1,20 +1,23 @@
 package game.Entity;
 
+import game.TTmath;
 import game.TextureManager;
 import game.Camera.OrthoCamera;
 import game.Screen.ProblemScreen;
-import game.Screen.ScreenManager;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.graphics.g2d.Animation;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer.Cell;
 import com.badlogic.gdx.math.Vector2;
 
 public class Player extends Entity implements InputProcessor{
+	private TTmath game;
 	private OrthoCamera camera;
+	private SpriteBatch sb;
 	private TiledMapTileLayer collisionLayer;
 	private Animation[] playerA = new Animation[4];
 	private TextureRegion[][] animations = new TextureRegion[4][2];
@@ -38,8 +41,10 @@ public class Player extends Entity implements InputProcessor{
 	//end
 	//math
 
-	public Player(Vector2 pos, Vector2 direction, OrthoCamera camera, TiledMapTileLayer collLayer) {
+	public Player(Vector2 pos, Vector2 direction, OrthoCamera camera, TiledMapTileLayer collLayer, TTmath game, SpriteBatch sb) {
 		super(TextureManager.PLAYER, pos, direction);
+		this.game = game;
+		this.sb = sb;
 		this.camera = camera;
 		this.collisionLayer = collLayer;
 		tileWidth = collisionLayer.getTileWidth();
@@ -147,7 +152,8 @@ public class Player extends Entity implements InputProcessor{
 		
 		if(endReach()){
 			System.out.println("U REACHED THE END");
-			ScreenManager.setScreen(new ProblemScreen(camera));
+			game.setScreen(new ProblemScreen(game, camera, sb));
+//			ScreenManager.setScreen(new ProblemScreen(camera));
 		}
 	}
 

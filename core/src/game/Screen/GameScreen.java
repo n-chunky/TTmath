@@ -1,5 +1,6 @@
 package game.Screen;
 
+import game.TTmath;
 import game.TextureManager;
 import game.Camera.OrthoCamera;
 import game.Entity.EntityManager;
@@ -7,39 +8,43 @@ import game.Level.LevelManager;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
+import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.math.Vector3;
 
-public class GameScreen extends Screen{
-
+public class GameScreen implements Screen{
+	private TTmath game;
 	private OrthoCamera camera;
-	private EntityManager entityManager;
+	private SpriteBatch sb;
 	private LevelManager levelManager;
-	Vector3 tmp = new Vector3();
-	public GameScreen(OrthoCamera cam){
-		camera = cam;
-	}
-
-	@Override
-	public void create() {
+	private EntityManager entityManager;
+	
+	public GameScreen(TTmath game, OrthoCamera camera, SpriteBatch sb) {
+		this.camera = camera;
+		this.game = game;
+		this.sb = sb;
+		
 		levelManager = new LevelManager(TextureManager.mapTutorial);
 		levelManager.createMap();
-		entityManager = new EntityManager(2, camera, levelManager.getMap());
+		entityManager = new EntityManager(2, camera, levelManager.getMap(), game, sb);
+	}
+	
+	@Override
+	public void show() {
+		// TODO Auto-generated method stub
+		
 	}
 
 	@Override
-	public void update() {
-		entityManager.update();
+	public void render(float delta) {
+		game.clear();
+
 		camera.update();
+		entityManager.update();
 		if(Gdx.input.isKeyPressed(Keys.SPACE)){
-			ScreenManager.setScreen(new MenuScreen(camera));
+			game.setScreen(new MenuScreen(game, camera, sb));
+			game.setPreviousScreen(this);
 		}
-	}
-
-	@Override
-	public void render(SpriteBatch sb) {
-
-
+		
 		levelManager.renderMap(camera);
 		sb.setProjectionMatrix(camera.combined);
 		sb.begin();
@@ -49,22 +54,32 @@ public class GameScreen extends Screen{
 
 	@Override
 	public void resize(int width, int height) {
-		camera.resize();
-	}
-
-	@Override
-	public void dispose() {
-
+		// TODO Auto-generated method stub
+		
 	}
 
 	@Override
 	public void pause() {
-
+		// TODO Auto-generated method stub
+		
 	}
 
 	@Override
 	public void resume() {
+		// TODO Auto-generated method stub
+		
+	}
 
+	@Override
+	public void hide() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void dispose() {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

@@ -1,67 +1,40 @@
 package game;
 
 import game.Camera.OrthoCamera;
+import game.Screen.GameScreen;
 import game.Screen.MenuScreen;
-import game.Screen.ScreenManager;
 
-import com.badlogic.gdx.ApplicationAdapter;
+import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
-public class TTmath extends ApplicationAdapter {
-	
+public class TTmath extends Game{
+
 	public static int WIDTH = 480, HEIGHT = 700;
-	SpriteBatch batch;
-	OrthoCamera camera;
-	
-	@Override
-	public void create () {
-		batch = new SpriteBatch();
-		ScreenManager.setScreen(new MenuScreen(camera));
-	}
+	private OrthoCamera camera;
+	private SpriteBatch sb;
+	public MenuScreen mainMenuScreen;
+	public Screen previousScreen;
+
 
 	@Override
-	public void dispose(){
-		if(ScreenManager.getCurrentScreen() != null){
-			ScreenManager.getCurrentScreen().dispose();
-		}
-		batch.dispose();
+	public void create() {
+		camera = new OrthoCamera();
+		camera.resize();
+		sb = new SpriteBatch();
+		mainMenuScreen = new MenuScreen(this, camera, sb);
+		setScreen(mainMenuScreen);              
 	}
 	
-	@Override
-	public void render() {		
+	public void clear(){
 		Gdx.gl.glClearColor(0, 0, 0, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-		
-		if(ScreenManager.getCurrentScreen() != null){
-			ScreenManager.getCurrentScreen().update();
-		}
-		
-		if(ScreenManager.getCurrentScreen() != null){
-			ScreenManager.getCurrentScreen().render(batch);
-		}
 	}
-
-	@Override
-	public void resize(int width, int height) {
-		if(ScreenManager.getCurrentScreen() != null){
-			ScreenManager.getCurrentScreen().resize(width, height);
-		}
-	}
-
-	@Override
-	public void pause() {
-		if(ScreenManager.getCurrentScreen() != null){
-			ScreenManager.getCurrentScreen().pause();
-		}
-	}
-
-	@Override
-	public void resume() {
-		if(ScreenManager.getCurrentScreen() != null){
-			ScreenManager.getCurrentScreen().resume();
-		}
+	
+	public void setPreviousScreen(Screen previousScreen){
+		this.previousScreen = previousScreen;
 	}
 
 }
