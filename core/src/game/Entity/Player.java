@@ -242,7 +242,10 @@ public class Player extends Entity implements InputProcessor{
 		return cell !=null && cell.getTile().getProperties().containsKey("blocked");
 	}
 
-	//touch movement implemented
+	/*touch movement implemented
+	*gdx.input.getDeltaY/X refers to the distance the finger is moving from where
+	*it stopped, so any directional change will be the new origin for getDeltaY/X
+	*/
 	@Override
 	public boolean touchDragged(int screenX, int screenY, int pointer) {
 

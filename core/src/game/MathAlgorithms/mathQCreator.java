@@ -1,4 +1,6 @@
 package game.MathAlgorithms;
+
+
 import java.util.Random;
 
 
@@ -21,19 +23,30 @@ import java.util.Random;
  */
 public class mathQCreator{
 
-	
+
 	private int numOfDoors;
 	private int mode;
 	private int operations[];
 	private int[][] answers;
 	private String[] questions;
-
+	private int path;
+	private int level;
+	private int gamemode;
 	//standard initial number used with level for creating questions
 	private static final int initial = 6;
-	
-	//gamemode: regular maze is 1, mental math is 2, future endless maze 3
-	mathQCreator(int path, int level, int doors, int gamemode){
+
+	mathQCreator(){}
+
+	/*
+	 * This method runs the operations that creates the questions and answers
+	 * gamemode: regular maze is 1, mental math is 2, future endless maze 3
+	 */
+
+	public void runOperation(int path, int level, int doors, int gamemode){
 		//if needed
+		this.path = path;
+		this.level = level;
+		this.gamemode = gamemode;
 		numOfDoors = doors;
 		answers = new int[numOfDoors][5];
 		questions = new String[numOfDoors];
@@ -54,7 +67,6 @@ public class mathQCreator{
 		}
 		questions = generateMathQuestion(operations, level);
 
-
 	}
 	/*
 	 * This method gets the math operation for the question in the level
@@ -65,13 +77,13 @@ public class mathQCreator{
 	 */
 	private int operationGenerator(int path){
 		Random rand = new Random();
-		int difficulty = rand.nextInt(1 + path);	
+		int difficulty;	
 		int[] operations = getPathsArray(path);
 		do{
+			difficulty = rand.nextInt(operations.length);
 			if(operations[difficulty] != -1){
 				break;
 			}
-			difficulty = rand.nextInt(1 + path);
 		}while(operations[difficulty] == -1);
 
 		return operations[difficulty];
@@ -91,8 +103,8 @@ public class mathQCreator{
 		int[] operations = new int[4];			//the math operations
 		switch(path){
 		case 1:
-			operations[0] = 1;
-			operations[1] = 2;
+			operations[0] = 0;
+			operations[1] = 1;
 			operations[2] = -1;
 			operations[3] = -1;
 			break;
@@ -157,31 +169,31 @@ public class mathQCreator{
 					secondN = rand.nextInt(initial + level);
 					answer = firstN + secondN;
 					answers[i] = randomizeAnswer(answer);
-					q[i] = firstN + "+" + secondN; 
+					q[i] = firstN + " + " + secondN; 
 					break;
-				//subtracting
+					//subtracting
 				case 1:
 					firstN = rand.nextInt(initial + level);
 					secondN = rand.nextInt(initial + level);
 					if(firstN < secondN){
 						answer = secondN - firstN;
-						q[i] = secondN + "-" + firstN; 
+						q[i] = secondN + " - " + firstN; 
 					}
 					else {
 						answer = firstN - secondN;
-						q[i] = secondN + "-" + firstN;
+						q[i] = firstN + " - " + secondN;
 					}
 					answers[i] = randomizeAnswer(answer);
 					break;
-				//multiplying
+					//multiplying
 				case 2:
 					firstN = rand.nextInt(initial + level);
 					secondN = rand.nextInt(initial + level);
 					answer = firstN * secondN;
 					answers[i] = randomizeAnswer(answer);
-					q[i] = firstN + "x" + secondN; 
+					q[i] = firstN + " x " + secondN; 
 					break;
-				//dividing
+					//dividing
 				case 3:
 					/*different, same thing as multiplying, but our parameter for randomizeAnswer is 
 					*either the first or second number. We will use the Random rand to choose either
@@ -190,13 +202,13 @@ public class mathQCreator{
 					firstN = rand.nextInt(initial + level);
 					secondN = rand.nextInt(initial + level);
 					answer = firstN * secondN;
-					if(rand.nextInt(2)==1){
-						answers[i] = randomizeAnswer(firstN);
-						q[i] = secondN + " / " + answer;
+					if(rand.nextInt(2)==1 && firstN != 0){
+						answers[i] = randomizeAnswer(secondN);
+						q[i] = answer + " \u00F7 " + firstN;
 					}
 					else{
-						answers[i] = randomizeAnswer(secondN);
-						q[i] = firstN + " / " + answer;
+						answers[i] = randomizeAnswer(firstN);
+						q[i] = answer + " \u00F7 " + secondN;
 					}
 					break;
 				default:
@@ -215,46 +227,46 @@ public class mathQCreator{
 					secondN = rand.nextInt(initial + (level * 5) + 1);
 					answer = firstN + secondN;
 					answers[i] = randomizeAnswer(answer);
-					q[i] = firstN + "+" + secondN; 
+					q[i] = firstN + " + " + secondN; 
 					break;
-				//subtracting
+					//subtracting
 				case 1:
 					firstN = rand.nextInt(initial + (level * 5) + 1);
 					secondN = rand.nextInt(initial + (level * 5) + 1);
 					if(firstN < secondN){
 						answer = secondN - firstN;
-						q[i] = secondN + "-" + firstN; 
+						q[i] = secondN + " - " + firstN; 
 					}
 					else {
 						answer = firstN - secondN;
-						q[i] = secondN + "-" + firstN;
+						q[i] = firstN + " - " + secondN;
 					}
 					answers[i] = randomizeAnswer(answer);
 					break;
-				//multiplying
+					//multiplying
 				case 2:
 					firstN = rand.nextInt((level + 4) + 1) + initial;
 					secondN = rand.nextInt((level + 4) + 1) + initial;
 					answer = firstN * secondN;
 					answers[i] = randomizeAnswer(answer);
-					q[i] = firstN + "x" + secondN; 
+					q[i] = firstN + " x " + secondN; 
 					break;
-				//dividing
+					//dividing
 				case 3:
 					/*different, same thing as multiplying, but our parameter for randomizeAnswer is 
-					*either the first or second number. We will use the Random rand to choose either
-					*so the variable "answer" and one of the other numbers will be part of the question
-					*/
+					 *either the first or second number. We will use the Random rand to choose either
+					 *so the variable "answer" and one of the other numbers will be part of the question
+					 */
 					firstN = rand.nextInt((level + 4) + 1) + initial;
 					secondN = rand.nextInt((level + 4) + 1) + initial;
 					answer = firstN * secondN;
-					if(rand.nextInt(2)==1){
-						answers[i] = randomizeAnswer(firstN);
-						q[i] = secondN + " / " + answer;
+					if(rand.nextInt(2)==1 && firstN != 0){
+						answers[i] = randomizeAnswer(secondN);
+						q[i] = answer + " \u00F7 " + firstN;
 					}
 					else{
-						answers[i] = randomizeAnswer(secondN);
-						q[i] = firstN + " / " + answer;
+						answers[i] = randomizeAnswer(firstN);
+						q[i] = answer + " \u00F7 " + secondN;
 					}
 					break;
 				default:
@@ -278,17 +290,21 @@ public class mathQCreator{
 		int answers[] = new int[5];
 		int max = answer+6;
 		int min = answer-6;
-		int realA = rand.nextInt(4+1);
+		int realA = rand.nextInt(3+1);
 		for(int i=0;i<4;i++){
 			answers[i] = rand.nextInt(max-min+1)+min;
 		}
 		answers[realA] = answer;
-		answers[5] = realA;
+		answers[4] = realA;
 		return answers;
 	}
 
 	public int[][] getAnswers(){
 		return answers;
+	}
+
+	public int getCorrectAnswer(int questionNumber){
+		return answers[questionNumber][answers[questionNumber][4]];
 	}
 
 	public String[] getQuestions(){
