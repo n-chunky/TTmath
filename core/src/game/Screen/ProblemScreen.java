@@ -27,9 +27,9 @@ public class ProblemScreen implements Screen{
 //		text.setScale(1);
 //		text.getRegion().getTexture().setFilter(TextureFilter.Linear, TextureFilter.Linear);
 
-		mathQCreator QA = new mathQCreator(1, 1, 1, 1);
-		answers = QA.getAnswers();
-		questions = QA.getQuestions();
+//		mathQCreator QA = new mathQCreator(1, 1, 1, 1);
+//		answers = QA.getAnswers();
+//		questions = QA.getQuestions();
 	}
 	
 	@Override
