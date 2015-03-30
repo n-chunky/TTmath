@@ -1,20 +1,25 @@
 package game.Entity;
 
+import game.TTmath;
 import game.TextureManager;
 import game.Camera.OrthoCamera;
+import game.GameItems.ItemManager;
 import game.Screen.ProblemScreen;
-import game.Screen.ScreenManager;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.graphics.g2d.Animation;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer.Cell;
 import com.badlogic.gdx.math.Vector2;
 
 public class Player extends Entity implements InputProcessor{
+	private TTmath game;
 	private OrthoCamera camera;
+	private SpriteBatch sb;
+	private ItemManager itemManager;
 	private TiledMapTileLayer collisionLayer;
 	private Animation[] playerA = new Animation[4];
 	private TextureRegion[][] animations = new TextureRegion[4][2];
@@ -38,13 +43,16 @@ public class Player extends Entity implements InputProcessor{
 	//end
 	//math
 
-	public Player(Vector2 pos, Vector2 direction, OrthoCamera camera, TiledMapTileLayer collLayer) {
+	public Player(Vector2 pos, Vector2 direction, OrthoCamera camera, TiledMapTileLayer collLayer, TTmath game, SpriteBatch sb, ItemManager itemManager) {
 		super(TextureManager.PLAYER, pos, direction);
+		this.game = game;
+		this.sb = sb;
+		this.itemManager = itemManager;
 		this.camera = camera;
 		this.collisionLayer = collLayer;
 		tileWidth = collisionLayer.getTileWidth();
 		tileHeight = collisionLayer.getTileHeight();
-		
+
 		//set up texture animations for player
 		//forward
 		for(int i=0;i<animations[0].length;i++){
@@ -64,7 +72,7 @@ public class Player extends Entity implements InputProcessor{
 		}
 		//set animations for player
 		for(int i=0;i<playerA.length;i++){
-			playerA[i] = new Animation(1 / 12f, animations[i]);
+			playerA[i] = new Animation(0.1f, animations[i]);
 		}
 		setTextureRegion(animations[0][0]);
 		distX = this.pos.x;
@@ -77,28 +85,30 @@ public class Player extends Entity implements InputProcessor{
 	public void update() {
 		pos.add(direction);
 
-		//old collision test
-		//				if(Gdx.input.isKeyPressed(Keys.DPAD_LEFT) && !collisionExist(Keys.DPAD_LEFT)){
-		//					setDirection(-300,0);
-		//				}
-		//				else if(Gdx.input.isKeyPressed(Keys.DPAD_RIGHT) && !collisionExist(Keys.DPAD_RIGHT)){
-		//					setDirection(300,0);
-		//				}
-		//				else if(Gdx.input.isKeyPressed(Keys.DPAD_DOWN) && !collisionExist(Keys.DPAD_DOWN)){
-		//					setDirection(0,-300);
-		//				}
-		//				else if(Gdx.input.isKeyPressed(Keys.DPAD_UP) && !collisionExist(Keys.DPAD_UP)){
-		//					setDirection(0,300);
-		//				}
-		//				else{
-		//					setDirection(0, 0);
-		//					camera.setPosition(pos.x, pos.y);
-		//					camera.update();
-		//				}
-		
 		//get new state time
 		stateTime += Gdx.graphics.getDeltaTime();
+		updateAnimation(stateTime);
+		checkCollision(isMoving);
+		checkForItems();
+		camera.setPosition(pos.x, pos.y);
+		camera.update();
+
+		if(endReach()){
+			System.out.println("U REACHED THE END");
+			game.setScreen(new ProblemScreen(game, camera, sb));
+			//			ScreenManager.setScreen(new ProblemScreen(camera));
+		}
+	}
+
+	private void checkForItems() {
+		if(itemExists(this.pos.x/tileWidth, this.pos.y/tileHeight)){
+			
+			System.out.println("Item exists");
+		}
 		
+	}
+
+	private void updateAnimation(float stateTime){
 		//animation update to make it consistent
 		if((distY+20)<this.pos.y){
 			setTextureRegion(playerA[1].getKeyFrame(stateTime, true));
@@ -116,9 +126,19 @@ public class Player extends Entity implements InputProcessor{
 			setTextureRegion(playerA[2].getKeyFrame(stateTime, true));
 			distX = this.pos.x;
 		}
-		
-		//checks for collision
-		if(isMoving){
+	}
+
+	//checks the current tile of the player to see if he reached the end or not
+	private boolean endReach() {
+		int tileX = (int) (this.getPosition().x / collisionLayer.getTileWidth());
+		int tileY = (int) (this.getPosition().y / collisionLayer.getTileHeight());
+		Cell cell = collisionLayer.getCell(tileX, tileY);
+		return cell != null && cell.getTile().getProperties().containsKey("end");
+	}
+
+	//gets collision based on direction
+	private void checkCollision(boolean moving){
+		if(moving){
 			if(movingDown && collidesBottom()){
 				setTextureRegion(playerA[0].getKeyFrame(stateTime, true));
 				movingDown = false;
@@ -141,51 +161,10 @@ public class Player extends Entity implements InputProcessor{
 			}
 			isMoving = false;
 		}
-		
-		camera.setPosition(pos.x, pos.y);
-		camera.update();
-		
-		if(endReach()){
-			System.out.println("U REACHED THE END");
-			ScreenManager.setScreen(new ProblemScreen(camera));
-		}
 	}
-
-	//checks the current tile of the player to see if he reached the end or not
-	private boolean endReach() {
-		int tileX = (int) (this.getPosition().x / collisionLayer.getTileWidth());
-		int tileY = (int) (this.getPosition().y / collisionLayer.getTileHeight());
-		Cell cell = collisionLayer.getCell(tileX, tileY);
-		return cell != null && cell.getTile().getProperties().containsKey("end");
-	}
-
-	// old collision checker
-	//	//checks if collision exists around the player
-	//	private boolean collisionExist(int key){
-	//
-	//		boolean collision = false;
-	//
-	//		//left
-	//		if(key == Keys.DPAD_LEFT)
-	//			collision = collidesLeft();
-	//
-	//		//right
-	//		if(key == Keys.DPAD_RIGHT)
-	//			collision = collidesRight();
-	//
-	//		//up
-	//		if(key == Keys.DPAD_UP)
-	//			collision = collidesTop();
-	//
-	//		//down
-	//		if(key == Keys.DPAD_DOWN)
-	//			collision = collidesBottom();
-	//
-	//		return collision;
-	//	}
 
 	/*
-	 * collision check
+	 * collision check called from checkCollision
 	 * added +3y more for tile detection right and left.
 	 * added +5x more for tile detection top and bottom
 	 * added -2y for tile detection bottom
@@ -242,10 +221,15 @@ public class Player extends Entity implements InputProcessor{
 		return cell !=null && cell.getTile().getProperties().containsKey("blocked");
 	}
 
+	private boolean itemExists(float x, float y){
+		Cell cell = collisionLayer.getCell((int) x, (int) y);
+		return cell !=null && cell.getTile().getProperties().containsKey("item");
+	}
+	
 	/*touch movement implemented
-	*gdx.input.getDeltaY/X refers to the distance the finger is moving from where
-	*it stopped, so any directional change will be the new origin for getDeltaY/X
-	*/
+	 *gdx.input.getDeltaY/X refers to the distance the finger is moving from where
+	 *it stopped, so any directional change will be the new origin for getDeltaY/X
+	 */
 	@Override
 	public boolean touchDragged(int screenX, int screenY, int pointer) {
 

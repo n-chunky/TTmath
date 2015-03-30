@@ -29,9 +29,6 @@ public class mathQCreator{
 	private int operations[];
 	private int[][] answers;
 	private String[] questions;
-	private int path;
-	private int level;
-	private int gamemode;
 	//standard initial number used with level for creating questions
 	private static final int initial = 6;
 
@@ -44,9 +41,6 @@ public class mathQCreator{
 
 	public void runOperation(int path, int level, int doors, int gamemode){
 		//if needed
-		this.path = path;
-		this.level = level;
-		this.gamemode = gamemode;
 		numOfDoors = doors;
 		answers = new int[numOfDoors][5];
 		questions = new String[numOfDoors];

@@ -1,6 +1,8 @@
 package game.Entity;
 
+import game.TTmath;
 import game.Camera.OrthoCamera;
+import game.GameItems.ItemManager;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.maps.tiled.TiledMap;
@@ -16,10 +18,10 @@ public class EntityManager {
 	TiledMap map;
 	TiledMapTileLayer tiles;
 	
-	public EntityManager(int amount, OrthoCamera camera, TiledMap tiledMap){
+	public EntityManager(int amount, OrthoCamera camera, TiledMap tiledMap, TTmath game, SpriteBatch sb, ItemManager itemManager){
 		map = tiledMap;
 		tiles = (TiledMapTileLayer) map.getLayers().get(1);
-		player = new Player(findStartPosition(), new Vector2(0,0), camera, (TiledMapTileLayer) tiles);
+		player = new Player(findStartPosition(), new Vector2(0,0), camera, (TiledMapTileLayer) tiles, game, sb, itemManager);
 	}
 	
 	public void update(){
