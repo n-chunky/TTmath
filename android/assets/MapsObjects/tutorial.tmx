@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" renderorder="right-down" width="30" height="9" tilewidth="32" tileheight="32" nextobjectid="1">
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="29" height="29" tilewidth="32" tileheight="32" nextobjectid="1">
  <tileset firstgid="1" name="grass" tilewidth="32" tileheight="32">
   <image source="grass.png" width="64" height="32"/>
   <tile id="0">
@@ -13,15 +13,7 @@
    </properties>
   </tile>
  </tileset>
- <tileset firstgid="3" name="Start" tilewidth="32" tileheight="32">
-  <image source="Start.png" width="32" height="32"/>
-  <tile id="0">
-   <properties>
-    <property name="start" value=""/>
-   </properties>
-  </tile>
- </tileset>
- <tileset firstgid="4" name="Wall" tilewidth="32" tileheight="32">
+ <tileset firstgid="3" name="Wall" tilewidth="32" tileheight="32">
   <image source="Wall.png" width="32" height="32"/>
   <tile id="0">
    <properties>
@@ -29,7 +21,28 @@
    </properties>
   </tile>
  </tileset>
- <tileset firstgid="5" name="Key" tilewidth="32" tileheight="32">
+ <tileset firstgid="4" name="Start" tilewidth="32" tileheight="32">
+  <image source="Start.png" width="32" height="32"/>
+  <tile id="0">
+   <properties>
+    <property name="start" value=""/>
+   </properties>
+  </tile>
+ </tileset>
+ <tileset firstgid="5" name="Tree1" tilewidth="32" tileheight="32">
+  <image source="Tree1.png" width="64" height="64"/>
+  <tile id="2">
+   <properties>
+    <property name="blocked" value=""/>
+   </properties>
+  </tile>
+  <tile id="3">
+   <properties>
+    <property name="blocked" value=""/>
+   </properties>
+  </tile>
+ </tileset>
+ <tileset firstgid="9" name="Key" tilewidth="32" tileheight="32">
   <image source="Key.png" width="32" height="32"/>
   <tile id="0">
    <properties>
@@ -38,7 +51,7 @@
    </properties>
   </tile>
  </tileset>
- <tileset firstgid="6" name="DoorClosed" tilewidth="32" tileheight="32">
+ <tileset firstgid="10" name="DoorClosed" tilewidth="32" tileheight="32">
   <image source="DoorClosed.png" width="32" height="32"/>
   <tile id="0">
    <properties>
@@ -46,39 +59,15 @@
    </properties>
   </tile>
  </tileset>
- <tileset firstgid="7" name="Brickwall" tilewidth="32" tileheight="32">
-  <image source="Brickwall.png" width="64" height="64"/>
-  <tile id="0">
-   <properties>
-    <property name="blocked" value=""/>
-   </properties>
-  </tile>
-  <tile id="1">
-   <properties>
-    <property name="blocked" value=""/>
-   </properties>
-  </tile>
-  <tile id="2">
-   <properties>
-    <property name="blocked" value=""/>
-   </properties>
-  </tile>
-  <tile id="3">
-   <properties>
-    <property name="blocked" value=""/>
-   </properties>
-  </tile>
- </tileset>
- <tileset firstgid="11" name="Warpgate" tilewidth="32" tileheight="32">
-  <image source="Warpgate.png" width="64" height="64"/>
- </tileset>
- <tileset firstgid="15" name="Tree1" tilewidth="32" tileheight="32">
-  <image source="Tree1.png" width="64" height="64"/>
- </tileset>
- <tileset firstgid="19" name="SmallRock" tilewidth="32" tileheight="32">
+ <tileset firstgid="11" name="SmallRock" tilewidth="32" tileheight="32">
   <image source="SmallRock.png" width="32" height="32"/>
+  <tile id="0">
+   <properties>
+    <property name="blocked" value=""/>
+   </properties>
+  </tile>
  </tileset>
- <tileset firstgid="20" name="Warpgate" tilewidth="32" tileheight="32">
+ <tileset firstgid="12" name="Warpgate" tilewidth="32" tileheight="32">
   <image source="Warpgate.png" width="64" height="64"/>
   <tile id="0">
    <properties>
@@ -101,14 +90,17 @@
    </properties>
   </tile>
  </tileset>
- <layer name="Terrain" width="30" height="9">
+ <tileset firstgid="16" name="SmallPuddle" tilewidth="32" tileheight="32">
+  <image source="SmallPuddle.png" width="32" height="32"/>
+ </tileset>
+ <layer name="Tile Layer 1" width="29" height="29">
   <data encoding="base64" compression="zlib">
-   eJxjZGBgYBzFo3gUj2ISMAA/+gEP
+   eJztwwEJAAAMBKH7/qUHy6HgqqmqqvoPqpMDSg==
   </data>
  </layer>
- <layer name="Objects" width="30" height="9">
+ <layer name="objectsa" width="29" height="29">
   <data encoding="base64" compression="zlib">
-   eJxjYCAdsENpVjRxNixq0AELFJMDcJnJjoXNyoDqPpi9zEhi6O7HZy8uTMhttPAvNjUw97CgYZAYGwNh91NiLzLA5V9i7GXDIY7NXnS15NjLRSbGZa8IEIsSYS81ALK9YkAsTmd7AY5MApY=
+   eJzNlosOwiAMRUl8bvjg/79WjJJ0eAu3BaM3aTTQ9ZSVNgvh/7SbYB7eaM6zeUlZj8Y4xVfLw/oOR5is//IDpjeW9EtijXm3MWzFMLX6eM/CMi25yD107hEmiq3lUtZWI/NZlxQ+61NzerWwnrPuea0fZzJZoRqOMD2z3HOHZP3LM5dsVyJHLxP9v2W7A//VEA8pNpitmL3eZWLU8erYWp/OYNYsTYvwncG0iO3d3jOtOcQwGGatFLYzsDXD5V4C+yhf2ZtaTmz/e7+JmHnT2ke5ILXuIPJjhGLt37+HbEeSyXCYPjtlO4dX/dHdsNq38rTqAYvdA+8=
   </data>
  </layer>
 </map>
