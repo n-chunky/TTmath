@@ -24,24 +24,24 @@ public class MenuScreen implements Screen{
 	private TTmath game;
 	private SpriteBatch sb;
 	private OrthoCamera camera;
-	private Texture Menu;
 
-	Table table;
-	Stage stage;
-	TextButton button;
-	TextButtonStyle textButtonStyle;
-	BitmapFont font;
-	Skin skin;
-	TextureAtlas buttonAtlas;
+	private Table table;
+	private Stage stage;
+	private TextButton button;
+	private TextButtonStyle textButtonStyle;
+	private BitmapFont font;
+	private Skin skin;
+	private TextureAtlas buttonAtlas;
 
 
 	// constructor to keep a reference to the main Game class
 	public MenuScreen(TTmath game, OrthoCamera camera, SpriteBatch sb){
-		Menu = TextureManager.MENUSCREEN;
 		this.camera = camera;
 		this.game = game;
 		this.sb = sb;
 
+		game.manageScreens(this);
+		
 		createStage();
 
 		FreeTypeFontGenerator openSans = new FreeTypeFontGenerator(Gdx.files.internal("resources/OpenSans-Regular.ttf"));
@@ -65,23 +65,27 @@ public class MenuScreen implements Screen{
 		textButtonStyle = new TextButtonStyle();
 		textButtonStyle.font = font;
 		textButtonStyle.up = skin.getDrawable("MenuItem");
-		button = new TextButton("<(*_*)>", textButtonStyle);
+		button = new TextButton("Touch me", textButtonStyle);
 		button.pad(20);
 		
 		button.addListener(new InputListener() {
 			public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
 				if(game.previousScreen != null){
-					game.setScreen(game.previousScreen);
+					// This is how to go back a screen!
+//					game.setScreen(game.previousScreen);
+//					dispose();
 				}
 				else{
-					game.setScreen(new GameScreen(game, camera, sb));
+					// Commented out for testing purposes
+//					game.setScreen(new GameScreen(game, camera, sb));
+//					game.setScreen(new ProblemScreen(game, camera, sb));
 				}
-				//			game.setScreen(new ProblemScreen(game, camera, sb));
+				game.setScreen(new GameScreen(game, camera, sb));
 				return true;
 			}
 
 			public void touchUp (InputEvent event, float x, float y, int pointer, int button) {
-				Gdx.app.log("my app", "Released");
+				// Do nothing?
 			}
 		});
 		
@@ -106,31 +110,8 @@ public class MenuScreen implements Screen{
 
 		camera.setPosition(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 		camera.update();
-		//		sb.setProjectionMatrix(camera.combined);
-		//		sb.begin();
-		//		sb.draw(Menu, camera.position.x - Menu.getWidth() / 2, camera.position.y - Menu.getHeight() / 2);
-		//		sb.end();
-
-		stage.draw();
-
-//		button.addListener(new ChangeListener() {
-//	        @Override
-//	        public void changed (ChangeEvent event, Actor actor) {
-//	            System.out.println("Button Pressed");
-//	        }
-//	    });
 		
-//		if(Gdx.input.isTouched()){
-//			if(game.previousScreen != null){
-//				game.setScreen(game.previousScreen);
-//			}
-//			else{
-//				game.setScreen(new GameScreen(game, camera, sb));
-//			}
-//			//			game.setScreen(new ProblemScreen(game, camera, sb));
-//			this.dispose();
-//		}
-
+		stage.draw();
 	}
 
 	@Override

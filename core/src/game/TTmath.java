@@ -17,6 +17,7 @@ public class TTmath extends Game{
 	private SpriteBatch sb;
 	public MenuScreen mainMenuScreen;
 	public Screen previousScreen;
+	public Screen currentScreen;
 
 
 	@Override
@@ -33,8 +34,10 @@ public class TTmath extends Game{
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 	}
 	
-	public void setPreviousScreen(Screen previousScreen){
-		this.previousScreen = previousScreen;
+	public void manageScreens(Screen newCurrentScreen){
+		if(currentScreen != null){
+			previousScreen = currentScreen;
+		}
+		currentScreen = newCurrentScreen;
 	}
-
 }

@@ -27,6 +27,8 @@ public class GameScreen implements Screen{
 		this.game = game;
 		this.sb = sb;
 
+		game.manageScreens(this);
+		
 		levelManager = new LevelManager(TextureManager.mapTutorial);
 		animationManager = new LevelAnimationManager(levelManager.getMap());
 		itemManager = new ItemManager(levelManager.getMap());
@@ -46,9 +48,10 @@ public class GameScreen implements Screen{
 		levelManager.createMap();
 		camera.update();
 		entityManager.update();
+		
+		// Only useful for desktop version
 		if(Gdx.input.isKeyPressed(Keys.SPACE)){
 			game.setScreen(new MenuScreen(game, camera, sb));
-			game.setPreviousScreen(this);
 		}
 
 		levelManager.renderMap(camera);
