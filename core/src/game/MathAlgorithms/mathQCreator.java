@@ -32,7 +32,7 @@ public class mathQCreator{
 	//standard initial number used with level for creating questions
 	private static final int initial = 6;
 
-	mathQCreator(){}
+	public mathQCreator(){}
 
 	/*
 	 * This method runs the operations that creates the questions and answers

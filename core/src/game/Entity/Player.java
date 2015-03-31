@@ -96,7 +96,6 @@ public class Player extends Entity implements InputProcessor{
 		if(endReach()){
 			System.out.println("U REACHED THE END");
 			game.setScreen(new ProblemScreen(game, camera, sb));
-			//			ScreenManager.setScreen(new ProblemScreen(camera));
 		}
 	}
 
