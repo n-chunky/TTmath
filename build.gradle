@@ -37,7 +37,11 @@ project(":desktop") {
         compile "com.badlogicgames.gdx:gdx-backend-lwjgl:$gdxVersion"
         compile "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-desktop"
         compile "com.badlogicgames.gdx:gdx-box2d-platform:$gdxVersion:natives-desktop"
+<<<<<<< HEAD
 		compile "com.badlogicgames.gdx:gdx-freetype-platform:$gdxVersion:natives-desktop"
+=======
+        compile "com.badlogicgames.gdx:gdx-freetype-platform:$gdxVersion:natives-desktop"
+>>>>>>> 41fecd4ed82af6ada01c4ed2d01bc34abc646344
     }
 }
  
