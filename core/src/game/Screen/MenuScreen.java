@@ -1,12 +1,7 @@
 package game.Screen;
 
-import game.TTmath;
-import game.TextureManager;
-import game.Camera.OrthoCamera;
-
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
@@ -19,6 +14,9 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
 
+import game.Camera.OrthoCamera;
+import game.TTmath;
+
 public class MenuScreen implements Screen{
 
 	private TTmath game;
@@ -27,7 +25,7 @@ public class MenuScreen implements Screen{
 
 	private Table table;
 	private Stage stage;
-	private TextButton button;
+	private TextButton playButton, mentalMathButton;
 	private TextButtonStyle textButtonStyle;
 	private BitmapFont font;
 	private Skin skin;
@@ -64,33 +62,55 @@ public class MenuScreen implements Screen{
 		skin.addRegions(buttonAtlas);
 		textButtonStyle = new TextButtonStyle();
 		textButtonStyle.font = font;
-		textButtonStyle.up = skin.getDrawable("MenuItem");
-		button = new TextButton("Touch me", textButtonStyle);
-		button.pad(20);
+		textButtonStyle.up   = skin.getDrawable("MenuItem");
+
+
+        // create play playButton
+		playButton = new TextButton("Play Levels", textButtonStyle);
+		playButton.pad(50);
 		
-		button.addListener(new InputListener() {
-			public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
-				if(game.previousScreen != null){
-					// This is how to go back a screen!
+		playButton.addListener(new InputListener() {
+            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+                if (game.previousScreen != null) {
+                    // This is how to go back a screen!
 //					game.setScreen(game.previousScreen);
 //					dispose();
-				}
-				else{
-					// Commented out for testing purposes
+                } else {
+                    // Commented out for testing purposes
 //					game.setScreen(new GameScreen(game, camera, sb));
 //					game.setScreen(new ProblemScreen(game, camera, sb));
-				}
-				game.setScreen(new GameScreen(game, camera, sb));
-				return true;
-			}
+                }
+                game.setScreen(new GameScreen(game, camera, sb));
+                return true;
+            }
 
-			public void touchUp (InputEvent event, float x, float y, int pointer, int button) {
-				// Do nothing?
-			}
-		});
-		
-		table.add(button);
+            public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
+                // Do nothing?
+            }
+        });
 
+
+
+
+        // create mental math playButton
+        mentalMathButton = new TextButton("Mental Math Practice", textButtonStyle);
+        mentalMathButton.pad(20);
+
+        mentalMathButton.addListener(new InputListener() {
+            public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
+                game.setScreen(new ProblemScreen(game, camera, sb));
+                return true;
+            }
+
+            public void touchUp (InputEvent event, float x, float y, int pointer, int button) {
+                // Do nothing?
+            }
+        });
+
+
+		table.add(playButton);
+        table.row();
+        table.add(mentalMathButton);
 		stage.addActor(table);
 	}
 
