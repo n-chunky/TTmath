@@ -14,17 +14,24 @@ import com.badlogic.gdx.utils.Array;
 public class LevelAnimationManager {
 
 	Array<AnimatedTiledMapTile> grassTileInScene;
-	Array<StaticTiledMapTile> grassTile;
-	Texture grass = TextureManager.GRASS;
+	Array<StaticTiledMapTile> Tile;
+	Texture tileTexture = TextureManager.GRASS;
+	TiledMap map;
+	
 	
 	public LevelAnimationManager(TiledMap map){
-
-		TiledMapTileSet tileSet = map.getTileSets().getTileSet("grass");
-		grassTile = new Array<StaticTiledMapTile>();
-
+		this.map = map;
+		createAnimation(map.getTileSets().getTileSet("grass"));
+		
+	}
+	
+	public void createAnimation(TiledMapTileSet tileSet){
+		
 		//hardcoded grass texture region
-		grassTile.add(new StaticTiledMapTile(new TextureRegion(grass,0,0,32,32)));
-		grassTile.add(new StaticTiledMapTile(new TextureRegion(grass,32,0,32,32)));
+		Tile = new Array<StaticTiledMapTile>();
+		
+		Tile.add(new StaticTiledMapTile(new TextureRegion(tileTexture,0,0,32,32)));
+		Tile.add(new StaticTiledMapTile(new TextureRegion(tileTexture,32,0,32,32)));
 
 		grassTileInScene = new Array<AnimatedTiledMapTile>();
 
@@ -34,10 +41,13 @@ public class LevelAnimationManager {
 				TiledMapTileLayer.Cell cell = layer.getCell(x,y);
 				Object property = cell.getTile().getProperties().get("grass");
 				if(property != null){
-					cell.setTile(new AnimatedTiledMapTile(1.5f,grassTile));
+					cell.setTile(new AnimatedTiledMapTile(1.5f,Tile));
 				}
 			}
 		}
-
 	}
+	
 }
+
+
+

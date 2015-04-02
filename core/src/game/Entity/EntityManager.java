@@ -17,10 +17,12 @@ public class EntityManager {
 	private Player player;
 	TiledMap map;
 	TiledMapTileLayer tiles;
+	SpriteBatch sb;
 	
 	public EntityManager(int amount, OrthoCamera camera, TiledMap tiledMap, TTmath game, SpriteBatch sb, ItemManager itemManager){
 		map = tiledMap;
 		tiles = (TiledMapTileLayer) map.getLayers().get(1);
+		this.sb = sb;
 		player = new Player(findStartPosition(), new Vector2(0,0), camera, (TiledMapTileLayer) tiles, game, sb, itemManager);
 	}
 	
@@ -28,10 +30,11 @@ public class EntityManager {
 		for(Entity entity : entities){
 			entity.update();
 		}
+//		if(player.)
 		player.update();
 	}
 	
-	public void render(SpriteBatch sb){
+	public void render(){
 		for(Entity entity : entities){
 			entity.render(sb);;
 		}

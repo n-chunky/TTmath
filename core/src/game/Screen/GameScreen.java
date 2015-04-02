@@ -57,7 +57,7 @@ public class GameScreen implements Screen{
 		levelManager.renderMap(camera);
 		sb.setProjectionMatrix(camera.combined);
 		sb.begin();
-		entityManager.render(sb);
+		entityManager.render();
 		sb.end();
 	}
 

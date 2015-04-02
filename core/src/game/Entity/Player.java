@@ -6,6 +6,8 @@ import game.Camera.OrthoCamera;
 import game.GameItems.ItemManager;
 import game.Screen.ProblemScreen;
 
+import java.util.Iterator;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.graphics.g2d.Animation;
@@ -89,7 +91,9 @@ public class Player extends Entity implements InputProcessor{
 		stateTime += Gdx.graphics.getDeltaTime();
 		updateAnimation(stateTime);
 		checkCollision(isMoving);
-		checkForItems();
+		if(checkForItems()){
+			itemManager.insertItem(retrieveItem());
+		}
 		camera.setPosition(pos.x, pos.y);
 		camera.update();
 
@@ -99,12 +103,31 @@ public class Player extends Entity implements InputProcessor{
 		}
 	}
 
-	private void checkForItems() {
-		if(itemExists(this.pos.x/tileWidth, this.pos.y/tileHeight)){
-			
-			System.out.println("Item exists");
+	private String retrieveItem() {
+		Cell cell = collisionLayer.getCell((int)(this.pos.x/tileWidth), (int)(this.pos.y/tileHeight));
+		if(cell != null){
+			String item;
+			try{
+				cell.getTile().getProperties().remove("item");
+			}catch(Exception E){}
+			Iterator<String> obj = cell.getTile().getProperties().getKeys();
+			item = obj.next();
+			System.out.println(item);
+			cell.getTile().setTextureRegion(new TextureRegion(TextureManager.GRASS));
+			return item;
 		}
-		
+		else {
+			System.out.println("current tile has no items on it");
+			return "null";
+		}
+	}
+
+	private boolean checkForItems() {
+		if(itemExists(this.pos.x/tileWidth, this.pos.y/tileHeight)){
+			System.out.println("Item exists");
+			return true;
+		}
+		return false;
 	}
 
 	private void updateAnimation(float stateTime){
@@ -158,6 +181,7 @@ public class Player extends Entity implements InputProcessor{
 				movingLeft = false;
 				setDirection(0,0);
 			}
+
 			isMoving = false;
 		}
 	}
@@ -177,6 +201,7 @@ public class Player extends Entity implements InputProcessor{
 		for(float step = 0; step < playerHeight; step += collisionLayer.getTileHeight() / 2){
 			if(isCellBlocked((this.getPosition().x+ + playerWidth) / tileWidth, ((this.getPosition().y + step)+3) / tileHeight))
 				return true;
+			
 		}
 		return false;
 	}
@@ -197,7 +222,8 @@ public class Player extends Entity implements InputProcessor{
 			return true;
 		}
 		for(float step = 0; step < playerWidth; step += collisionLayer.getTileWidth() / 2){
-			if(isCellBlocked(((this.getPosition().x + step)+5) / tileWidth, ((this.getPosition().y + playerHeight)) / tileHeight))
+			if(isCellBlocked(((this.getPosition().x + step)+5) / tileWidth, ((this.getPosition().y + playerHeight)) / tileHeight)
+					|| checkDoor(((this.getPosition().x + step)) / tileWidth, ((this.getPosition().y + playerHeight)) / tileHeight))
 				return true;
 		}
 		return false;
@@ -220,11 +246,35 @@ public class Player extends Entity implements InputProcessor{
 		return cell !=null && cell.getTile().getProperties().containsKey("blocked");
 	}
 
+
+	private boolean checkDoor(float x, float y) {
+		Cell cell = collisionLayer.getCell((int) x, (int) y);
+		if(cell != null && cell.getTile().getProperties().containsKey("door")){
+			System.out.println("found door");
+			if(itemManager.checkItemExists("key")){
+				openDoor(cell);
+			}
+			return true;
+		}
+		return false;
+	}
+	
+	private void openDoor(Cell cell){
+		if(cell !=null) 
+			cell.getTile().getProperties().remove("door");
+		System.out.println("door opened");
+//		cell.setTile(tile);
+	}
+
 	private boolean itemExists(float x, float y){
 		Cell cell = collisionLayer.getCell((int) x, (int) y);
 		return cell !=null && cell.getTile().getProperties().containsKey("item");
 	}
-	
+
+	public ItemManager getItems(){
+		return itemManager;
+	}
+
 	/*touch movement implemented
 	 *gdx.input.getDeltaY/X refers to the distance the finger is moving from where
 	 *it stopped, so any directional change will be the new origin for getDeltaY/X

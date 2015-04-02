@@ -18,4 +18,5 @@ public class TextureManager {
 	public static TiledMap Path1Level5 = new TmxMapLoader().load("MapsObjects/Path1Level5.tmx");
 	public static Texture GRASS = new Texture(Gdx.files.internal("MapsObjects/grass.png"));
 	public static Texture KEY = new Texture(Gdx.files.internal("MapsObjects/Key.png"));
+	public static Texture DOOROPEN = new Texture(Gdx.files.internal("MapsObjects/DoorOpen.png"));
 }
