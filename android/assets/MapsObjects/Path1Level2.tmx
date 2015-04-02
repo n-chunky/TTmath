@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <map version="1.0" orientation="orthogonal" renderorder="right-down" width="19" height="15" tilewidth="32" tileheight="32" nextobjectid="1">
  <tileset firstgid="1" name="grass" tilewidth="32" tileheight="32">
-  <image source="grass.png" width="64" height="32"/>
+  <image source="grass.png" width="96" height="32"/>
  </tileset>
- <tileset firstgid="3" name="Wall" tilewidth="32" tileheight="32">
+ <tileset firstgid="4" name="Wall" tilewidth="32" tileheight="32">
   <image source="Wall.png" width="32" height="32"/>
   <tile id="0">
    <properties>
@@ -11,7 +11,7 @@
    </properties>
   </tile>
  </tileset>
- <tileset firstgid="4" name="Key" tilewidth="32" tileheight="32">
+ <tileset firstgid="5" name="Key" tilewidth="32" tileheight="32">
   <image source="Key.png" width="32" height="32"/>
   <tile id="0">
    <properties>
@@ -20,7 +20,7 @@
    </properties>
   </tile>
  </tileset>
- <tileset firstgid="5" name="DoorClosed" tilewidth="32" tileheight="32">
+ <tileset firstgid="6" name="DoorClosed" tilewidth="32" tileheight="32">
   <image source="DoorClosed.png" width="32" height="32"/>
   <tile id="0">
    <properties>
@@ -28,7 +28,7 @@
    </properties>
   </tile>
  </tileset>
- <tileset firstgid="6" name="Warpgate" tilewidth="32" tileheight="32">
+ <tileset firstgid="7" name="Warpgate" tilewidth="32" tileheight="32">
   <image source="Warpgate.png" width="192" height="64"/>
   <tile id="0">
    <properties>
@@ -91,7 +91,7 @@
    </properties>
   </tile>
  </tileset>
- <tileset firstgid="18" name="SmallRock" tilewidth="32" tileheight="32">
+ <tileset firstgid="19" name="SmallRock" tilewidth="32" tileheight="32">
   <image source="SmallRock.png" width="32" height="32"/>
   <tile id="0">
    <properties>
@@ -99,7 +99,7 @@
    </properties>
   </tile>
  </tileset>
- <tileset firstgid="19" name="StartWarpgate" tilewidth="32" tileheight="32">
+ <tileset firstgid="20" name="StartWarpgate" tilewidth="32" tileheight="32">
   <image source="StartWarpgate.png" width="96" height="32"/>
   <tile id="0">
    <properties>
@@ -117,7 +117,7 @@
    </properties>
   </tile>
  </tileset>
- <tileset firstgid="22" name="SpecialDoor" tilewidth="32" tileheight="32">
+ <tileset firstgid="23" name="SpecialDoor" tilewidth="32" tileheight="32">
   <image source="SpecialDoor.png" width="64" height="32"/>
   <tile id="0">
    <properties>
@@ -130,15 +130,16 @@
    </properties>
   </tile>
  </tileset>
- <tileset firstgid="24" name="SpecialKey" tilewidth="32" tileheight="32">
+ <tileset firstgid="25" name="SpecialKey" tilewidth="32" tileheight="32">
   <image source="SpecialKey.png" width="32" height="32"/>
   <tile id="0">
    <properties>
-    <property name="finalkey" value=""/>
+    <property name="item" value=""/>
+    <property name="keyfinal" value=""/>
    </properties>
   </tile>
  </tileset>
- <tileset firstgid="25" name="MetalWall" tilewidth="32" tileheight="32">
+ <tileset firstgid="26" name="MetalWall" tilewidth="32" tileheight="32">
   <image source="MetalWall.png" width="64" height="64"/>
   <tile id="0">
    <properties>
@@ -161,17 +162,17 @@
    </properties>
   </tile>
  </tileset>
- <tileset firstgid="29" name="ConcreteWall" tilewidth="32" tileheight="32">
+ <tileset firstgid="30" name="ConcreteWall" tilewidth="32" tileheight="32">
   <image source="ConcreteWall.png" width="64" height="64"/>
  </tileset>
  <layer name="Terrain" width="19" height="15">
   <data encoding="base64" compression="zlib">
-   eJy1lFEKwDAIQ3sR6+5/yu1jQnjoVjv2ESxqY7RSG2O44NiAXZj3/fkAW4CD8wtCn+qyhrWES30u/G82zqoj07UC5lKr1urkqi+L635U3NRa9ciZkJux7D51r8wr6hrinb0gF+fV2Qv28Nfe76B6L/4V9Fex8J2BUSHT
+   eJytUlsOwCAI8yTI7n/J7WNNmgYU3D4aCI9SERtjOOE6gD2Yb/9cwApw4fwC6GNd1rAWcHHMiX9n4bOOSFcFWqtaeVanlmNRHv6KW7Vmb9SdKLfmon7VXdkX5prkO3ehXLovaKva3Q7/uPsTZP/FfnTnWQ6xG/47IvA=
   </data>
  </layer>
  <layer name="Objects" width="19" height="15">
   <data encoding="base64" compression="zlib">
-   eJytk9EKgCAMRfdg9VIvBZHk/39nCxysy9LMXbjoVA7bVCJfnZ1es4UVO2zl9UfJYOGaF0tiGSPMdV011mDs3xrZEz37gawEa9jPPY8zezHyCh9Zh8HWMdaALLlX3SuM9dkSq0XIqr2JUNizWD1+Y6UGy1/0krA29gVNDAy3
+   eJytk9EKgCAMRfdi9VIvBZHk//9mCxysy9LMXbjoVA7bVCJfnZ1es4UVO2zl9UfJYOGaF0tiGSPMdV011mDs3xrZEz37gawEa9jPPY8zezHyCh9Zh8HWMdaALLlX3SuM9dkSq0XIqr2JUNizWD1+Y6UGy1/0krA29gVssw04
   </data>
  </layer>
 </map>

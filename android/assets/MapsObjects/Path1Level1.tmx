@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <map version="1.0" orientation="orthogonal" renderorder="right-down" width="30" height="9" tilewidth="32" tileheight="32" nextobjectid="1">
  <tileset firstgid="1" name="grass" tilewidth="32" tileheight="32">
-  <image source="grass.png" width="64" height="32"/>
+  <image source="grass.png" width="96" height="32"/>
   <tile id="0">
    <properties>
     <property name="grass" value="1"/>
@@ -12,8 +12,13 @@
     <property name="grass" value="2"/>
    </properties>
   </tile>
+  <tile id="2">
+   <properties>
+    <property name="grass" value="3"/>
+   </properties>
+  </tile>
  </tileset>
- <tileset firstgid="3" name="Wall" tilewidth="32" tileheight="32">
+ <tileset firstgid="4" name="Wall" tilewidth="32" tileheight="32">
   <image source="Wall.png" width="32" height="32"/>
   <tile id="0">
    <properties>
@@ -21,7 +26,7 @@
    </properties>
   </tile>
  </tileset>
- <tileset firstgid="4" name="Key" tilewidth="32" tileheight="32">
+ <tileset firstgid="5" name="Key" tilewidth="32" tileheight="32">
   <image source="Key.png" width="32" height="32"/>
   <tile id="0">
    <properties>
@@ -30,7 +35,7 @@
    </properties>
   </tile>
  </tileset>
- <tileset firstgid="5" name="DoorClosed" tilewidth="32" tileheight="32">
+ <tileset firstgid="6" name="DoorClosed" tilewidth="32" tileheight="32">
   <image source="DoorClosed.png" width="32" height="32"/>
   <tile id="0">
    <properties>
@@ -38,7 +43,7 @@
    </properties>
   </tile>
  </tileset>
- <tileset firstgid="6" name="Brickwall" tilewidth="32" tileheight="32">
+ <tileset firstgid="7" name="Brickwall" tilewidth="32" tileheight="32">
   <image source="Brickwall.png" width="64" height="64"/>
   <tile id="0">
    <properties>
@@ -61,7 +66,7 @@
    </properties>
   </tile>
  </tileset>
- <tileset firstgid="10" name="Warpgate" tilewidth="32" tileheight="32">
+ <tileset firstgid="11" name="Warpgate" tilewidth="32" tileheight="32">
   <image source="Warpgate.png" width="192" height="64"/>
   <tile id="0">
    <properties>
@@ -124,13 +129,13 @@
    </properties>
   </tile>
  </tileset>
- <tileset firstgid="22" name="Tree1" tilewidth="32" tileheight="32">
+ <tileset firstgid="23" name="Tree1" tilewidth="32" tileheight="32">
   <image source="Tree1.png" width="64" height="64"/>
  </tileset>
- <tileset firstgid="26" name="SmallRock" tilewidth="32" tileheight="32">
+ <tileset firstgid="27" name="SmallRock" tilewidth="32" tileheight="32">
   <image source="SmallRock.png" width="32" height="32"/>
  </tileset>
- <tileset firstgid="27" name="Warpgate" tilewidth="32" tileheight="32">
+ <tileset firstgid="28" name="Warpgate" tilewidth="32" tileheight="32">
   <image source="Warpgate.png" width="192" height="64"/>
   <tile id="0">
    <properties>
@@ -153,7 +158,7 @@
    </properties>
   </tile>
  </tileset>
- <tileset firstgid="39" name="StartWarpgate" tilewidth="32" tileheight="32">
+ <tileset firstgid="40" name="StartWarpgate" tilewidth="32" tileheight="32">
   <image source="StartWarpgate.png" width="96" height="32"/>
   <tile id="0">
    <properties>
@@ -171,7 +176,7 @@
    </properties>
   </tile>
  </tileset>
- <tileset firstgid="42" name="SpecialDoor" tilewidth="32" tileheight="32">
+ <tileset firstgid="43" name="SpecialDoor" tilewidth="32" tileheight="32">
   <image source="SpecialDoor.png" width="64" height="32"/>
   <tile id="0">
    <properties>
@@ -184,11 +189,12 @@
    </properties>
   </tile>
  </tileset>
- <tileset firstgid="44" name="SpecialKey" tilewidth="32" tileheight="32">
+ <tileset firstgid="45" name="SpecialKey" tilewidth="32" tileheight="32">
   <image source="SpecialKey.png" width="32" height="32"/>
   <tile id="0">
    <properties>
-    <property name="finalkey" value=""/>
+    <property name="item" value=""/>
+    <property name="keyfinal" value=""/>
    </properties>
   </tile>
  </tileset>
@@ -199,7 +205,7 @@
  </layer>
  <layer name="Objects" width="30" height="9">
   <data encoding="base64" compression="zlib">
-   eJxjYCAdsEFpHTRxVixq0AEzFIOAOpn24hOHsVmgGJu9DEhqiLUXFybkNmz2EgtwmYlNDcw9zGgYJKbFQNj9lNiLDHD5lxh7WXGIY7MXXS059nKSiXHZKw3EMkTYSw2AbK8iECvR2V4AdqsC1Q==
+   eJxjYCAdsENpXTRxNixq0AELFIOABpn24hOHsVmhGJu9DEhqiLUXFybkNmz2EgtwmYlNDcw9LGgYJKbNQNj9lNiLDHD5lxh72XCIY7MXXS059nKRiXHZKwPEskTYSw2AbK8SECvT2V4AKMYDMA==
   </data>
  </layer>
 </map>

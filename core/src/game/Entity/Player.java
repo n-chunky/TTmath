@@ -130,6 +130,11 @@ public class Player extends Entity implements InputProcessor{
 		return false;
 	}
 
+	private boolean itemExists(float x, float y){
+		Cell cell = collisionLayer.getCell((int) x, (int) y);
+		return cell !=null && cell.getTile().getProperties().containsKey("item");
+	}
+	
 	private void updateAnimation(float stateTime){
 		//animation update to make it consistent
 		if((distY+20)<this.pos.y){
@@ -199,7 +204,8 @@ public class Player extends Entity implements InputProcessor{
 			return true;
 		}
 		for(float step = 0; step < playerHeight; step += collisionLayer.getTileHeight() / 2){
-			if(isCellBlocked((this.getPosition().x+ + playerWidth) / tileWidth, ((this.getPosition().y + step)+3) / tileHeight))
+			if(isCellBlocked((this.getPosition().x + playerWidth) / tileWidth, ((this.getPosition().y + step)+3) / tileHeight)
+					|| checkDoor((this.getPosition().x + playerWidth) / tileWidth, ((this.getPosition().y + step)) / tileHeight))
 				return true;
 			
 		}
@@ -211,7 +217,8 @@ public class Player extends Entity implements InputProcessor{
 			return true;
 		}
 		for(float step = 0; step < playerHeight; step += collisionLayer.getTileHeight() / 2){
-			if(isCellBlocked((this.getPosition().x) / tileWidth, ((this.getPosition().y + step)+3) / tileHeight))
+			if(isCellBlocked((this.getPosition().x) / tileWidth, ((this.getPosition().y + step)+3) / tileHeight)
+					|| checkDoor((this.getPosition().x) / tileWidth, ((this.getPosition().y + step)) / tileHeight))
 				return true;
 		}
 		return false;
@@ -234,7 +241,8 @@ public class Player extends Entity implements InputProcessor{
 			return true;
 		}
 		for(float step = 0; step < playerWidth; step += collisionLayer.getTileWidth() / 2){
-			if(isCellBlocked(((this.getPosition().x + step)+5) / tileWidth, ((this.getPosition().y)-2) / tileHeight))
+			if(isCellBlocked(((this.getPosition().x + step)+5) / tileWidth, ((this.getPosition().y)-2) / tileHeight)
+					|| checkDoor(((this.getPosition().x + step)) / tileWidth, ((this.getPosition().y)) / tileHeight))
 				return true;
 		}
 		return false;
@@ -249,26 +257,32 @@ public class Player extends Entity implements InputProcessor{
 
 	private boolean checkDoor(float x, float y) {
 		Cell cell = collisionLayer.getCell((int) x, (int) y);
-		if(cell != null && cell.getTile().getProperties().containsKey("door")){
+		if(cell != null && (cell.getTile().getProperties().containsKey("door")
+				|| cell.getTile().getProperties().containsKey("finaldoor"))){
 			System.out.println("found door");
 			if(itemManager.checkItemExists("key")){
 				openDoor(cell);
+			}
+			if(itemManager.checkItemExists("keyfinal")){
+				openFinalDoor(cell);
 			}
 			return true;
 		}
 		return false;
 	}
 	
+	private void openFinalDoor(Cell cell) {
+		if(cell !=null) 
+			cell.getTile().getProperties().remove("finaldoor");
+		System.out.println("final door opened");
+//		cell.setTile(tile);
+	}
+
 	private void openDoor(Cell cell){
 		if(cell !=null) 
 			cell.getTile().getProperties().remove("door");
 		System.out.println("door opened");
 //		cell.setTile(tile);
-	}
-
-	private boolean itemExists(float x, float y){
-		Cell cell = collisionLayer.getCell((int) x, (int) y);
-		return cell !=null && cell.getTile().getProperties().containsKey("item");
 	}
 
 	public ItemManager getItems(){

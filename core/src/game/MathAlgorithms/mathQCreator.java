@@ -190,9 +190,9 @@ public class mathQCreator{
 					//dividing
 				case 3:
 					/*different, same thing as multiplying, but our parameter for randomizeAnswer is 
-					*either the first or second number. We will use the Random rand to choose either
-					*so the variable "answer" and one of the other numbers will be part of the question
-					*/
+					 *either the first or second number. We will use the Random rand to choose either
+					 *so the variable "answer" and one of the other numbers will be part of the question
+					 */
 					firstN = rand.nextInt(initial + level);
 					secondN = rand.nextInt(initial + level);
 					answer = firstN * secondN;
@@ -286,7 +286,9 @@ public class mathQCreator{
 		int min = answer-6;
 		int realA = rand.nextInt(3+1);
 		for(int i=0;i<4;i++){
-			answers[i] = rand.nextInt(max-min+1)+min;
+			do{
+				answers[i] = rand.nextInt(max-min+1)+min;
+			}while(answers[i] == answer);
 		}
 		answers[realA] = answer;
 		answers[4] = realA;

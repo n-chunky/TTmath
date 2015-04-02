@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <map version="1.0" orientation="orthogonal" renderorder="right-down" width="29" height="29" tilewidth="32" tileheight="32" nextobjectid="1">
  <tileset firstgid="1" name="grass" tilewidth="32" tileheight="32">
-  <image source="grass.png" width="64" height="32"/>
+  <image source="grass.png" width="96" height="32"/>
   <tile id="0">
    <properties>
     <property name="grass" value="1"/>
@@ -12,8 +12,13 @@
     <property name="grass" value="2"/>
    </properties>
   </tile>
+  <tile id="2">
+   <properties>
+    <property name="grass" value="3"/>
+   </properties>
+  </tile>
  </tileset>
- <tileset firstgid="3" name="Wall" tilewidth="32" tileheight="32">
+ <tileset firstgid="4" name="Wall" tilewidth="32" tileheight="32">
   <image source="Wall.png" width="32" height="32"/>
   <tile id="0">
    <properties>
@@ -21,7 +26,7 @@
    </properties>
   </tile>
  </tileset>
- <tileset firstgid="4" name="Tree1" tilewidth="32" tileheight="32">
+ <tileset firstgid="5" name="Tree1" tilewidth="32" tileheight="32">
   <image source="Tree1.png" width="64" height="64"/>
   <tile id="2">
    <properties>
@@ -34,7 +39,7 @@
    </properties>
   </tile>
  </tileset>
- <tileset firstgid="8" name="Key" tilewidth="32" tileheight="32">
+ <tileset firstgid="9" name="Key" tilewidth="32" tileheight="32">
   <image source="Key.png" width="32" height="32"/>
   <tile id="0">
    <properties>
@@ -43,7 +48,7 @@
    </properties>
   </tile>
  </tileset>
- <tileset firstgid="9" name="DoorClosed" tilewidth="32" tileheight="32">
+ <tileset firstgid="10" name="DoorClosed" tilewidth="32" tileheight="32">
   <image source="DoorClosed.png" width="32" height="32"/>
   <tile id="0">
    <properties>
@@ -51,7 +56,7 @@
    </properties>
   </tile>
  </tileset>
- <tileset firstgid="10" name="SmallRock" tilewidth="32" tileheight="32">
+ <tileset firstgid="11" name="SmallRock" tilewidth="32" tileheight="32">
   <image source="SmallRock.png" width="32" height="32"/>
   <tile id="0">
    <properties>
@@ -59,7 +64,7 @@
    </properties>
   </tile>
  </tileset>
- <tileset firstgid="11" name="Warpgate" tilewidth="32" tileheight="32">
+ <tileset firstgid="12" name="Warpgate" tilewidth="32" tileheight="32">
   <image source="Warpgate.png" width="192" height="64"/>
   <tile id="0">
    <properties>
@@ -122,10 +127,10 @@
    </properties>
   </tile>
  </tileset>
- <tileset firstgid="23" name="SmallPuddle" tilewidth="32" tileheight="32">
+ <tileset firstgid="24" name="SmallPuddle" tilewidth="32" tileheight="32">
   <image source="SmallPuddle.png" width="32" height="32"/>
  </tileset>
- <tileset firstgid="24" name="StartWarpgate" tilewidth="32" tileheight="32">
+ <tileset firstgid="25" name="StartWarpgate" tilewidth="32" tileheight="32">
   <image source="StartWarpgate.png" width="96" height="32"/>
   <tile id="0">
    <properties>
@@ -143,7 +148,7 @@
    </properties>
   </tile>
  </tileset>
- <tileset firstgid="27" name="SpecialDoor" tilewidth="32" tileheight="32">
+ <tileset firstgid="28" name="SpecialDoor" tilewidth="32" tileheight="32">
   <image source="SpecialDoor.png" width="64" height="32"/>
   <tile id="0">
    <properties>
@@ -156,11 +161,12 @@
    </properties>
   </tile>
  </tileset>
- <tileset firstgid="29" name="SpecialKey" tilewidth="32" tileheight="32">
+ <tileset firstgid="30" name="SpecialKey" tilewidth="32" tileheight="32">
   <image source="SpecialKey.png" width="32" height="32"/>
   <tile id="0">
    <properties>
-    <property name="finalkey" value=""/>
+    <property name="item" value=""/>
+    <property name="keyfinal" value=""/>
    </properties>
   </tile>
  </tileset>
@@ -171,7 +177,7 @@
  </layer>
  <layer name="objectsa" width="29" height="29">
   <data encoding="base64" compression="zlib">
-   eJzNVtsKwyAMFXZru71sLw7G/v83Zx+EaE/iSdbBDgREY07MrU3p/3DYQSJ83/q8N19W9hennaqr+eGNoXZ2LHIi9LQ7Un8iOc9FLk5OeSfyTksviz0mtktqwXBq+ZF7nlywnCNfUC60d9d17yfrF7KL4lL3ZsNPxLnmJadtfnoeuUa17I1t3/NaP6K3RDlZoBxanKMajMxyVEMSWg3OqbV3LXID90d95Y2tXN+LPID+y2EPYTE4LZvWnI+8s+8JLZcjTs9MYL5Xk9DV7DEzIYJRDbN3rDlURfuWspw9cmpnIOr/Gjd5Jr+Blr+yNzWf2P6P/hMx88Y6R74gWDUo8R6cW5xPsbZqwQvm/StqLeS0zVNEfuWnFx9L7gUC
+   eJzNVkkOwyAM5NAtSXtpL1Sq+v9nlhyQDBmbsZtKHckSAuMx3pKU/g+HHSTC963Pe/NlZX9x2qm6mh/eGGpnxyInQk+7I/UnkvNc5OLklHci77T0sthjYrukFgynlh+558kFyznyBeVCe3dd936yfiG7KC51bzb8RJxrXnLa5qfnkWtUy97Y9j2v9SN6S5STBcqhxTmqwcgsRzUkodXgnFp71yI3cH/UV97YyvW9yAPovxz2EBaD07JpzfnIO/ue0HI54vTMBOZ7NQldzR4zEyIY1TB7x5pDVbRvKcvZI6d2BqL+r3GTZ/IbaPkre1Pzie3/6D8RM2+sc+QLglWDEu/BucX5FGurFrxg3r+i1kJO2zxF5Fd+evEBDOsGFQ==
   </data>
  </layer>
 </map>
