@@ -288,13 +288,45 @@ public class mathQCreator{
 		for(int i=0;i<4;i++){
 			do{
 				answers[i] = rand.nextInt(max-min+1)+min;
-			}while(answers[i] == answer);
+			}while(answers[i] == answer || answers[i]<0);
 		}
 		answers[realA] = answer;
 		answers[4] = realA;
 		return answers;
 	}
-
+//	private int[] randomizeAnswer(int answer){
+//	Random rand = new Random();
+//	int answers[] = new int[5];
+//	int max = answer+6;
+//	int min = answer-6;
+//	int realA = rand.nextInt(3+1);
+//	for(int i=0;i<4;i++){
+//		do{
+//			answers[i] = rand.nextInt(max-min+1)+min;
+//		}while(answers[i] == answer || answers[i]<0);
+//	}
+//	while(areThereDuplicateAnswers(answers, answer) != -1){
+//		int duplicate = areThereDuplicateAnswers(answers, answer);
+//		do{
+//		answers[duplicate] = rand.nextInt(max-min+1)+min;
+//		}while(answers[duplicate] < 0);
+//	}
+//	answers[realA] = answer;
+//	answers[4] = realA;
+//	return answers;
+//}
+//
+////returns -1 if there are no duplicates, the index if otherwise
+//private int areThereDuplicateAnswers(int[] answers, int realAnswer){
+//	for(int i=0;i<4;i++){
+//		for(int j=0;j<4;j++){
+//			if(answers[i] == answers[j] || answers[i] == realAnswer)
+//				return i;
+//		}
+//
+//	}
+//	return -1;
+//}
 	public int[][] getAnswers(){
 		return answers;
 	}

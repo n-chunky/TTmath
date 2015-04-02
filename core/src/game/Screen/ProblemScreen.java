@@ -25,6 +25,7 @@ public class ProblemScreen implements Screen{
 	private BitmapFont text;
 	private OrthoCamera camera;
 	private TTmath game;
+	private int gamemode;
 	private int[][] answers;
 	private String[] questions;
 	private Label label;
@@ -35,10 +36,11 @@ public class ProblemScreen implements Screen{
 	private mathQCreator math;
 	SpriteBatch sb;
 
-	public ProblemScreen(TTmath game, OrthoCamera camera, SpriteBatch sb){
+	public ProblemScreen(TTmath game, OrthoCamera camera, SpriteBatch sb, int gamemode){
 		this.camera = camera;
 		this.game = game;
 		this.sb = sb;
+		this.gamemode = gamemode;
 
 		game.manageScreens(this);
 		
@@ -58,7 +60,7 @@ public class ProblemScreen implements Screen{
 		answers = math.getAnswers();
 		questions = math.getQuestions();
 		
-		for(int i = 0; i < answers.length; i++){
+		for(int i = 0; i < answers[0].length; i++){
 			System.out.println(answers[0][i]);
 		}
 		
@@ -70,8 +72,8 @@ public class ProblemScreen implements Screen{
 		TextButtonStyle textButtonStyle = new TextButtonStyle();
 		buttons = new TextButton[5];
 		text.setColor(Color.WHITE);
-
-		for(int i = 0; i < 5; i++){
+		
+		for(int i = 0; i < 4; i++){
 			buttonAtlas = new TextureAtlas(Gdx.files.internal("Menus/buton.pack"));
 			skin.addRegions(buttonAtlas);
 			textButtonStyle = new TextButtonStyle();
@@ -83,7 +85,9 @@ public class ProblemScreen implements Screen{
 			final int num = i;
 			
 			buttons[i].addListener(new InputListener() {
+				int wrong = 0;
 				public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
+					
 					if(buttons[num].getLabel().textEquals(""+math.getCorrectAnswer(0))){
 
 						
@@ -104,8 +108,18 @@ public class ProblemScreen implements Screen{
 						/*
 						 * For now will just make it go back to the menuScreen
 						 */
-						game.setScreen(new MenuScreen(game, camera, sb));
+						if(gamemode == 1){
+							game.setScreen(game.previousScreen);
+						}
+						else game.setScreen(new ProblemScreen(game, camera, sb, 0));
 						dispose();
+					}
+					else {
+						wrong++;
+						if(wrong==3){
+							game.setScreen(new MenuScreen(game, camera, sb));
+						}
+					 
 					}
 					return true;
 				}

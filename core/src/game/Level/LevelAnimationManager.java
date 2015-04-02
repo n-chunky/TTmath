@@ -32,6 +32,7 @@ public class LevelAnimationManager {
 		
 		Tile.add(new StaticTiledMapTile(new TextureRegion(tileTexture,0,0,32,32)));
 		Tile.add(new StaticTiledMapTile(new TextureRegion(tileTexture,32,0,32,32)));
+		Tile.add(new StaticTiledMapTile(new TextureRegion(tileTexture,64,0,32,32)));
 
 		grassTileInScene = new Array<AnimatedTiledMapTile>();
 

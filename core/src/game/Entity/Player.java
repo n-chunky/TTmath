@@ -13,8 +13,10 @@ import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.maps.tiled.TiledMapTile;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer.Cell;
+import com.badlogic.gdx.maps.tiled.tiles.StaticTiledMapTile;
 import com.badlogic.gdx.math.Vector2;
 
 public class Player extends Entity implements InputProcessor{
@@ -99,21 +101,19 @@ public class Player extends Entity implements InputProcessor{
 
 		if(endReach()){
 			System.out.println("U REACHED THE END");
-			game.setScreen(new ProblemScreen(game, camera, sb));
 		}
 	}
 
 	private String retrieveItem() {
 		Cell cell = collisionLayer.getCell((int)(this.pos.x/tileWidth), (int)(this.pos.y/tileHeight));
 		if(cell != null){
-			String item;
-			try{
-				cell.getTile().getProperties().remove("item");
-			}catch(Exception E){}
+			String item = null;
 			Iterator<String> obj = cell.getTile().getProperties().getKeys();
-			item = obj.next();
+			while(obj.hasNext()){
+				item = obj.next();
+			}
 			System.out.println(item);
-			cell.getTile().setTextureRegion(new TextureRegion(TextureManager.GRASS));
+			collisionLayer.setCell((int)(this.pos.x/tileWidth), (int)(this.pos.y/tileHeight), null);
 			return item;
 		}
 		else {
@@ -261,9 +261,13 @@ public class Player extends Entity implements InputProcessor{
 				|| cell.getTile().getProperties().containsKey("finaldoor"))){
 			System.out.println("found door");
 			if(itemManager.checkItemExists("key")){
+				itemManager.removeItem("key");
+				game.setScreen(new ProblemScreen(game, camera, sb, 1));
 				openDoor(cell);
 			}
 			if(itemManager.checkItemExists("keyfinal")){
+				itemManager.removeItem("keyfinal");
+				game.setScreen(new ProblemScreen(game, camera, sb, 1));
 				openFinalDoor(cell);
 			}
 			return true;
@@ -273,14 +277,14 @@ public class Player extends Entity implements InputProcessor{
 	
 	private void openFinalDoor(Cell cell) {
 		if(cell !=null) 
-			cell.getTile().getProperties().remove("finaldoor");
+			cell.setTile(new StaticTiledMapTile(new TextureRegion(new TextureRegion(TextureManager.SPECIALDOOROPEN))));
 		System.out.println("final door opened");
 //		cell.setTile(tile);
 	}
 
 	private void openDoor(Cell cell){
 		if(cell !=null) 
-			cell.getTile().getProperties().remove("door");
+			cell.setTile(new StaticTiledMapTile(new TextureRegion(new TextureRegion(TextureManager.DOOROPEN))));
 		System.out.println("door opened");
 //		cell.setTile(tile);
 	}
