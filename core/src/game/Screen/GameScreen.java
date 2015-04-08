@@ -1,17 +1,18 @@
 package game.Screen;
 
-import game.TTmath;
-import game.TextureManager;
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input.Keys;
+import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+
 import game.Camera.OrthoCamera;
 import game.Entity.EntityManager;
 import game.GameItems.ItemManager;
 import game.Level.LevelAnimationManager;
 import game.Level.LevelManager;
+import game.TTmath;
+import game.TextureManager;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input.Keys;
-import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 public class GameScreen implements Screen{
 	private TTmath game;
@@ -21,15 +22,34 @@ public class GameScreen implements Screen{
 	private LevelAnimationManager animationManager;
 	private EntityManager entityManager;
 	private ItemManager itemManager;
+    private int levelNumber;
 	
-	public GameScreen(TTmath game, OrthoCamera camera, SpriteBatch sb) {
+	public GameScreen(TTmath game, OrthoCamera camera, SpriteBatch sb, int levelNumber) {
 		this.camera = camera;
 		this.game = game;
 		this.sb = sb;
+        this.levelNumber = levelNumber;
 
 		game.manageScreens(this);
-		
-		levelManager = new LevelManager(TextureManager.mapTutorial);
+
+        // choose the map
+        switch(levelNumber){
+            case 0: levelManager = new LevelManager(TextureManager.mapTutorial);
+                    break;
+            case 1: levelManager = new LevelManager(TextureManager.Level1);
+                    break;
+            case 2: levelManager = new LevelManager(TextureManager.Level2);
+                    break;
+            case 3: levelManager = new LevelManager(TextureManager.Level3);
+                    break;
+            case 4: levelManager = new LevelManager(TextureManager.Level4);
+                    break;
+            case 5: levelManager = new LevelManager(TextureManager.Level5);
+                    break;
+            default: System.out.println("default level selector case");
+                    break;
+        }
+
 		animationManager = new LevelAnimationManager(levelManager.getMap());
 		itemManager = new ItemManager(levelManager.getMap());
 		entityManager = new EntityManager(2, camera, levelManager.getMap(), game, sb, itemManager);
