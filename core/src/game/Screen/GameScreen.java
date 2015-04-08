@@ -31,8 +31,8 @@ public class GameScreen implements Screen{
         this.levelNumber = levelNumber;
 
 		game.manageScreens(this);
-		
-//		levelManager = new LevelManager(TextureManager.mapTutorial);
+
+        // choose the map
         switch(levelNumber){
             case 0: levelManager = new LevelManager(TextureManager.mapTutorial);
                     break;
@@ -47,6 +47,7 @@ public class GameScreen implements Screen{
             case 5: levelManager = new LevelManager(TextureManager.Level5);
                     break;
             default: System.out.println("default level selector case");
+                    break;
         }
 
 		animationManager = new LevelAnimationManager(levelManager.getMap());
