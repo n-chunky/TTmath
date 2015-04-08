@@ -80,7 +80,7 @@ public class MenuScreen implements Screen{
 //					game.setScreen(new GameScreen(game, camera, sb));
 //					game.setScreen(new ProblemScreen(game, camera, sb));
                 }
-                game.setScreen(new GameScreen(game, camera, sb));
+                game.setScreen(new LevelMenuScreen(game, camera, sb));
                 return true;
             }
 
