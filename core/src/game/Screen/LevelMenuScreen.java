@@ -29,6 +29,7 @@ public class LevelMenuScreen implements Screen{
     private Table table;
     private Skin skin;
     private TextButton buttons[];
+    private TextButtonStyle textButtonStyle;
     SpriteBatch sb;
 
     public LevelMenuScreen(TTmath game, OrthoCamera camera, SpriteBatch sb){
@@ -62,7 +63,7 @@ public class LevelMenuScreen implements Screen{
             textButtonStyle.up = skin.getDrawable("MenuItem");
             buttons[i] = new TextButton(""+Integer.toString(i+1), textButtonStyle);
 
-            buttons[i].pad(80);
+            buttons[i].pad(20);
 
 
             final int levelSelect = i+1;
@@ -80,7 +81,7 @@ public class LevelMenuScreen implements Screen{
                 }
             });
 
-            table.add(buttons[i]);
+            table.add(buttons[i]).width(250);
         }
 
         stage.addActor(table);
