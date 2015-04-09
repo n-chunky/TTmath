@@ -8,6 +8,7 @@ import game.GameItems.ItemManager;
 import game.Level.LevelAnimationManager;
 import game.Level.LevelManager;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.maps.tiled.TiledMap;
@@ -65,10 +66,9 @@ public class GameScreen implements Screen{
         }
 
 		levelManager.createMap();
-		animationManager = new LevelAnimationManager(levelManager.getMap());
 		itemManager = new ItemManager(levelManager.getMap());
 		entityManager = new EntityManager(2, camera, levelManager.getMap(), game, sb, itemManager);
-		
+		animationManager = new LevelAnimationManager(levelManager.getMap());
 	}
 
 	@Override

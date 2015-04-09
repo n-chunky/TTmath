@@ -119,6 +119,7 @@ public class ProblemScreen implements Screen{
 							Gdx.input.setInputProcessor(previousProcessor);
 							game.setScreen(game.previousScreen);
 							game.manageScreens(game.previousScreen);
+							game.correctAns();
 							dispose();
 						}
 						else if(level == 10){
@@ -132,6 +133,7 @@ public class ProblemScreen implements Screen{
 					}
 					else {
 						if(gamemode == 1){
+							
 							Gdx.input.setInputProcessor(previousProcessor);
 							game.setScreen(game.previousScreen);
 							game.manageScreens(game.previousScreen);
@@ -140,7 +142,7 @@ public class ProblemScreen implements Screen{
 						else{
 							game.incorrectAns();
 							if(game.getIncorrect()==3){
-								game.resetIncorrect();
+								game.resetAns();
 								game.setScreen(new MenuScreen(game, camera, sb));
 								dispose();
 							}

@@ -40,6 +40,8 @@ public class Player extends Entity implements InputProcessor{
 	boolean movingUp = false;
 	boolean movingDown = false;
 	boolean isMoving = false;
+	boolean doorFound = false;
+	private Cell doorCell = null;
 
 	//tags for tiles
 	//blocked
@@ -83,7 +85,7 @@ public class Player extends Entity implements InputProcessor{
 		distY = this.pos.y;
 		stateTime = 0f;
 	}
-	
+
 	@Override
 	public void update() {
 		pos.add(direction);
@@ -92,9 +94,30 @@ public class Player extends Entity implements InputProcessor{
 		stateTime += Gdx.graphics.getDeltaTime();
 		updateAnimation(stateTime);
 		checkCollision(isMoving);
+
 		if(checkForItems()){
 			itemManager.insertItem(retrieveItem());
 		}
+
+		if(doorFound){
+			if(itemManager.checkItemExists("key")){
+				doorFound = false;
+				itemManager.removeItem("key");
+				game.setScreen(new ProblemScreen(game, camera, sb, 1, 1));
+			}
+			if(itemManager.checkItemExists("keyfinal")){
+				doorFound = false;
+				itemManager.removeItem("keyfinal");
+				game.setScreen(new ProblemScreen(game, camera, sb, 1, 1));
+			}
+		}
+
+		if(game.getcorrect()==1){
+			game.resetAns();
+			openDoor(doorCell);
+			openFinalDoor(doorCell);
+		}
+
 		camera.setPosition(pos.x, pos.y);
 		camera.update();
 
@@ -103,6 +126,8 @@ public class Player extends Entity implements InputProcessor{
 			game.setScreen(new MenuScreen(game, camera, sb));
 		}
 	}
+
+
 
 	private String retrieveItem() {
 		Cell cell = collisionLayer.getCell((int)(this.pos.x/tileWidth), (int)(this.pos.y/tileHeight));
@@ -134,7 +159,7 @@ public class Player extends Entity implements InputProcessor{
 		Cell cell = collisionLayer.getCell((int) x, (int) y);
 		return cell !=null && cell.getTile().getProperties().containsKey("item");
 	}
-	
+
 	private void updateAnimation(float stateTime){
 		//animation update to make it consistent
 		if((distY+20)<this.pos.y){
@@ -165,7 +190,7 @@ public class Player extends Entity implements InputProcessor{
 
 	//gets collision based on direction
 	private void checkCollision(boolean moving){
-		if(moving){
+		if(moving && collisionExists()){
 			if(movingDown && collidesBottom()){
 				setTextureRegion(playerA[0].getKeyFrame(stateTime, true));
 				movingDown = false;
@@ -191,6 +216,13 @@ public class Player extends Entity implements InputProcessor{
 		}
 	}
 
+	public boolean collisionExists(){
+		if(collidesRight() || collidesLeft() || collidesTop() || collidesBottom()){
+			return true;
+		}
+		return false;
+	}
+
 	/*
 	 * collision check called from checkCollision
 	 * added +3y more for tile detection right and left.
@@ -204,10 +236,12 @@ public class Player extends Entity implements InputProcessor{
 			return true;
 		}
 		for(float step = 0; step < playerHeight; step += collisionLayer.getTileHeight() / 2){
-			if(isCellBlocked((this.getPosition().x + playerWidth) / tileWidth, ((this.getPosition().y + step)+3) / tileHeight)
-					|| checkDoor((this.getPosition().x + playerWidth) / tileWidth, ((this.getPosition().y + step)) / tileHeight))
+			if(isCellBlocked((this.getPosition().x + playerWidth) / tileWidth, ((this.getPosition().y + step)+3) / tileHeight)){
+				if(movingRight)	checkDoor((this.getPosition().x + playerWidth) / tileWidth, ((this.getPosition().y + step)+3) / tileHeight);
+				else doorFound = false;
 				return true;
-			
+			}
+
 		}
 		return false;
 	}
@@ -217,9 +251,11 @@ public class Player extends Entity implements InputProcessor{
 			return true;
 		}
 		for(float step = 0; step < playerHeight; step += collisionLayer.getTileHeight() / 2){
-			if(isCellBlocked((this.getPosition().x) / tileWidth, ((this.getPosition().y + step)+3) / tileHeight)
-					|| checkDoor((this.getPosition().x) / tileWidth, ((this.getPosition().y + step)) / tileHeight))
+			if(isCellBlocked((this.getPosition().x) / tileWidth, ((this.getPosition().y + step)+3) / tileHeight)){
+				if(movingLeft)	checkDoor((this.getPosition().x) / tileWidth, ((this.getPosition().y + step)+3) / tileHeight);
+				else doorFound = false;
 				return true;
+			}
 		}
 		return false;
 	}
@@ -229,9 +265,11 @@ public class Player extends Entity implements InputProcessor{
 			return true;
 		}
 		for(float step = 0; step < playerWidth; step += collisionLayer.getTileWidth() / 2){
-			if(isCellBlocked(((this.getPosition().x + step)+5) / tileWidth, ((this.getPosition().y + playerHeight)) / tileHeight)
-					|| checkDoor(((this.getPosition().x + step)) / tileWidth, ((this.getPosition().y + playerHeight)) / tileHeight))
+			if(isCellBlocked(((this.getPosition().x + step)+5) / tileWidth, ((this.getPosition().y + playerHeight)) / tileHeight)){
+				if(movingUp)	checkDoor(((this.getPosition().x + step)+5) / tileWidth, ((this.getPosition().y + playerHeight)) / tileHeight);
+				else doorFound = false;
 				return true;
+			}
 		}
 		return false;
 	}
@@ -241,58 +279,47 @@ public class Player extends Entity implements InputProcessor{
 			return true;
 		}
 		for(float step = 0; step < playerWidth; step += collisionLayer.getTileWidth() / 2){
-			if(isCellBlocked(((this.getPosition().x + step)+5) / tileWidth, ((this.getPosition().y)-2) / tileHeight)
-					|| checkDoor(((this.getPosition().x + step)) / tileWidth, ((this.getPosition().y)) / tileHeight))
+			if(isCellBlocked(((this.getPosition().x + step)+5) / tileWidth, ((this.getPosition().y)-2) / tileHeight)){
+				if(movingDown)	checkDoor(((this.getPosition().x + step)+5) / tileWidth, ((this.getPosition().y)-2) / tileHeight);
+				else doorFound = false;
 				return true;
+			}
 		}
 		return false;
 	}
 
-	//checks if the cell contains tag "blocked"
+	//checks if the cell contains tag "blocked" "door" or "finaldoor"
 	private boolean isCellBlocked(float x, float y){
 		Cell cell = collisionLayer.getCell((int) x, (int) y);
-		return cell !=null && cell.getTile().getProperties().containsKey("blocked");
+		return cell !=null && (cell.getTile().getProperties().containsKey("blocked") 
+				|| cell.getTile().getProperties().containsKey("door") || cell.getTile().getProperties().containsKey("finaldoor"));
 	}
 
-
-	private boolean checkDoor(float x, float y) {
+	//checks if a door exists
+	//sets field values doorCell and doorFound if door exists
+	private void checkDoor(float x, float y) {
 		Cell cell = collisionLayer.getCell((int) x, (int) y);
 		if(cell != null && (cell.getTile().getProperties().containsKey("door")
 				|| cell.getTile().getProperties().containsKey("finaldoor"))){
 			System.out.println("found door");
-			if(itemManager.checkItemExists("key")){
-				itemManager.removeItem("key");
-				game.setScreen(new ProblemScreen(game, camera, sb, 1, 1));
-				if(game.getIncorrect()>0){
-					game.resetIncorrect();
-				}
-				else openDoor(cell);
-			}
-			if(itemManager.checkItemExists("keyfinal")){
-				itemManager.removeItem("keyfinal");
-				game.setScreen(new ProblemScreen(game, camera, sb, 1, 1));
-				if(game.getIncorrect()>0){
-					game.resetIncorrect();
-				}
-				else openFinalDoor(cell);
-			}
-			return true;
+			//set doorCell to cell and doorFound true
+			doorCell  = cell;
+			doorFound = true;
 		}
-		return false;
 	}
-	
+
 	private void openFinalDoor(Cell cell) {
-		if(cell !=null) 
+		if(cell !=null && cell.getTile().getProperties().containsKey("finaldoor")){
 			cell.setTile(new StaticTiledMapTile(new TextureRegion(new TextureRegion(TextureManager.SPECIALDOOROPEN))));
-		System.out.println("final door opened");
-//		cell.setTile(tile);
+			System.out.println("final door opened");
+		}
 	}
 
 	private void openDoor(Cell cell){
-		if(cell !=null) 
+		if(cell !=null && cell.getTile().getProperties().containsKey("door")){
 			cell.setTile(new StaticTiledMapTile(new TextureRegion(new TextureRegion(TextureManager.DOOROPEN))));
-		System.out.println("door opened");
-//		cell.setTile(tile);
+			System.out.println("door opened");
+		}
 	}
 
 	public ItemManager getItems(){
@@ -334,6 +361,9 @@ public class Player extends Entity implements InputProcessor{
 
 	@Override
 	public boolean touchDown(int screenX, int screenY, int pointer, int button) {
+		if(Gdx.input.getX()>(Gdx.graphics.getWidth()-75) && Gdx.input.getY()<75){
+			game.setScreen(new MenuScreen(game, camera, sb));
+		}
 		return false;
 	}
 

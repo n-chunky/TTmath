@@ -18,7 +18,8 @@ public class TTmath extends Game{
 	public Screen previousScreen;
 	public Screen currentScreen;
 	private int incorrect = 0;
-
+	private int correct = 0;
+	
 	@Override
 	public void create() {
 		camera = new OrthoCamera();
@@ -44,11 +45,20 @@ public class TTmath extends Game{
 		incorrect++;
 	}
 	
-	public void resetIncorrect(){
+	public void resetAns(){
 		incorrect = 0;
+		correct = 0;
 	}
 	
 	public int getIncorrect(){
 		return incorrect;
+	}
+	
+	public void correctAns(){
+		correct++;
+	}
+	
+	public int getcorrect(){
+		return correct;
 	}
 }

@@ -20,6 +20,9 @@ public class TextureManager {
 	public static Texture KEY = new Texture(Gdx.files.internal("MapsObjects/Key.png"));
 	public static Texture DOOROPEN = new Texture(Gdx.files.internal("MapsObjects/DoorOpen.png"));
 	public static Texture SPECIALDOOROPEN = new Texture(Gdx.files.internal("MapsObjects/SpecialDoorOpen.png"));
+	public static Texture GAMEBUTTON = new Texture(Gdx.files.internal("Menus/gameMenuButton.png"));
+	public static Texture START = new Texture(Gdx.files.internal("MapsObjects/StartWarpgate.png"));
+	public static Texture END = new Texture(Gdx.files.internal("MapsObjects/Warpgate.png"));
 	
 	public static void resetMaps(){
 		Level1 = new TmxMapLoader().load("MapsObjects/Path1Level1.tmx");
