@@ -1,5 +1,8 @@
 package game.Screen;
 
+import game.TTmath;
+import game.Camera.OrthoCamera;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
@@ -13,9 +16,6 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
-
-import game.Camera.OrthoCamera;
-import game.TTmath;
 
 public class MenuScreen implements Screen{
 
@@ -98,7 +98,7 @@ public class MenuScreen implements Screen{
 
         mentalMathButton.addListener(new InputListener() {
             public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
-                game.setScreen(new ProblemScreen(game, camera, sb, 0));
+                game.setScreen(new ProblemScreen(game, camera, sb, 0, 1));
                 return true;
             }
 

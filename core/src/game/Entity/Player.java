@@ -4,6 +4,7 @@ import game.TTmath;
 import game.TextureManager;
 import game.Camera.OrthoCamera;
 import game.GameItems.ItemManager;
+import game.Screen.MenuScreen;
 import game.Screen.ProblemScreen;
 
 import java.util.Iterator;
@@ -22,7 +23,6 @@ public class Player extends Entity implements InputProcessor{
 	private TTmath game;
 	private OrthoCamera camera;
 	private SpriteBatch sb;
-	InputProcessor processor = this;
 	private ItemManager itemManager;
 	private TiledMapTileLayer collisionLayer;
 	private Animation[] playerA = new Animation[4];
@@ -82,11 +82,6 @@ public class Player extends Entity implements InputProcessor{
 		distX = this.pos.x;
 		distY = this.pos.y;
 		stateTime = 0f;
-		Gdx.input.setInputProcessor(processor);
-	}
-
-	public void resetProcessor(){
-		Gdx.input.setInputProcessor(processor);
 	}
 	
 	@Override
@@ -105,6 +100,7 @@ public class Player extends Entity implements InputProcessor{
 
 		if(endReach()){
 			System.out.println("U REACHED THE END");
+			game.setScreen(new MenuScreen(game, camera, sb));
 		}
 	}
 
@@ -160,7 +156,7 @@ public class Player extends Entity implements InputProcessor{
 	}
 
 	//checks the current tile of the player to see if he reached the end or not
-	private boolean endReach() {
+	public boolean endReach() {
 		int tileX = (int) (this.getPosition().x / collisionLayer.getTileWidth());
 		int tileY = (int) (this.getPosition().y / collisionLayer.getTileHeight());
 		Cell cell = collisionLayer.getCell(tileX, tileY);
@@ -266,7 +262,7 @@ public class Player extends Entity implements InputProcessor{
 			System.out.println("found door");
 			if(itemManager.checkItemExists("key")){
 				itemManager.removeItem("key");
-				game.setScreen(new ProblemScreen(game, camera, sb, 1));
+				game.setScreen(new ProblemScreen(game, camera, sb, 1, 1));
 				if(game.getIncorrect()>0){
 					game.resetIncorrect();
 				}
@@ -274,7 +270,7 @@ public class Player extends Entity implements InputProcessor{
 			}
 			if(itemManager.checkItemExists("keyfinal")){
 				itemManager.removeItem("keyfinal");
-				game.setScreen(new ProblemScreen(game, camera, sb, 1));
+				game.setScreen(new ProblemScreen(game, camera, sb, 1, 1));
 				if(game.getIncorrect()>0){
 					game.resetIncorrect();
 				}

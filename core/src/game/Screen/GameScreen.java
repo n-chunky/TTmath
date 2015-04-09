@@ -1,17 +1,16 @@
 package game.Screen;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input.Keys;
-import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-
+import game.TTmath;
+import game.TextureManager;
 import game.Camera.OrthoCamera;
 import game.Entity.EntityManager;
 import game.GameItems.ItemManager;
 import game.Level.LevelAnimationManager;
 import game.Level.LevelManager;
-import game.TTmath;
-import game.TextureManager;
+
+import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.maps.tiled.TiledMap;
 
 
 public class GameScreen implements Screen{
@@ -23,6 +22,7 @@ public class GameScreen implements Screen{
 	private EntityManager entityManager;
 	private ItemManager itemManager;
     private int levelNumber;
+
 	
 	public GameScreen(TTmath game, OrthoCamera camera, SpriteBatch sb, int levelNumber) {
 		this.camera = camera;
@@ -32,24 +32,39 @@ public class GameScreen implements Screen{
 
 		game.manageScreens(this);
 
+		TextureManager.resetMaps();
+		TiledMap map;
         // choose the map
         switch(levelNumber){
-            case 0: levelManager = new LevelManager(TextureManager.mapTutorial);
+            case 0:
+            	map = TextureManager.mapTutorial;
+            	levelManager = new LevelManager(map);
                     break;
-            case 1: levelManager = new LevelManager(TextureManager.Level1);
+            case 1: 
+            	map = TextureManager.Level1;
+            	levelManager = new LevelManager(map);
                     break;
-            case 2: levelManager = new LevelManager(TextureManager.Level2);
+            case 2: 
+            	map = TextureManager.Level2;
+            	levelManager = new LevelManager(map);
                     break;
-            case 3: levelManager = new LevelManager(TextureManager.Level3);
+            case 3: 
+            	map = TextureManager.Level3;
+            	levelManager = new LevelManager(map);
                     break;
-            case 4: levelManager = new LevelManager(TextureManager.Level4);
+            case 4: 
+            	map = TextureManager.Level4;
+            	levelManager = new LevelManager(map);
                     break;
-            case 5: levelManager = new LevelManager(TextureManager.Level5);
+            case 5: 
+            	map = TextureManager.Level5;
+            	levelManager = new LevelManager(map);
                     break;
             default: System.out.println("default level selector case");
                     break;
         }
 
+		levelManager.createMap();
 		animationManager = new LevelAnimationManager(levelManager.getMap());
 		itemManager = new ItemManager(levelManager.getMap());
 		entityManager = new EntityManager(2, camera, levelManager.getMap(), game, sb, itemManager);
@@ -65,15 +80,9 @@ public class GameScreen implements Screen{
 	@Override
 	public void render(float delta) {
 		game.clear();
-		levelManager.createMap();
 		camera.update();
 		entityManager.update();
 		
-		// Only useful for desktop version
-		if(Gdx.input.isKeyPressed(Keys.SPACE)){
-			game.setScreen(new MenuScreen(game, camera, sb));
-		}
-
 		levelManager.renderMap(camera);
 		sb.setProjectionMatrix(camera.combined);
 		sb.begin();

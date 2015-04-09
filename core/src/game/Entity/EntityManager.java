@@ -4,6 +4,7 @@ import game.TTmath;
 import game.Camera.OrthoCamera;
 import game.GameItems.ItemManager;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
@@ -24,6 +25,11 @@ public class EntityManager {
 		tiles = (TiledMapTileLayer) map.getLayers().get(1);
 		this.sb = sb;
 		player = new Player(findStartPosition(), new Vector2(0,0), camera, (TiledMapTileLayer) tiles, game, sb, itemManager);
+		setInputProcessor();
+	}
+	
+	public void setInputProcessor(){
+		Gdx.input.setInputProcessor(player);
 	}
 	
 	public void update(){
@@ -80,4 +86,12 @@ public class EntityManager {
 		}
 		return start;
 	}
+	
+	public boolean playerEnd(){
+		if(player.endReach()){
+			return true;
+		}
+		return false;
+	}
+	
 }

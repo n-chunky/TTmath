@@ -20,4 +20,12 @@ public class TextureManager {
 	public static Texture KEY = new Texture(Gdx.files.internal("MapsObjects/Key.png"));
 	public static Texture DOOROPEN = new Texture(Gdx.files.internal("MapsObjects/DoorOpen.png"));
 	public static Texture SPECIALDOOROPEN = new Texture(Gdx.files.internal("MapsObjects/SpecialDoorOpen.png"));
+	
+	public static void resetMaps(){
+		Level1 = new TmxMapLoader().load("MapsObjects/Path1Level1.tmx");
+		Level2 = new TmxMapLoader().load("MapsObjects/Path1Level2.tmx");
+		Level3 = new TmxMapLoader().load("MapsObjects/Path1Level3.tmx");
+		Level4 = new TmxMapLoader().load("MapsObjects/Path1Level4.tmx");
+		Level5 = new TmxMapLoader().load("MapsObjects/Path1Level5.tmx");
+	}
 }

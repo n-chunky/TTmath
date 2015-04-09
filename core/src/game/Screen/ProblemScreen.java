@@ -1,10 +1,12 @@
 package game.Screen;
 
+
 import game.TTmath;
 import game.Camera.OrthoCamera;
 import game.MathAlgorithms.mathQCreator;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
@@ -26,6 +28,7 @@ public class ProblemScreen implements Screen{
 	private OrthoCamera camera;
 	private TTmath game;
 	private int gamemode;
+	private int level;
 	private int[][] answers;
 	private String[] questions;
 	private Label label;
@@ -34,36 +37,40 @@ public class ProblemScreen implements Screen{
 	private Skin skin;
 	private TextButton buttons[];
 	private mathQCreator math;
+	private InputProcessor previousProcessor;
 	SpriteBatch sb;
 
-	public ProblemScreen(TTmath game, OrthoCamera camera, SpriteBatch sb, int gamemode){
+
+	//int path should be added later
+	public ProblemScreen(TTmath game, OrthoCamera camera, SpriteBatch sb, int gamemode, int level){
 		this.camera = camera;
 		this.game = game;
 		this.sb = sb;
 		this.gamemode = gamemode;
-
+		this.level = level;
 		game.manageScreens(this);
-		
+		this.previousProcessor = Gdx.input.getInputProcessor();
+
 		FreeTypeFontGenerator openSans = new FreeTypeFontGenerator(Gdx.files.internal("resources/OpenSans-Regular.ttf"));
 		createFont(openSans, 25);
 		openSans.dispose();
-		
+
 		createStage();
 		createQuestions();
 		createLabel();
 		createButton();
 	}
-	
+
 	private void createQuestions() {
 		math = new mathQCreator();
-		math.runOperation(1,1,1,1);
+		math.runOperation(6,level,1,1);
 		answers = math.getAnswers();
 		questions = math.getQuestions();
-		
+
 		for(int i = 0; i < answers[0].length; i++){
 			System.out.println(answers[0][i]);
 		}
-		
+
 	}
 
 	private void createButton() {
@@ -72,7 +79,8 @@ public class ProblemScreen implements Screen{
 		TextButtonStyle textButtonStyle = new TextButtonStyle();
 		buttons = new TextButton[5];
 		text.setColor(Color.WHITE);
-		
+
+
 		for(int i = 0; i < 4; i++){
 			buttonAtlas = new TextureAtlas(Gdx.files.internal("Menus/buton.pack"));
 			skin.addRegions(buttonAtlas);
@@ -83,44 +91,61 @@ public class ProblemScreen implements Screen{
 			buttons[i].pad(20);
 
 			final int num = i;
-			
+
 			buttons[i].addListener(new InputListener() {
 				public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
-					
+
 					if(buttons[num].getLabel().textEquals(""+math.getCorrectAnswer(0))){
 
-						
+
 						/*
 						 * Goes back to the game Screen but leaves you at
 						 * the portal so it creates another problem screen.
 						 * Commented out for now. If you want to use be aware 
 						 * that the problem screen will break after 3 questions.
 						 */
-//						if(game.previousScreen != null){
-//							game.setScreen(game.previousScreen);
-//							dispose();
-//						}
-//						else{
-//							// do something
-//						}
-						
+						//						if(game.previousScreen != null){
+						//							game.setScreen(game.previousScreen);
+						//							dispose();
+						//						}
+						//						else{
+						//							// do something
+						//						}
+
 						/*
 						 * For now will just make it go back to the menuScreen
 						 */
 						if(gamemode == 1){
+							Gdx.input.setInputProcessor(previousProcessor);
 							game.setScreen(game.previousScreen);
-							
+							game.manageScreens(game.previousScreen);
+							dispose();
 						}
-						else game.setScreen(new ProblemScreen(game, camera, sb, 0));
-						dispose();
+						else if(level == 10){
+							game.setScreen(new ProblemScreen(game, camera, sb, 0, level));
+							dispose();
+						}
+						else {
+							game.setScreen(new ProblemScreen(game, camera, sb, 0, level+1));
+							dispose();
+						}
 					}
 					else {
-						game.incorrectAns();
-						if(game.getIncorrect()==3){
-							game.resetIncorrect();
-							game.setScreen(new MenuScreen(game, camera, sb));
+						if(gamemode == 1){
+							Gdx.input.setInputProcessor(previousProcessor);
+							game.setScreen(game.previousScreen);
+							game.manageScreens(game.previousScreen);
+							dispose();
 						}
-					 
+						else{
+							game.incorrectAns();
+							if(game.getIncorrect()==3){
+								game.resetIncorrect();
+								game.setScreen(new MenuScreen(game, camera, sb));
+								dispose();
+							}
+						}
+
 					}
 					return true;
 				}
@@ -133,7 +158,7 @@ public class ProblemScreen implements Screen{
 			table.row();
 			table.add(buttons[i]);
 		}
-		
+
 		stage.addActor(table);
 	}
 
@@ -145,7 +170,7 @@ public class ProblemScreen implements Screen{
 		table.add(label);
 		stage.addActor(table);
 	}
-	
+
 	private void createStage(){
 		stage = new Stage();
 		table = new Table(skin);
@@ -157,50 +182,50 @@ public class ProblemScreen implements Screen{
 		text = ftfg.generateFont((int)(dp * Gdx.graphics.getDensity()));
 		text.setColor(Color.RED);
 	}
-	
+
 	@Override
 	public void show() {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void render(float delta) {
 		game.clear();
-		
+
 		camera.update();
-        
-        stage.draw();
+
+		stage.draw();
 	}
 
 	@Override
 	public void resize(int width, int height) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void pause() {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void resume() {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void hide() {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void dispose() {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 }
