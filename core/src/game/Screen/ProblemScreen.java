@@ -1,5 +1,9 @@
 package game.Screen;
 
+import game.TTmath;
+import game.Camera.OrthoCamera;
+import game.MathAlgorithms.mathQCreator;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
@@ -16,10 +20,6 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
-
-import game.Camera.OrthoCamera;
-import game.MathAlgorithms.mathQCreator;
-import game.TTmath;
 
 public class ProblemScreen implements Screen{
 	private BitmapFont text;
@@ -85,7 +85,6 @@ public class ProblemScreen implements Screen{
 			final int num = i;
 			
 			buttons[i].addListener(new InputListener() {
-				int wrong = 0;
 				public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
 					
 					if(buttons[num].getLabel().textEquals(""+math.getCorrectAnswer(0))){
@@ -110,13 +109,15 @@ public class ProblemScreen implements Screen{
 						 */
 						if(gamemode == 1){
 							game.setScreen(game.previousScreen);
+							
 						}
 						else game.setScreen(new ProblemScreen(game, camera, sb, 0));
 						dispose();
 					}
 					else {
-						wrong++;
-						if(wrong==3){
+						game.incorrectAns();
+						if(game.getIncorrect()==3){
+							game.resetIncorrect();
 							game.setScreen(new MenuScreen(game, camera, sb));
 						}
 					 

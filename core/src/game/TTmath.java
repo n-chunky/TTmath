@@ -1,7 +1,6 @@
 package game;
 
 import game.Camera.OrthoCamera;
-import game.Screen.GameScreen;
 import game.Screen.MenuScreen;
 
 import com.badlogic.gdx.Game;
@@ -18,7 +17,7 @@ public class TTmath extends Game{
 	public MenuScreen mainMenuScreen;
 	public Screen previousScreen;
 	public Screen currentScreen;
-
+	private int incorrect = 0;
 
 	@Override
 	public void create() {
@@ -39,5 +38,17 @@ public class TTmath extends Game{
 			previousScreen = currentScreen;
 		}
 		currentScreen = newCurrentScreen;
+	}
+	
+	public void incorrectAns(){
+		incorrect++;
+	}
+	
+	public void resetIncorrect(){
+		incorrect = 0;
+	}
+	
+	public int getIncorrect(){
+		return incorrect;
 	}
 }

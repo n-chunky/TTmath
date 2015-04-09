@@ -13,7 +13,6 @@ import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.maps.tiled.TiledMapTile;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer.Cell;
 import com.badlogic.gdx.maps.tiled.tiles.StaticTiledMapTile;
@@ -23,6 +22,7 @@ public class Player extends Entity implements InputProcessor{
 	private TTmath game;
 	private OrthoCamera camera;
 	private SpriteBatch sb;
+	InputProcessor processor = this;
 	private ItemManager itemManager;
 	private TiledMapTileLayer collisionLayer;
 	private Animation[] playerA = new Animation[4];
@@ -82,9 +82,13 @@ public class Player extends Entity implements InputProcessor{
 		distX = this.pos.x;
 		distY = this.pos.y;
 		stateTime = 0f;
-		Gdx.input.setInputProcessor(this);
+		Gdx.input.setInputProcessor(processor);
 	}
 
+	public void resetProcessor(){
+		Gdx.input.setInputProcessor(processor);
+	}
+	
 	@Override
 	public void update() {
 		pos.add(direction);
@@ -263,12 +267,18 @@ public class Player extends Entity implements InputProcessor{
 			if(itemManager.checkItemExists("key")){
 				itemManager.removeItem("key");
 				game.setScreen(new ProblemScreen(game, camera, sb, 1));
-				openDoor(cell);
+				if(game.getIncorrect()>0){
+					game.resetIncorrect();
+				}
+				else openDoor(cell);
 			}
 			if(itemManager.checkItemExists("keyfinal")){
 				itemManager.removeItem("keyfinal");
 				game.setScreen(new ProblemScreen(game, camera, sb, 1));
-				openFinalDoor(cell);
+				if(game.getIncorrect()>0){
+					game.resetIncorrect();
+				}
+				else openFinalDoor(cell);
 			}
 			return true;
 		}
