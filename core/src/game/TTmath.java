@@ -1,7 +1,10 @@
 package game;
 
 import game.Camera.OrthoCamera;
+import game.Screen.GameScreen;
+import game.Screen.LevelMenuScreen;
 import game.Screen.MenuScreen;
+import game.Screen.ProblemScreen;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
@@ -15,8 +18,11 @@ public class TTmath extends Game{
 	private OrthoCamera camera;
 	private SpriteBatch sb;
 	public MenuScreen mainMenuScreen;
-	public Screen previousScreen;
-	public Screen currentScreen;
+	public ProblemScreen problemScreen;
+	public GameScreen gameScreen;
+	public LevelMenuScreen levelMenu;
+//	public Screen previousScreen;
+//	public Screen currentScreen;
 	private int incorrect = 0;
 	private int correct = 0;
 	
@@ -34,12 +40,12 @@ public class TTmath extends Game{
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 	}
 	
-	public void manageScreens(Screen newCurrentScreen){
-		if(currentScreen != null){
-			previousScreen = currentScreen;
-		}
-		currentScreen = newCurrentScreen;
-	}
+//	public void manageScreens(Screen newCurrentScreen){
+//		if(currentScreen != null){
+//			previousScreen = currentScreen;
+//		}
+//		currentScreen = newCurrentScreen;
+//	}
 	
 	public void incorrectAns(){
 		incorrect++;

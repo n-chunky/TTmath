@@ -38,7 +38,8 @@ public class MenuScreen implements Screen{
 		this.game = game;
 		this.sb = sb;
 
-		game.manageScreens(this);
+//		game.manageScreens(this);
+		game.mainMenuScreen = this;
 		
 		createStage();
 
@@ -71,21 +72,11 @@ public class MenuScreen implements Screen{
 		
 		playButton.addListener(new InputListener() {
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-                if (game.previousScreen != null) {
-                    // This is how to go back a screen!
-//					game.setScreen(game.previousScreen);
-//					dispose();
-                } else {
-                    // Commented out for testing purposes
-//					game.setScreen(new GameScreen(game, camera, sb));
-//					game.setScreen(new ProblemScreen(game, camera, sb));
-                }
-                game.setScreen(new LevelMenuScreen(game, camera, sb));
                 return true;
             }
 
             public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
-                // Do nothing?
+                game.setScreen(new LevelMenuScreen(game, camera, sb));
             }
         });
 
@@ -98,12 +89,11 @@ public class MenuScreen implements Screen{
 
         mentalMathButton.addListener(new InputListener() {
             public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
-                game.setScreen(new ProblemScreen(game, camera, sb, 0, 1));
                 return true;
             }
 
             public void touchUp (InputEvent event, float x, float y, int pointer, int button) {
-                // Do nothing?
+                game.setScreen(new ProblemScreen(game, camera, sb, 0, 1));
             }
         });
 

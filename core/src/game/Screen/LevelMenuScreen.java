@@ -16,141 +16,144 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
+import com.badlogic.gdx.scenes.scene2d.utils.Align;
 
 import game.Camera.OrthoCamera;
 import game.TTmath;
 
 public class LevelMenuScreen implements Screen{
-    private BitmapFont text;
-    private OrthoCamera camera;
-    private TTmath game;
-    private Label label;
-    private Stage stage;
-    private Table table;
-    private Skin skin;
-    private TextButton buttons[];
-    private TextButtonStyle textButtonStyle;
-    SpriteBatch sb;
+	private BitmapFont text;
+	private OrthoCamera camera;
+	private TTmath game;
+	private Label label;
+	private Stage stage;
+	private Table table;
+	private Skin skin;
+	private TextButton buttons[];
+	private TextButtonStyle textButtonStyle;
+	SpriteBatch sb;
 
-    public LevelMenuScreen(TTmath game, OrthoCamera camera, SpriteBatch sb){
-        this.camera = camera;
-        this.game = game;
-        this.sb = sb;
+	public LevelMenuScreen(TTmath game, OrthoCamera camera, SpriteBatch sb){
+		this.camera = camera;
+		this.game = game;
+		this.sb = sb;
 
-        game.manageScreens(this);
+		//        game.manageScreens(this);
+		game.levelMenu = this;
 
-        FreeTypeFontGenerator openSans = new FreeTypeFontGenerator(Gdx.files.internal("resources/OpenSans-Regular.ttf"));
-        createFont(openSans, 25);
-        openSans.dispose();
+		FreeTypeFontGenerator openSans = new FreeTypeFontGenerator(Gdx.files.internal("resources/OpenSans-Regular.ttf"));
+		createFont(openSans, 25);
+		openSans.dispose();
 
-        createStage();
-        createLabel();
-        createButton();
-    }
+		createStage();
+		createLabel();
+		createButton();
+	}
 
-    private void createButton() {
-        Skin skin = new Skin();
-        TextureAtlas buttonAtlas = new TextureAtlas();
-        TextButtonStyle textButtonStyle = new TextButtonStyle();
-        buttons = new TextButton[5];
-        text.setColor(Color.WHITE);
+	private void createButton() {
+		Skin skin = new Skin();
+		TextureAtlas buttonAtlas = new TextureAtlas();
+		TextButtonStyle textButtonStyle = new TextButtonStyle();
+		buttons = new TextButton[5];
+		text.setColor(Color.WHITE);
 
-        for(int i = 0; i < 5; i++){
-            buttonAtlas = new TextureAtlas(Gdx.files.internal("Menus/buton.pack"));
-            skin.addRegions(buttonAtlas);
-            textButtonStyle = new TextButtonStyle();
-            textButtonStyle.font = text;
-            textButtonStyle.up = skin.getDrawable("MenuItem");
-            buttons[i] = new TextButton(""+Integer.toString(i+1), textButtonStyle);
+		for(int i = 0; i < 5; i++){
+			buttonAtlas = new TextureAtlas(Gdx.files.internal("Menus/buton.pack"));
+			skin.addRegions(buttonAtlas);
+			textButtonStyle = new TextButtonStyle();
+			textButtonStyle.font = text;
+			textButtonStyle.up = skin.getDrawable("MenuItem");
+			buttons[i] = new TextButton(""+Integer.toString(i+1), textButtonStyle);
 
-            buttons[i].pad(20);
+			buttons[i].pad(20);
 
 
-            final int levelSelect = i+1;
+			final int levelSelect = i+1;
 
-            buttons[i].addListener(new InputListener() {
-                public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
+			buttons[i].addListener(new InputListener() {
+				public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
 
-                    game.setScreen(new GameScreen(game, camera, sb, levelSelect));
+					game.setScreen(new GameScreen(game, camera, sb, levelSelect));
 
-                    return true;
-                }
+					return true;
+				}
 
-                public void touchUp (InputEvent event, float x, float y, int pointer, int button) {
-                    // Do nothing?
-                }
-            });
+				public void touchUp (InputEvent event, float x, float y, int pointer, int button) {
+					// Do nothing?
+				}
+			});
 
-            table.add(buttons[i]).width(250);
-        }
+			table.add(buttons[i]).width(100).pad(20);
+		}
 
-        stage.addActor(table);
-    }
+		stage.addActor(table);
+	}
 
-    private void createLabel() {
-        LabelStyle ls = new LabelStyle();
-        ls.font = text;
-        ls.fontColor = Color.WHITE;
-        label = new Label("Map Select", ls);
-        table.add(label);
-        stage.addActor(table);
-    }
+	private void createLabel() {
+		LabelStyle ls = new LabelStyle();
+		ls.font = text;
+		ls.fontColor = Color.WHITE;
+		label = new Label("Map Select", ls);
+		table.add(label).colspan(5);
+		table.row();
+		stage.addActor(table);
+	}
 
-    private void createStage(){
-        stage = new Stage();
-        table = new Table(skin);
-        table.setBounds(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-        Gdx.input.setInputProcessor(stage);
-    }
+	private void createStage(){
+		stage = new Stage();
+		table = new Table(skin);
+		table.setBounds(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+		Gdx.input.setInputProcessor(stage);
+	}
 
-    private void createFont(FreeTypeFontGenerator ftfg, float dp){
-        text = ftfg.generateFont((int)(dp * Gdx.graphics.getDensity()));
-        text.setColor(Color.WHITE);
-    }
+	private void createFont(FreeTypeFontGenerator ftfg, float dp){
+		text = ftfg.generateFont((int)(dp * Gdx.graphics.getDensity()));
+		text.setColor(Color.WHITE);
+	}
 
-    @Override
-    public void show() {
-        // TODO Auto-generated method stub
+	@Override
+	public void show() {
+		// TODO Auto-generated method stub
 
-    }
+	}
 
-    @Override
-    public void render(float delta) {
-        game.clear();
+	@Override
+	public void render(float delta) {
+		game.clear();
 
-        camera.update();
+		camera.update();
 
-        stage.draw();
-    }
+		stage.draw();
+	}
 
-    @Override
-    public void resize(int width, int height) {
-        // TODO Auto-generated method stub
+	@Override
+	public void resize(int width, int height) {
+		// TODO Auto-generated method stub
 
-    }
+	}
 
-    @Override
-    public void pause() {
-        // TODO Auto-generated method stub
+	@Override
+	public void pause() {
+		// TODO Auto-generated method stub
 
-    }
+	}
 
-    @Override
-    public void resume() {
-        // TODO Auto-generated method stub
+	@Override
+	public void resume() {
+		// TODO Auto-generated method stub
 
-    }
+	}
 
-    @Override
-    public void hide() {
-        // TODO Auto-generated method stub
+	@Override
+	public void hide() {
+		// TODO Auto-generated method stub
 
-    }
+	}
 
-    @Override
-    public void dispose() {
-        // TODO Auto-generated method stub
+	@Override
+	public void dispose() {
+		// TODO Auto-generated method stub
 
-    }
+	}
 
 }
