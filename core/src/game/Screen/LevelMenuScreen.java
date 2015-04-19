@@ -16,7 +16,6 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
-import com.badlogic.gdx.scenes.scene2d.utils.Align;
 
 import game.Camera.OrthoCamera;
 import game.TTmath;
@@ -28,9 +27,7 @@ public class LevelMenuScreen implements Screen{
 	private Label label;
 	private Stage stage;
 	private Table table;
-	private Skin skin;
 	private TextButton buttons[];
-	private TextButtonStyle textButtonStyle;
 	SpriteBatch sb;
 
 	public LevelMenuScreen(TTmath game, OrthoCamera camera, SpriteBatch sb){
@@ -52,8 +49,8 @@ public class LevelMenuScreen implements Screen{
 
 	private void createButton() {
 		Skin skin = new Skin();
-		TextureAtlas buttonAtlas = new TextureAtlas();
-		TextButtonStyle textButtonStyle = new TextButtonStyle();
+		TextureAtlas buttonAtlas;
+		TextButtonStyle textButtonStyle;
 		buttons = new TextButton[5];
 		text.setColor(Color.WHITE);
 
@@ -101,7 +98,7 @@ public class LevelMenuScreen implements Screen{
 
 	private void createStage(){
 		stage = new Stage();
-		table = new Table(skin);
+		table = new Table();
 		table.setBounds(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 		Gdx.input.setInputProcessor(stage);
 	}

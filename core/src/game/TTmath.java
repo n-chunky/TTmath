@@ -1,6 +1,7 @@
 package game;
 
 import game.Camera.OrthoCamera;
+import game.Screen.GameOverScreen;
 import game.Screen.GameScreen;
 import game.Screen.LevelMenuScreen;
 import game.Screen.MenuScreen;
@@ -8,7 +9,6 @@ import game.Screen.ProblemScreen;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
@@ -21,6 +21,7 @@ public class TTmath extends Game{
 	public ProblemScreen problemScreen;
 	public GameScreen gameScreen;
 	public LevelMenuScreen levelMenu;
+	public GameOverScreen gameOver;
 //	public Screen previousScreen;
 //	public Screen currentScreen;
 	private int incorrect = 0;
