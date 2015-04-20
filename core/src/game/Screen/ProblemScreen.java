@@ -1,10 +1,6 @@
 package game.Screen;
 
 
-import game.TTmath;
-import game.Camera.OrthoCamera;
-import game.MathAlgorithms.mathQCreator;
-
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Screen;
@@ -22,6 +18,10 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
+
+import game.Camera.OrthoCamera;
+import game.MathAlgorithms.mathQCreator;
+import game.TTmath;
 
 public class ProblemScreen implements Screen{
 	private BitmapFont text;
@@ -59,9 +59,10 @@ public class ProblemScreen implements Screen{
 		createQuestions();
 		createLabel();
 		createButton();
+
 	}
 
-	private void createQuestions() {
+    private void createQuestions() {
 		math = new mathQCreator();
 		math.runOperation(6,level,1,1);
 		answers = math.getAnswers();
@@ -97,6 +98,11 @@ public class ProblemScreen implements Screen{
 
 					if(buttons[num].getLabel().textEquals(""+math.getCorrectAnswer(0))){
 
+                        // update scoreboard
+
+
+
+
 
 						/*
 						 * Goes back to the game Screen but leaves you at
@@ -130,8 +136,14 @@ public class ProblemScreen implements Screen{
 							game.setScreen(new ProblemScreen(game, camera, sb, 0, level+1));
 							dispose();
 						}
+
+
+
+
 					}
 					else {
+
+
 						if(gamemode == 1){
 							
 							Gdx.input.setInputProcessor(previousProcessor);
@@ -143,10 +155,13 @@ public class ProblemScreen implements Screen{
 							game.incorrectAns();
 							if(game.getIncorrect()==3){
 								game.resetAns();
-								game.setScreen(new MenuScreen(game, camera, sb));
+								game.setScreen(new GameOverScreen(game, camera, sb));
 								dispose();
 							}
 						}
+
+
+
 
 					}
 					return true;
@@ -184,6 +199,8 @@ public class ProblemScreen implements Screen{
 		text = ftfg.generateFont((int)(dp * Gdx.graphics.getDensity()));
 		text.setColor(Color.RED);
 	}
+
+
 
 	@Override
 	public void show() {

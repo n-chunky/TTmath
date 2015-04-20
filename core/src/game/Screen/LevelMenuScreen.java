@@ -27,9 +27,7 @@ public class LevelMenuScreen implements Screen{
     private Label label;
     private Stage stage;
     private Table table;
-    private Skin skin;
     private TextButton buttons[];
-    private TextButtonStyle textButtonStyle;
     SpriteBatch sb;
 
     public LevelMenuScreen(TTmath game, OrthoCamera camera, SpriteBatch sb){
@@ -50,8 +48,8 @@ public class LevelMenuScreen implements Screen{
 
     private void createButton() {
         Skin skin = new Skin();
-        TextureAtlas buttonAtlas = new TextureAtlas();
-        TextButtonStyle textButtonStyle = new TextButtonStyle();
+        TextureAtlas buttonAtlas;
+        TextButtonStyle textButtonStyle;
         buttons = new TextButton[5];
         text.setColor(Color.WHITE);
 
@@ -91,14 +89,14 @@ public class LevelMenuScreen implements Screen{
         LabelStyle ls = new LabelStyle();
         ls.font = text;
         ls.fontColor = Color.WHITE;
-        label = new Label("Map Select", ls);
+        label = new Label("Map Select  ", ls);
         table.add(label);
         stage.addActor(table);
     }
 
     private void createStage(){
         stage = new Stage();
-        table = new Table(skin);
+        table = new Table();
         table.setBounds(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         Gdx.input.setInputProcessor(stage);
     }
