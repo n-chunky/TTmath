@@ -1,32 +1,40 @@
 package game;
 
-import game.Camera.OrthoCamera;
-import game.Screen.MenuScreen;
-
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.utils.TimeUtils;
+
+import game.Camera.OrthoCamera;
+import game.Screen.SplashScreen;
 
 public class TTmath extends Game{
 
 	public static int WIDTH = 480, HEIGHT = 700;
 	private OrthoCamera camera;
 	private SpriteBatch sb;
-	public MenuScreen mainMenuScreen;
+//	public MenuScreen mainMenuScreen;
 	public Screen previousScreen;
 	public Screen currentScreen;
 	private int incorrect = 0;
 	private int correct = 0;
+    private int rendCount;
+    private long startTime;
+    private long endTime;
 	
 	@Override
 	public void create() {
-		camera = new OrthoCamera();
+
+
+        camera = new OrthoCamera();
 		camera.resize();
 		sb = new SpriteBatch();
-		mainMenuScreen = new MenuScreen(this, camera, sb);
-		setScreen(mainMenuScreen);              
+//		mainMenuScreen = new MenuScreen(this, camera, sb);
+//		setScreen(mainMenuScreen);
+        startTime = TimeUtils.millis();
+        setScreen(new SplashScreen(this, camera, sb));
 	}
 	
 	public void clear(){
@@ -61,4 +69,31 @@ public class TTmath extends Game{
 	public int getcorrect(){
 		return correct;
 	}
+
+    @Override
+    public void dispose() {
+        super.dispose();
+        endTime = TimeUtils.millis();
+    }
+
+    @Override
+    public void pause() {
+        super.pause();
+    }
+
+    @Override
+    public void resume() {
+        super.resume();
+    }
+
+    @Override
+    public void render() {
+        super.render();
+        rendCount++;
+    }
+
+    @Override
+    public void resize(int width, int height) {
+        super.resize(width, height);
+    }
 }
