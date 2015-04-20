@@ -34,7 +34,7 @@ public class GameOverScreen implements Screen{
         this.camera = camera;
         this.sb = sb;
 
-        game.manageScreens(this);
+        game.gameOver = this;
 
         FreeTypeFontGenerator openSans = new FreeTypeFontGenerator(Gdx.files.internal("resources/OpenSans-Regular.ttf"));
         createFont(openSans, 25);

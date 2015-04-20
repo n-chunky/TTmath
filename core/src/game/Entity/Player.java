@@ -41,6 +41,7 @@ public class Player extends Entity implements InputProcessor{
 	boolean movingDown = false;
 	boolean isMoving = false;
 	boolean doorFound = false;
+	boolean pScreen = false;
 	private Cell doorCell = null;
 
 	//tags for tiles
@@ -103,16 +104,21 @@ public class Player extends Entity implements InputProcessor{
 			if(itemManager.checkItemExists("key")){
 				doorFound = false;
 				itemManager.removeItem("key");
-				game.setScreen(new ProblemScreen(game, camera, sb, 1, 1));
+//				game.setScreen(new ProblemScreen(game, camera, sb, 1, 1));
+				game.problemScreen = new ProblemScreen(game, camera, sb, 1, 1);
+				pScreen = true;
 			}
 			if(itemManager.checkItemExists("keyfinal")){
 				doorFound = false;
 				itemManager.removeItem("keyfinal");
-				game.setScreen(new ProblemScreen(game, camera, sb, 1, 1));
+//				game.setScreen(new ProblemScreen(game, camera, sb, 1, 1));
+				game.problemScreen = new ProblemScreen(game, camera, sb, 1, 1);
+				pScreen = true;
 			}
 		}
 
 		if(game.getcorrect()==1){
+			pScreen = false;
 			game.resetAns();
 			openDoor(doorCell);
 			openFinalDoor(doorCell);

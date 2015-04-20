@@ -38,6 +38,7 @@ public class ProblemScreen implements Screen{
 	private TextButton buttons[];
 	private mathQCreator math;
 	private InputProcessor previousProcessor;
+	private boolean created;
 	SpriteBatch sb;
 
 
@@ -48,18 +49,28 @@ public class ProblemScreen implements Screen{
 		this.sb = sb;
 		this.gamemode = gamemode;
 		this.level = level;
-		game.manageScreens(this);
 		this.previousProcessor = Gdx.input.getInputProcessor();
+
+		createDisplay();
+	}
+
+	private void createDisplay() {
+		if(created){
+			return;
+		}
 
 		FreeTypeFontGenerator openSans = new FreeTypeFontGenerator(Gdx.files.internal("resources/OpenSans-Regular.ttf"));
 		createFont(openSans, 25);
 		openSans.dispose();
 
-		createStage();
 		createQuestions();
+		createStage();
 		createLabel();
 		createButton();
-
+		
+		created = true;
+		
+		game.problemScreen = this;
 	}
 
     private void createQuestions() {
@@ -76,8 +87,8 @@ public class ProblemScreen implements Screen{
 
 	private void createButton() {
 		Skin skin = new Skin();
-		TextureAtlas buttonAtlas = new TextureAtlas();
-		TextButtonStyle textButtonStyle = new TextButtonStyle();
+		TextureAtlas buttonAtlas;
+		TextButtonStyle textButtonStyle;
 		buttons = new TextButton[5];
 		text.setColor(Color.WHITE);
 
@@ -102,29 +113,14 @@ public class ProblemScreen implements Screen{
 
 
 
-
-
-						/*
-						 * Goes back to the game Screen but leaves you at
-						 * the portal so it creates another problem screen.
-						 * Commented out for now. If you want to use be aware 
-						 * that the problem screen will break after 3 questions.
-						 */
-						//						if(game.previousScreen != null){
-						//							game.setScreen(game.previousScreen);
-						//							dispose();
-						//						}
-						//						else{
-						//							// do something
-						//						}
-
 						/*
 						 * For now will just make it go back to the menuScreen
 						 */
 						if(gamemode == 1){
 							Gdx.input.setInputProcessor(previousProcessor);
-							game.setScreen(game.previousScreen);
-							game.manageScreens(game.previousScreen);
+//							game.setScreen(game.previousScreen);
+//							game.manageScreens(game.previousScreen);
+							game.setScreen(game.gameScreen);
 							game.correctAns();
 							dispose();
 						}
@@ -147,8 +143,9 @@ public class ProblemScreen implements Screen{
 						if(gamemode == 1){
 							
 							Gdx.input.setInputProcessor(previousProcessor);
-							game.setScreen(game.previousScreen);
-							game.manageScreens(game.previousScreen);
+//							game.setScreen(game.previousScreen);
+//							game.manageScreens(game.previousScreen);
+							game.setScreen(game.gameScreen);
 							dispose();
 						}
 						else{
@@ -182,8 +179,9 @@ public class ProblemScreen implements Screen{
 	private void createLabel() {
 		LabelStyle ls = new LabelStyle();
 		ls.font = text;
-		ls.fontColor = Color.RED;
-		label = new Label(questions[0],ls);
+		ls.fontColor = Color.WHITE;
+		label = new Label("What is the answer to the following question: "
+				+questions[0],ls);
 		table.add(label);
 		stage.addActor(table);
 	}
@@ -193,6 +191,13 @@ public class ProblemScreen implements Screen{
 		table = new Table(skin);
 		table.setBounds(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 		Gdx.input.setInputProcessor(stage);
+	}
+	
+	public void playStage(){
+		if(Gdx.input.getInputProcessor() != stage){
+			Gdx.input.setInputProcessor(stage);
+		}
+		stage.draw();
 	}
 
 	private void createFont(FreeTypeFontGenerator ftfg, float dp){

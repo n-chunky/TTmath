@@ -5,6 +5,7 @@ import game.Camera.OrthoCamera;
 import game.GameItems.ItemManager;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
@@ -19,24 +20,33 @@ public class EntityManager {
 	TiledMap map;
 	TiledMapTileLayer tiles;
 	SpriteBatch sb;
+	private InputProcessor previousProcessor;
+	TTmath game;
 	
 	public EntityManager(int amount, OrthoCamera camera, TiledMap tiledMap, TTmath game, SpriteBatch sb, ItemManager itemManager){
 		map = tiledMap;
 		tiles = (TiledMapTileLayer) map.getLayers().get(1);
 		this.sb = sb;
+		this.game = game;
 		player = new Player(findStartPosition(), new Vector2(0,0), camera, (TiledMapTileLayer) tiles, game, sb, itemManager);
-		setInputProcessor();
+		setInputProcessor(player);
 	}
 	
-	public void setInputProcessor(){
-		Gdx.input.setInputProcessor(player);
+	public void setInputProcessor(InputProcessor processor){
+		Gdx.input.setInputProcessor(processor);
+		previousProcessor = Gdx.input.getInputProcessor();
 	}
 	
 	public void update(){
 		for(Entity entity : entities){
 			entity.update();
 		}
-//		if(player.)
+		if(player.pScreen){
+			game.problemScreen.playStage();
+		}
+		else{
+			Gdx.input.setInputProcessor(player);
+		}
 		player.update();
 	}
 	

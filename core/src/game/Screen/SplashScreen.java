@@ -22,8 +22,7 @@ public class SplashScreen implements Screen{
         this.camera = camera;
         this.sb = sb;
 
-
-        game.manageScreens(this);
+//      game.manageScreens(this);
     }
 
     @Override

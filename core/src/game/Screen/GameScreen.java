@@ -31,7 +31,8 @@ public class GameScreen implements Screen{
 		this.sb = sb;
         this.levelNumber = levelNumber;
 
-		game.manageScreens(this);
+//		game.manageScreens(this);
+        game.gameScreen = this;
 
 		TextureManager.resetMaps();
 		TiledMap map;
@@ -81,12 +82,12 @@ public class GameScreen implements Screen{
 	public void render(float delta) {
 		game.clear();
 		camera.update();
-		entityManager.update();
 		
 		levelManager.renderMap(camera);
 		sb.setProjectionMatrix(camera.combined);
 		sb.begin();
 		entityManager.render();
+		entityManager.update();
 		sb.end();
 	}
 
