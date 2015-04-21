@@ -204,7 +204,7 @@ public class ProblemScreen implements Screen{
         ls.font = text;
         ls.fontColor = Color.GREEN;
         Label scoreLabel = new Label(Integer.toString(game.getScore()), ls);
-        table.row();
+        scoreLabel.setPosition(Gdx.graphics.getWidth(),0);
         table.add(scoreLabel);
         stage.addActor(table);
     }

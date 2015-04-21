@@ -1,7 +1,9 @@
 package game.Screen;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.TimeUtils;
 
@@ -16,11 +18,16 @@ public class SplashScreen implements Screen{
     private SpriteBatch sb;
     private long startTime;
     private Texture texture;
+    private Sprite sprite;
+    private final int HEIGHT, WIDTH;
 
     public SplashScreen(TTmath game, OrthoCamera camera, SpriteBatch sb){
         this.game = game;
         this.camera = camera;
         this.sb = sb;
+
+        HEIGHT = Gdx.graphics.getHeight();
+        WIDTH  = Gdx.graphics.getWidth();
 
 //      game.manageScreens(this);
     }
@@ -29,15 +36,23 @@ public class SplashScreen implements Screen{
     public void show() {
         texture = TextureManager.SPLASH;
         startTime = TimeUtils.millis();
+
+//        TextureRegion region = new TextureRegion(texture, 0, 0,
+//                WIDTH, HEIGHT);
+        sprite = new Sprite(texture);
+
+        sprite.setSize(WIDTH, HEIGHT);
+
     }
 
     @Override
     public void render(float delta) {
+//        sb.setProjectionMatrix(camera.combined);
         sb.begin();
-        sb.draw(texture, 0, 0);
+        sprite.draw(sb);
         sb.end();
 
-        if(TimeUtils.millis() > (startTime+1000)){
+        if(TimeUtils.millis() > (startTime+5000)){
             game.setScreen(new MenuScreen(game, camera, sb));
         }
 
