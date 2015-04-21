@@ -147,6 +147,7 @@ public class ProblemScreen implements Screen{
 						if(gamemode == 1){
 							
 							Gdx.input.setInputProcessor(previousProcessor);
+							game.incorrectAns();
 //							game.setScreen(game.previousScreen);
 //							game.manageScreens(game.previousScreen);
 //							game.setScreen(game.gameScreen);
@@ -226,6 +227,10 @@ public class ProblemScreen implements Screen{
 		camera.update();
 
 		stage.draw();
+		if(Gdx.input.isTouched() && (Gdx.input.getX()>(Gdx.graphics.getWidth()-75) && Gdx.input.getY()<75)){
+			game.setScreen(new MenuScreen(game, camera, sb));
+			game.currentScreen.dispose();
+		}
 	}
 
 	@Override

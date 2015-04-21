@@ -12,4 +12,4 @@ public class DesktopLauncher {
 		config.width = TTmath.HEIGHT;
 		new LwjglApplication(new TTmath(), config);
 	}
-}0
+}

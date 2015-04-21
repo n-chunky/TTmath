@@ -126,6 +126,10 @@ public class Player extends Entity implements InputProcessor{
 			openDoor(doorCell);
 			openFinalDoor(doorCell);
 		}
+		if(game.getIncorrect()==1){
+			pScreen = false;
+			game.resetAns();
+		}
 
 		camera.setPosition(pos.x, pos.y);
 		camera.update();
