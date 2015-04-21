@@ -8,7 +8,6 @@ import game.GameItems.ItemManager;
 import game.Level.LevelAnimationManager;
 import game.Level.LevelManager;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.maps.tiled.TiledMap;
@@ -31,8 +30,8 @@ public class GameScreen implements Screen{
 		this.sb = sb;
         this.levelNumber = levelNumber;
 
-//		game.manageScreens(this);
-        game.gameScreen = this;
+		game.manageScreens(this);
+//        game.gameScreen = this;
 
 		TextureManager.resetMaps();
 		TiledMap map;

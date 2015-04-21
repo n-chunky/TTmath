@@ -1,13 +1,13 @@
 package game.Screen;
 
+import game.TTmath;
+import game.TextureManager;
+import game.Camera.OrthoCamera;
+
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.TimeUtils;
-
-import game.Camera.OrthoCamera;
-import game.TTmath;
-import game.TextureManager;
 
 public class SplashScreen implements Screen{
 
@@ -37,7 +37,7 @@ public class SplashScreen implements Screen{
         sb.draw(texture, 0, 0);
         sb.end();
 
-        if(TimeUtils.millis() > (startTime+5000)){
+        if(TimeUtils.millis() > (startTime+1000)){
             game.setScreen(new MenuScreen(game, camera, sb));
         }
 

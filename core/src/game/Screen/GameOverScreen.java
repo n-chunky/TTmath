@@ -1,5 +1,8 @@
 package game.Screen;
 
+import game.TTmath;
+import game.Camera.OrthoCamera;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
@@ -9,15 +12,12 @@ import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
-import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
-
-import game.Camera.OrthoCamera;
-import game.TTmath;
 
 public class GameOverScreen implements Screen{
     private BitmapFont text;
@@ -34,11 +34,11 @@ public class GameOverScreen implements Screen{
         this.camera = camera;
         this.sb = sb;
 
-        game.gameOver = this;
-
-        FreeTypeFontGenerator openSans = new FreeTypeFontGenerator(Gdx.files.internal("resources/OpenSans-Regular.ttf"));
-        createFont(openSans, 25);
-        openSans.dispose();
+//        game.gameOver = this;
+        game.setScreen(this);
+		FreeTypeFontGenerator TEXT_8BIT = new FreeTypeFontGenerator(Gdx.files.internal("resources/Minecraftia-Regular.ttf"));
+		createFont(TEXT_8BIT, 25);
+		TEXT_8BIT.dispose();
 
         createStage();
         createLabel();
@@ -64,8 +64,10 @@ public class GameOverScreen implements Screen{
     }
 
     private void createFont(FreeTypeFontGenerator ftfg, float dp){
+    	
         text = ftfg.generateFont((int)(dp * Gdx.graphics.getDensity()));
         text.setColor(Color.RED);
+        
     }
 
     private void createButton(){
@@ -87,7 +89,7 @@ public class GameOverScreen implements Screen{
 
 
                 game.setScreen(new MenuScreen(game, camera, sb));
-
+                dispose();
                 return true;
             }
 

@@ -38,14 +38,14 @@ public class MenuScreen implements Screen{
 		this.game = game;
 		this.sb = sb;
 
-//		game.manageScreens(this);
-		game.mainMenuScreen = this;
+		game.manageScreens(this);
+//		game.mainMenuScreen = this;
 		
 		createStage();
 
-		FreeTypeFontGenerator openSans = new FreeTypeFontGenerator(Gdx.files.internal("resources/OpenSans-Regular.ttf"));
-		font = createFont(openSans, 40);
-		openSans.dispose();
+		FreeTypeFontGenerator TEXT_8BIT = new FreeTypeFontGenerator(Gdx.files.internal("resources/Minecraftia-Regular.ttf"));
+		font = createFont(TEXT_8BIT, 25);
+		TEXT_8BIT.dispose();
 
 		createButton();
 	}
@@ -77,6 +77,7 @@ public class MenuScreen implements Screen{
 
             public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
                 game.setScreen(new LevelMenuScreen(game, camera, sb));
+                dispose();
             }
         });
 
@@ -94,6 +95,7 @@ public class MenuScreen implements Screen{
 
             public void touchUp (InputEvent event, float x, float y, int pointer, int button) {
                 game.setScreen(new ProblemScreen(game, camera, sb, 0, 1));
+                dispose();
             }
         });
 

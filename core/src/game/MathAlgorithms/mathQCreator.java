@@ -1,6 +1,7 @@
 package game.MathAlgorithms;
 
 
+import java.util.ArrayList;
 import java.util.Random;
 
 
@@ -147,6 +148,7 @@ public class mathQCreator{
 	 * Method generates math questions in Strings
 	 * Answers are also generated here in the 2d array
 	 * returns a String array
+	 * \u00F7 acsii code for division, if needed
 	 */
 	private String[] generateMathQuestion(int[] operation, int level){
 		Random rand = new Random();
@@ -193,10 +195,12 @@ public class mathQCreator{
 					 *either the first or second number. We will use the Random rand to choose either
 					 *so the variable "answer" and one of the other numbers will be part of the question
 					 */
-					firstN = rand.nextInt(initial + level);
-					secondN = rand.nextInt(initial + level);
+					do{
+						firstN = rand.nextInt(initial + level);
+						secondN = rand.nextInt(initial + level);
+					}while(firstN == 0 && secondN == 0);
 					answer = firstN * secondN;
-					if(rand.nextInt(2)==1 && firstN != 0){
+					if(firstN != 0){
 						answers[i] = randomizeAnswer(secondN);
 						q[i] = answer + " \u00F7 " + firstN;
 					}
@@ -251,10 +255,12 @@ public class mathQCreator{
 					 *either the first or second number. We will use the Random rand to choose either
 					 *so the variable "answer" and one of the other numbers will be part of the question
 					 */
-					firstN = rand.nextInt((level + 4) + 1) + initial;
-					secondN = rand.nextInt((level + 4) + 1) + initial;
+					do{
+						firstN = rand.nextInt((level + 4) + 1) + initial;
+						secondN = rand.nextInt((level + 4) + 1) + initial;
+					}while(firstN == 0 && secondN == 0);
 					answer = firstN * secondN;
-					if(rand.nextInt(2)==1 && firstN != 0){
+					if(firstN != 0){
 						answers[i] = randomizeAnswer(secondN);
 						q[i] = answer + " \u00F7 " + firstN;
 					}
@@ -281,6 +287,7 @@ public class mathQCreator{
 	 */
 	private int[] randomizeAnswer(int answer){
 		Random rand = new Random();
+		ArrayList<Integer> holder = new ArrayList<Integer>();
 		int answers[] = new int[5];
 		int max = answer+6;
 		int min = answer-6;
@@ -288,45 +295,17 @@ public class mathQCreator{
 		for(int i=0;i<4;i++){
 			do{
 				answers[i] = rand.nextInt(max-min+1)+min;
-			}while(answers[i] == answer || answers[i]<0);
+			}while(answers[i] == answer || answers[i]<0 || holder.contains(answers[i]));
+			holder.add(answers[i]);
+		}
+		for(int i=0;i<4;i++){
+			answers[i] = holder.get(i);
 		}
 		answers[realA] = answer;
 		answers[4] = realA;
 		return answers;
 	}
-//	private int[] randomizeAnswer(int answer){
-//	Random rand = new Random();
-//	int answers[] = new int[5];
-//	int max = answer+6;
-//	int min = answer-6;
-//	int realA = rand.nextInt(3+1);
-//	for(int i=0;i<4;i++){
-//		do{
-//			answers[i] = rand.nextInt(max-min+1)+min;
-//		}while(answers[i] == answer || answers[i]<0);
-//	}
-//	while(areThereDuplicateAnswers(answers, answer) != -1){
-//		int duplicate = areThereDuplicateAnswers(answers, answer);
-//		do{
-//		answers[duplicate] = rand.nextInt(max-min+1)+min;
-//		}while(answers[duplicate] < 0);
-//	}
-//	answers[realA] = answer;
-//	answers[4] = realA;
-//	return answers;
-//}
-//
-////returns -1 if there are no duplicates, the index if otherwise
-//private int areThereDuplicateAnswers(int[] answers, int realAnswer){
-//	for(int i=0;i<4;i++){
-//		for(int j=0;j<4;j++){
-//			if(answers[i] == answers[j] || answers[i] == realAnswer)
-//				return i;
-//		}
-//
-//	}
-//	return -1;
-//}
+
 	public int[][] getAnswers(){
 		return answers;
 	}

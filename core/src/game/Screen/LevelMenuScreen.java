@@ -1,5 +1,8 @@
 package game.Screen;
 
+import game.TTmath;
+import game.Camera.OrthoCamera;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
@@ -17,9 +20,6 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
 
-import game.Camera.OrthoCamera;
-import game.TTmath;
-
 public class LevelMenuScreen implements Screen{
 	private BitmapFont text;
 	private OrthoCamera camera;
@@ -35,12 +35,12 @@ public class LevelMenuScreen implements Screen{
 		this.game = game;
 		this.sb = sb;
 
-		//        game.manageScreens(this);
-		game.levelMenu = this;
+		game.manageScreens(this);
+//		game.levelMenu = this;
 
-		FreeTypeFontGenerator openSans = new FreeTypeFontGenerator(Gdx.files.internal("resources/OpenSans-Regular.ttf"));
-		createFont(openSans, 25);
-		openSans.dispose();
+		FreeTypeFontGenerator TEXT_8BIT = new FreeTypeFontGenerator(Gdx.files.internal("resources/Minecraftia-Regular.ttf"));
+		createFont(TEXT_8BIT, 25);
+		TEXT_8BIT.dispose();
 
 		createStage();
 		createLabel();
@@ -71,7 +71,7 @@ public class LevelMenuScreen implements Screen{
 				public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
 
 					game.setScreen(new GameScreen(game, camera, sb, levelSelect));
-
+					dispose();
 					return true;
 				}
 

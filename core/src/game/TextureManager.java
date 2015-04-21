@@ -24,7 +24,7 @@ public class TextureManager {
 	public static Texture START             = new Texture(Gdx.files.internal("MapsObjects/StartWarpgate.png"));
 	public static Texture END               = new Texture(Gdx.files.internal("MapsObjects/Warpgate.png"));
     public static Texture SPLASH            = new Texture(Gdx.files.internal("resources/SplashScreen.png"));
-	
+    
 	public static void resetMaps(){
 		Level1 = new TmxMapLoader().load("MapsObjects/Path1Level1.tmx");
 		Level2 = new TmxMapLoader().load("MapsObjects/Path1Level2.tmx");

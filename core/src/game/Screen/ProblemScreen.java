@@ -1,6 +1,10 @@
 package game.Screen;
 
 
+import game.TTmath;
+import game.Camera.OrthoCamera;
+import game.MathAlgorithms.mathQCreator;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Screen;
@@ -18,10 +22,6 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
-
-import game.Camera.OrthoCamera;
-import game.MathAlgorithms.mathQCreator;
-import game.TTmath;
 
 public class ProblemScreen implements Screen{
 	private BitmapFont text;
@@ -59,9 +59,9 @@ public class ProblemScreen implements Screen{
 			return;
 		}
 
-		FreeTypeFontGenerator openSans = new FreeTypeFontGenerator(Gdx.files.internal("resources/OpenSans-Regular.ttf"));
-		createFont(openSans, 25);
-		openSans.dispose();
+		FreeTypeFontGenerator TEXT_8BIT = new FreeTypeFontGenerator(Gdx.files.internal("resources/Minecraftia-Regular.ttf"));
+		createFont(TEXT_8BIT, 25);
+		TEXT_8BIT.dispose();
 
 		createQuestions();
 		createStage();
@@ -69,7 +69,6 @@ public class ProblemScreen implements Screen{
 		createButton();
 		
 		created = true;
-		
 		game.problemScreen = this;
 	}
 
@@ -79,9 +78,7 @@ public class ProblemScreen implements Screen{
 		answers = math.getAnswers();
 		questions = math.getQuestions();
 
-		for(int i = 0; i < answers[0].length; i++){
-			System.out.println(answers[0][i]);
-		}
+		System.out.println("level is: " + level);
 
 	}
 
@@ -101,7 +98,8 @@ public class ProblemScreen implements Screen{
 			textButtonStyle.up = skin.getDrawable("MenuItem");
 			buttons[i] = new TextButton(""+answers[0][i], textButtonStyle);
 			buttons[i].pad(20);
-
+			buttons[i].padTop(50);
+		
 			final int num = i;
 
 			buttons[i].addListener(new InputListener() {
@@ -120,7 +118,7 @@ public class ProblemScreen implements Screen{
 							Gdx.input.setInputProcessor(previousProcessor);
 //							game.setScreen(game.previousScreen);
 //							game.manageScreens(game.previousScreen);
-							game.setScreen(game.gameScreen);
+//							game.setScreen(game.gameScreen);
 							game.correctAns();
 							dispose();
 						}
@@ -128,8 +126,14 @@ public class ProblemScreen implements Screen{
 							game.setScreen(new ProblemScreen(game, camera, sb, 0, level));
 							dispose();
 						}
-						else {
+						else if(game.getCounter() == 3){
+							game.resetCounter();
 							game.setScreen(new ProblemScreen(game, camera, sb, 0, level+1));
+							dispose();
+						}
+						else{
+							game.incrementCounter();
+							game.setScreen(new ProblemScreen(game, camera, sb, 0, level));
 							dispose();
 						}
 
@@ -145,13 +149,14 @@ public class ProblemScreen implements Screen{
 							Gdx.input.setInputProcessor(previousProcessor);
 //							game.setScreen(game.previousScreen);
 //							game.manageScreens(game.previousScreen);
-							game.setScreen(game.gameScreen);
+//							game.setScreen(game.gameScreen);
 							dispose();
 						}
 						else{
 							game.incorrectAns();
 							if(game.getIncorrect()==3){
 								game.resetAns();
+								game.resetCounter();
 								game.setScreen(new GameOverScreen(game, camera, sb));
 								dispose();
 							}
@@ -182,6 +187,7 @@ public class ProblemScreen implements Screen{
 		ls.fontColor = Color.WHITE;
 		label = new Label("What is the answer to the following question: "
 				+questions[0],ls);
+		
 		table.add(label);
 		stage.addActor(table);
 	}

@@ -41,6 +41,7 @@ public class Player extends Entity implements InputProcessor{
 	boolean movingDown = false;
 	boolean isMoving = false;
 	boolean doorFound = false;
+	boolean finalDoorFound = false;
 	boolean pScreen = false;
 	private Cell doorCell = null;
 
@@ -108,10 +109,12 @@ public class Player extends Entity implements InputProcessor{
 				game.problemScreen = new ProblemScreen(game, camera, sb, 1, 1);
 				pScreen = true;
 			}
+		}
+		if(finalDoorFound){
 			if(itemManager.checkItemExists("keyfinal")){
 				doorFound = false;
 				itemManager.removeItem("keyfinal");
-//				game.setScreen(new ProblemScreen(game, camera, sb, 1, 1));
+				//game.setScreen(new ProblemScreen(game, camera, sb, 1, 1));
 				game.problemScreen = new ProblemScreen(game, camera, sb, 1, 1);
 				pScreen = true;
 			}
@@ -305,12 +308,17 @@ public class Player extends Entity implements InputProcessor{
 	//sets field values doorCell and doorFound if door exists
 	private void checkDoor(float x, float y) {
 		Cell cell = collisionLayer.getCell((int) x, (int) y);
-		if(cell != null && (cell.getTile().getProperties().containsKey("door")
-				|| cell.getTile().getProperties().containsKey("finaldoor"))){
+		if(cell != null && cell.getTile().getProperties().containsKey("door")){
 			System.out.println("found door");
 			//set doorCell to cell and doorFound true
 			doorCell  = cell;
 			doorFound = true;
+		}
+		else if(cell != null && cell.getTile().getProperties().containsKey("finaldoor")){
+			System.out.println("found final door");
+			//set doorCell to cell and doorFound true
+			doorCell = cell;
+			finalDoorFound = true;
 		}
 	}
 
@@ -369,6 +377,7 @@ public class Player extends Entity implements InputProcessor{
 	public boolean touchDown(int screenX, int screenY, int pointer, int button) {
 		if(Gdx.input.getX()>(Gdx.graphics.getWidth()-75) && Gdx.input.getY()<75){
 			game.setScreen(new MenuScreen(game, camera, sb));
+			game.currentScreen.dispose();
 		}
 		return false;
 	}
