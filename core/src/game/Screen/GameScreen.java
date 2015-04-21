@@ -1,16 +1,18 @@
 package game.Screen;
 
-import game.TTmath;
-import game.TextureManager;
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
+import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.maps.tiled.TiledMap;
+
 import game.Camera.OrthoCamera;
 import game.Entity.EntityManager;
 import game.GameItems.ItemManager;
 import game.Level.LevelAnimationManager;
 import game.Level.LevelManager;
-
-import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.maps.tiled.TiledMap;
+import game.TTmath;
+import game.TextureManager;
 
 
 public class GameScreen implements Screen{
@@ -30,6 +32,7 @@ public class GameScreen implements Screen{
 		this.sb = sb;
         this.levelNumber = levelNumber;
 
+        Gdx.input.setCatchBackKey(true);
 		game.manageScreens(this);
 //        game.gameScreen = this;
 
@@ -88,6 +91,12 @@ public class GameScreen implements Screen{
 		entityManager.render();
 		entityManager.update();
 		sb.end();
+
+
+        if(Gdx.input.isKeyPressed(Input.Keys.BACK)){
+            game.setScreen(new LevelMenuScreen(game, camera, sb));
+            game.currentScreen.dispose();
+        }
 	}
 
 	@Override

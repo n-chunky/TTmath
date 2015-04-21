@@ -1,15 +1,15 @@
 package game;
 
-import game.Camera.OrthoCamera;
-import game.Screen.ProblemScreen;
-import game.Screen.SplashScreen;
-
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.TimeUtils;
+
+import game.Camera.OrthoCamera;
+import game.Screen.ProblemScreen;
+import game.Screen.SplashScreen;
 
 public class TTmath extends Game{
 
@@ -27,14 +27,13 @@ public class TTmath extends Game{
 	private int incorrect = 0;
 	private int correct = 0;
 	private int counter = 0;
+    private int score = 0;
     private int rendCount;
     private long startTime;
     private long endTime;
 	
 	@Override
 	public void create() {
-
-
         camera = new OrthoCamera();
 		camera.resize();
 		sb = new SpriteBatch();
@@ -55,7 +54,19 @@ public class TTmath extends Game{
 		}
 		currentScreen = newCurrentScreen;
 	}
-	
+
+    public int getScore() {
+        return score;
+    }
+
+    public void incrementScore(){
+        score++;
+    }
+
+    public void resetScore(){
+        score = 0;
+    }
+
 	public void incorrectAns(){
 		incorrect++;
 	}
