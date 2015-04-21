@@ -1,14 +1,5 @@
 package game.Entity;
 
-import game.TTmath;
-import game.TextureManager;
-import game.Camera.OrthoCamera;
-import game.GameItems.ItemManager;
-import game.Screen.MenuScreen;
-import game.Screen.ProblemScreen;
-
-import java.util.Iterator;
-
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.graphics.g2d.Animation;
@@ -18,6 +9,15 @@ import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer.Cell;
 import com.badlogic.gdx.maps.tiled.tiles.StaticTiledMapTile;
 import com.badlogic.gdx.math.Vector2;
+
+import java.util.Iterator;
+
+import game.Camera.OrthoCamera;
+import game.GameItems.ItemManager;
+import game.Screen.MenuScreen;
+import game.Screen.ProblemScreen;
+import game.TTmath;
+import game.TextureManager;
 
 public class Player extends Entity implements InputProcessor{
 	private TTmath game;
@@ -379,10 +379,7 @@ public class Player extends Entity implements InputProcessor{
 
 	@Override
 	public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-		if(Gdx.input.getX()>(Gdx.graphics.getWidth()-75) && Gdx.input.getY()<75){
-			game.setScreen(new MenuScreen(game, camera, sb));
-			game.currentScreen.dispose();
-		}
+
 		return false;
 	}
 

@@ -1,8 +1,5 @@
 package game.Screen;
 
-import game.TTmath;
-import game.Camera.OrthoCamera;
-
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
@@ -16,6 +13,9 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
+
+import game.Camera.OrthoCamera;
+import game.TTmath;
 
 public class MenuScreen implements Screen{
 
@@ -68,7 +68,10 @@ public class MenuScreen implements Screen{
 
         // create play playButton
 		playButton = new TextButton("Play Levels", textButtonStyle);
-		playButton.pad(50);
+        playButton.padTop(40 * Gdx.graphics.getDensity());
+        playButton.padBottom(15 * Gdx.graphics.getDensity());
+        playButton.padLeft(15 * Gdx.graphics.getDensity());
+        playButton.padRight(15 * Gdx.graphics.getDensity());
 		
 		playButton.addListener(new InputListener() {
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
@@ -86,7 +89,10 @@ public class MenuScreen implements Screen{
 
         // create mental math playButton
         mentalMathButton = new TextButton("Mental Math Practice", textButtonStyle);
-        mentalMathButton.pad(20);
+        mentalMathButton.padTop(40 * Gdx.graphics.getDensity());
+        mentalMathButton.padBottom(15 * Gdx.graphics.getDensity());
+        mentalMathButton.padLeft(15 * Gdx.graphics.getDensity());
+        mentalMathButton.padRight(15 * Gdx.graphics.getDensity());
 
         mentalMathButton.addListener(new InputListener() {
             public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {

@@ -1,11 +1,8 @@
 package game.Screen;
 
 
-import game.TTmath;
-import game.Camera.OrthoCamera;
-import game.MathAlgorithms.mathQCreator;
-
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
@@ -22,6 +19,10 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
+
+import game.Camera.OrthoCamera;
+import game.MathAlgorithms.mathQCreator;
+import game.TTmath;
 
 public class ProblemScreen implements Screen{
 	private BitmapFont text;
@@ -50,6 +51,7 @@ public class ProblemScreen implements Screen{
 		this.gamemode = gamemode;
 		this.level = level;
 		this.previousProcessor = Gdx.input.getInputProcessor();
+        Gdx.input.setCatchBackKey(true);
 
 		createDisplay();
 	}
@@ -67,6 +69,7 @@ public class ProblemScreen implements Screen{
 		createStage();
 		createLabel();
 		createButton();
+        createScoreLabel();
 		
 		created = true;
 		game.problemScreen = this;
@@ -97,8 +100,10 @@ public class ProblemScreen implements Screen{
 			textButtonStyle.font = text;
 			textButtonStyle.up = skin.getDrawable("MenuItem");
 			buttons[i] = new TextButton(""+answers[0][i], textButtonStyle);
-			buttons[i].pad(20);
-			buttons[i].padTop(50);
+            buttons[i].padTop(40 * Gdx.graphics.getDensity());
+            buttons[i].padBottom(15 * Gdx.graphics.getDensity());
+            buttons[i].padLeft(15 * Gdx.graphics.getDensity());
+            buttons[i].padRight(15 * Gdx.graphics.getDensity());
 		
 			final int num = i;
 
@@ -108,7 +113,7 @@ public class ProblemScreen implements Screen{
 					if(buttons[num].getLabel().textEquals(""+math.getCorrectAnswer(0))){
 
                         // update scoreboard
-
+                        game.incrementScore();
 
 
 						/*
@@ -159,6 +164,7 @@ public class ProblemScreen implements Screen{
 								game.resetAns();
 								game.resetCounter();
 								game.setScreen(new GameOverScreen(game, camera, sb));
+                                game.resetScore();
 								dispose();
 							}
 						}
@@ -186,12 +192,22 @@ public class ProblemScreen implements Screen{
 		LabelStyle ls = new LabelStyle();
 		ls.font = text;
 		ls.fontColor = Color.WHITE;
-		label = new Label("What is the answer to the following question: "
+		label = new Label("What is the answer to the following question: \n"
 				+questions[0],ls);
 		
 		table.add(label);
 		stage.addActor(table);
 	}
+
+    private void createScoreLabel(){
+        LabelStyle ls = new LabelStyle();
+        ls.font = text;
+        ls.fontColor = Color.GREEN;
+        Label scoreLabel = new Label(Integer.toString(game.getScore()), ls);
+        table.row();
+        table.add(scoreLabel);
+        stage.addActor(table);
+    }
 
 	private void createStage(){
 		stage = new Stage();
@@ -227,7 +243,10 @@ public class ProblemScreen implements Screen{
 		camera.update();
 
 		stage.draw();
-		if(Gdx.input.isTouched() && (Gdx.input.getX()>(Gdx.graphics.getWidth()-75) && Gdx.input.getY()<75)){
+//		if(Gdx.input.isTouched() && (Gdx.input.getX()>(Gdx.graphics.getWidth()-75) && Gdx.input.getY()<75)){
+        if(Gdx.input.isKeyPressed(Input.Keys.BACK)){
+            game.resetScore();
+
 			game.setScreen(new MenuScreen(game, camera, sb));
 			game.currentScreen.dispose();
 		}

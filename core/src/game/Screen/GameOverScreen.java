@@ -1,9 +1,7 @@
 package game.Screen;
 
-import game.TTmath;
-import game.Camera.OrthoCamera;
-
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
@@ -18,6 +16,9 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
+
+import game.Camera.OrthoCamera;
+import game.TTmath;
 
 public class GameOverScreen implements Screen{
     private BitmapFont text;
@@ -36,6 +37,10 @@ public class GameOverScreen implements Screen{
 
 //        game.gameOver = this;
         game.setScreen(this);
+
+        Gdx.input.setCatchBackKey(true);
+
+
 		FreeTypeFontGenerator TEXT_8BIT = new FreeTypeFontGenerator(Gdx.files.internal("resources/Minecraftia-Regular.ttf"));
 		createFont(TEXT_8BIT, 25);
 		TEXT_8BIT.dispose();
@@ -82,7 +87,10 @@ public class GameOverScreen implements Screen{
         textButtonStyle.up = skin.getDrawable("MenuItem");
         gameOverButton = new TextButton("Back to Home", textButtonStyle);
 
-        gameOverButton.pad(20);
+        gameOverButton.padTop(40 * Gdx.graphics.getDensity());
+        gameOverButton.padBottom(15 * Gdx.graphics.getDensity());
+        gameOverButton.padLeft(15 * Gdx.graphics.getDensity());
+        gameOverButton.padRight(15 * Gdx.graphics.getDensity());
 
         gameOverButton.addListener(new InputListener(){
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
@@ -118,6 +126,13 @@ public class GameOverScreen implements Screen{
         camera.update();
 
         stage.draw();
+
+        if(Gdx.input.isKeyPressed(Input.Keys.BACK)){
+            game.resetScore();
+
+            game.setScreen(new MenuScreen(game, camera, sb));
+            game.currentScreen.dispose();
+        }
     }
 
     @Override

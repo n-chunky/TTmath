@@ -1,9 +1,7 @@
 package game.Screen;
 
-import game.TTmath;
-import game.Camera.OrthoCamera;
-
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
@@ -19,6 +17,9 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
+
+import game.Camera.OrthoCamera;
+import game.TTmath;
 
 public class LevelMenuScreen implements Screen{
 	private BitmapFont text;
@@ -37,7 +38,7 @@ public class LevelMenuScreen implements Screen{
 
 		game.manageScreens(this);
 //		game.levelMenu = this;
-
+        Gdx.input.setCatchBackKey(true);
 		FreeTypeFontGenerator TEXT_8BIT = new FreeTypeFontGenerator(Gdx.files.internal("resources/Minecraftia-Regular.ttf"));
 		createFont(TEXT_8BIT, 25);
 		TEXT_8BIT.dispose();
@@ -62,7 +63,10 @@ public class LevelMenuScreen implements Screen{
 			textButtonStyle.up = skin.getDrawable("MenuItem");
 			buttons[i] = new TextButton(""+Integer.toString(i+1), textButtonStyle);
 
-			buttons[i].pad(20);
+            buttons[i].padTop(40 * Gdx.graphics.getDensity());
+            buttons[i].padBottom(15 * Gdx.graphics.getDensity());
+            buttons[i].padLeft(15 * Gdx.graphics.getDensity());
+            buttons[i].padRight(15 * Gdx.graphics.getDensity());
 
 
 			final int levelSelect = i+1;
@@ -80,7 +84,7 @@ public class LevelMenuScreen implements Screen{
 				}
 			});
 
-			table.add(buttons[i]).width(100).pad(20);
+			table.add(buttons[i]);
 		}
 
 		stage.addActor(table);
@@ -121,6 +125,11 @@ public class LevelMenuScreen implements Screen{
 		camera.update();
 
 		stage.draw();
+
+        if(Gdx.input.isKeyPressed(Input.Keys.BACK)){
+            game.setScreen(new MenuScreen(game, camera, sb));
+            game.currentScreen.dispose();
+        }
 	}
 
 	@Override
