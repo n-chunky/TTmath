@@ -27,7 +27,7 @@ public class GameOverScreen implements Screen{
     private Label gameOverLabel;
     private Table table;
     private Stage stage;
-    private TextButton gameOverButton;
+    private TextButton gameOverButton, highScoreButton;
     SpriteBatch sb;
 
     public GameOverScreen(TTmath game, OrthoCamera camera, SpriteBatch sb) {
@@ -95,7 +95,6 @@ public class GameOverScreen implements Screen{
         gameOverButton.addListener(new InputListener(){
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
 
-
                 game.setScreen(new MenuScreen(game, camera, sb));
                 dispose();
                 return true;
@@ -110,6 +109,7 @@ public class GameOverScreen implements Screen{
 
         table.add(gameOverButton);
         stage.addActor(table);
+
 
     }
 

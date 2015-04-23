@@ -28,6 +28,10 @@ public class TTmath extends Game{
 	private int correct = 0;
 	private int counter = 0;
     private int score = 0;
+
+
+
+    private int multiplier = 1;
     private int rendCount;
     private long startTime;
     private long endTime;
@@ -60,11 +64,27 @@ public class TTmath extends Game{
     }
 
     public void incrementScore(){
-        score++;
+        score = score + (10* multiplier);
+    }
+
+    public void setScore(int score){
+        this.score = score;
     }
 
     public void resetScore(){
         score = 0;
+    }
+
+    public int getMultiplier() {
+        return multiplier;
+    }
+
+    public void setMultiplier(int multiplier) {
+        this.multiplier = multiplier;
+    }
+
+    public void incrementMultiplier(){
+        multiplier++;
     }
 
 	public void incorrectAns(){

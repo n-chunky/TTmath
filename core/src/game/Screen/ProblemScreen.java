@@ -32,7 +32,7 @@ public class ProblemScreen implements Screen{
 	private int level;
 	private int[][] answers;
 	private String[] questions;
-	private Label label;
+	private Label label, incorrect;
 	private Stage stage;
 	private Table table;
 	private Skin skin;
@@ -40,6 +40,7 @@ public class ProblemScreen implements Screen{
 	private mathQCreator math;
 	private InputProcessor previousProcessor;
 	private boolean created;
+    private String XXX = "";
 	SpriteBatch sb;
 
 
@@ -52,7 +53,6 @@ public class ProblemScreen implements Screen{
 		this.level = level;
 		this.previousProcessor = Gdx.input.getInputProcessor();
         Gdx.input.setCatchBackKey(true);
-
 		createDisplay();
 	}
 
@@ -70,6 +70,7 @@ public class ProblemScreen implements Screen{
 		createLabel();
 		createButton();
         createScoreLabel();
+        createIncorrectLabel();
 		
 		created = true;
 		game.problemScreen = this;
@@ -115,7 +116,6 @@ public class ProblemScreen implements Screen{
                         // update scoreboard
                         game.incrementScore();
 
-
 						/*
 						 * For now will just make it go back to the menuScreen
 						 */
@@ -133,6 +133,7 @@ public class ProblemScreen implements Screen{
 						}
 						else if(game.getCounter() == 3){
 							game.resetCounter();
+                            game.incrementMultiplier();
 							game.setScreen(new ProblemScreen(game, camera, sb, 0, level+1));
 							dispose();
 						}
@@ -157,9 +158,17 @@ public class ProblemScreen implements Screen{
 //							game.manageScreens(game.previousScreen);
 //							game.setScreen(game.gameScreen);
 							dispose();
+
 						}
 						else{
+
+                            // incorrect answer, reset multiplier
+                            game.setMultiplier(1);
+
 							game.incorrectAns();
+
+
+                            game.setScreen(new ProblemScreen(game, camera, sb, 0, level));
 							if(game.getIncorrect()==3){
 								game.resetAns();
 								game.resetCounter();
@@ -167,6 +176,9 @@ public class ProblemScreen implements Screen{
                                 game.resetScore();
 								dispose();
 							}
+
+
+
 						}
 
 
@@ -192,7 +204,7 @@ public class ProblemScreen implements Screen{
 		LabelStyle ls = new LabelStyle();
 		ls.font = text;
 		ls.fontColor = Color.WHITE;
-		label = new Label("What is the answer to the following question: \n"
+		label = new Label("Answer to the following question: \n"
 				+questions[0],ls);
 		
 		table.add(label);
@@ -204,8 +216,39 @@ public class ProblemScreen implements Screen{
         ls.font = text;
         ls.fontColor = Color.GREEN;
         Label scoreLabel = new Label(Integer.toString(game.getScore()), ls);
-        scoreLabel.setPosition(Gdx.graphics.getWidth(),0);
+//        scoreLabel.setPosition(Gdx.graphics.getWidth(),0);
         table.add(scoreLabel);
+        stage.addActor(table);
+    }
+
+    private void createIncorrectLabel(){
+        LabelStyle ls = new LabelStyle();
+        ls.font = text;
+        ls.fontColor = Color.RED;
+
+        switch(game.getIncorrect()){
+            case 0:
+                XXX = "";
+                break;
+            case 1:
+                XXX = "X";
+                break;
+            case 2:
+                XXX = "XX";
+                break;
+            case 3:
+                XXX = "XXX";
+                break;
+            default:
+                XXX = "";
+                break;
+        }
+
+
+        incorrect = new Label(XXX, ls);
+        incorrect.setPosition(0, Gdx.graphics.getHeight());
+        table.row();
+        table.add(incorrect);
         stage.addActor(table);
     }
 
@@ -227,6 +270,7 @@ public class ProblemScreen implements Screen{
 		text = ftfg.generateFont((int)(dp * Gdx.graphics.getDensity()));
 		text.setColor(Color.RED);
 	}
+
 
 
 
