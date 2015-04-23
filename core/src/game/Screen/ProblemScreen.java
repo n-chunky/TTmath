@@ -1,6 +1,10 @@
 package game.Screen;
 
 
+import game.TTmath;
+import game.Camera.OrthoCamera;
+import game.MathAlgorithms.mathQCreator;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
@@ -19,10 +23,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
-
-import game.Camera.OrthoCamera;
-import game.MathAlgorithms.mathQCreator;
-import game.TTmath;
+import com.badlogic.gdx.scenes.scene2d.utils.Align;
 
 public class ProblemScreen implements Screen{
 	private BitmapFont text;
@@ -206,8 +207,11 @@ public class ProblemScreen implements Screen{
 		ls.fontColor = Color.WHITE;
 		label = new Label("Answer to the following question: \n"
 				+questions[0],ls);
-		
-		table.add(label);
+		label.setWrap(true);
+		label.setAlignment(Align.center);
+		label.setWidth(10);
+
+		table.add(label).width(Gdx.graphics.getWidth());
 		stage.addActor(table);
 	}
 
@@ -216,8 +220,8 @@ public class ProblemScreen implements Screen{
         ls.font = text;
         ls.fontColor = Color.GREEN;
         Label scoreLabel = new Label(Integer.toString(game.getScore()), ls);
-//        scoreLabel.setPosition(Gdx.graphics.getWidth(),0);
-        table.add(scoreLabel);
+        table.row();
+        table.add(scoreLabel).bottom().right();
         stage.addActor(table);
     }
 
@@ -248,7 +252,7 @@ public class ProblemScreen implements Screen{
         incorrect = new Label(XXX, ls);
         incorrect.setPosition(0, Gdx.graphics.getHeight());
         table.row();
-        table.add(incorrect);
+        table.add(incorrect).bottom().left();
         stage.addActor(table);
     }
 
