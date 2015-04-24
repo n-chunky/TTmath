@@ -5,18 +5,23 @@ import game.Camera.OrthoCamera;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
-import com.badlogic.gdx.Net;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
-import com.badlogic.gdx.net.HttpStatus;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
-import com.badlogic.gdx.utils.Json;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
+import com.badlogic.gdx.scenes.scene2d.ui.TextField;
+import com.badlogic.gdx.scenes.scene2d.ui.TextField.TextFieldStyle;
 
 public class HighScoreScreen implements Screen{
 	private Table table;
@@ -26,6 +31,8 @@ public class HighScoreScreen implements Screen{
 	private TTmath game;
 	private OrthoCamera camera;
 	private SpriteBatch sb;
+	private TextButton mainMenu;
+	private TextButton submit;
 	
 	public HighScoreScreen(TTmath game, OrthoCamera camera, SpriteBatch sb){
 		this.game = game;
@@ -43,9 +50,8 @@ public class HighScoreScreen implements Screen{
 			createLabel("Player "+i+" - ",false);
 			createLabel(""+(i+100),false);
 		}
+		createButon();
 		
-		sendRequest();
-
 	}
 	
 	private void createFont(FreeTypeFontGenerator ftfg, float dp){
@@ -55,64 +61,6 @@ public class HighScoreScreen implements Screen{
         
     }
 	
-	public void sendRequest() {
-		 
-    	final Json json = new Json();
-    	
-        String requestJson = json.toJson(score); // this is just an example
- 
-        Net.HttpRequest request = new Net.HttpRequest(method);
-        final String url = "http://107.181.168.88/retrieve.php";
-        request.setUrl(url);
- 
-        request.setContent(requestJson);
- 
-        request.setHeader("Content-Type", "application/json");
-        request.setHeader("Accept", "application/json");
- 
-        Gdx.net.sendHttpRequest(request, new Net.HttpResponseListener() {
-        	
-            public void handleHttpResponse(Net.HttpResponse httpResponse) {
- 
-                int statusCode = httpResponse.getStatus().getStatusCode();
-                if(statusCode != HttpStatus.SC_OK) {
-                    System.out.println("Request Failed");
-                    return;
-                }
- 
-                String responseJson = httpResponse.getResultAsString();
-                try {
-                	
- 
-                	//DO some stuff with the response string
-                
-                }
-                catch(Exception exception) {
-                   
-                	exception.printStackTrace();
-                }
-            }
- 
-            public void failed(Throwable t) {
-            	 System.out.println("Request Failed Completely");
-            }
-
-			@Override
-			public void cancelled() {
-				// TODO Auto-generated method stub
-				
-			}
- 
-//			@Override
-//			public void cancelled() {
-//				System.out.println("request cancelled");
-//				
-//			}
- 
-        });
- 
-    }
-
 	private void createStage(){
         stage = new Stage();
         table = new Table();
@@ -135,9 +83,75 @@ public class HighScoreScreen implements Screen{
 		}
 		stage.addActor(table);
 	}
+	
+	private void createButon(){
+        Skin skin = new Skin();
+        TextureAtlas buttonAtlas;
+        TextButtonStyle textButtonStyle;
+
+        buttonAtlas = new TextureAtlas(Gdx.files.internal("Menus/buton.pack"));
+        skin.addRegions(buttonAtlas);
+        textButtonStyle = new TextButtonStyle();
+        textButtonStyle.font = text;
+        textButtonStyle.up = skin.getDrawable("MenuItem");
+        
+        TextFieldStyle tfs = new TextFieldStyle();
+        tfs.font = text;
+        tfs.fontColor = Color.WHITE;
+        TextField nameText = new TextField("NAME",tfs);
+
+        
+        //  Submit button
+        submit = new TextButton("Submit Score", textButtonStyle);
+
+        submit.padTop(40 * Gdx.graphics.getDensity());
+        submit.padBottom(15 * Gdx.graphics.getDensity());
+        submit.padLeft(15 * Gdx.graphics.getDensity());
+        submit.padRight(15 * Gdx.graphics.getDensity());
+
+        submit.addListener(new InputListener(){
+            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+                return true;
+            }
+
+            public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
+            	// Do something here!
+            }
+        });
+        
+
+        //  Main menu button
+        mainMenu = new TextButton("Back to Home", textButtonStyle);
+
+        mainMenu.padTop(40 * Gdx.graphics.getDensity());
+        mainMenu.padBottom(15 * Gdx.graphics.getDensity());
+        mainMenu.padLeft(15 * Gdx.graphics.getDensity());
+        mainMenu.padRight(15 * Gdx.graphics.getDensity());
+
+        mainMenu.addListener(new InputListener(){
+            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+                return true;
+            }
+
+            public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
+                game.setScreen(new MenuScreen(game, camera, sb));
+                dispose();
+            }
+        });
+        
+
+        table.row();
+        table.add(submit);
+        table.add(nameText).width(Gdx.graphics.getDensity()*150)
+        .height(Gdx.graphics.getDensity()*30);
+        table.row();
+        table.add(mainMenu);
+        stage.addActor(table);
+	}
 
 	@Override
 	public void show() {
+		
 	}
 
 	@Override
