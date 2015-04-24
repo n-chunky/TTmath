@@ -51,7 +51,6 @@ public class HighScoreScreen implements Screen{
 			createLabel(""+(i+100),false);
 		}
 		createButon();
-		
 	}
 	
 	private void createFont(FreeTypeFontGenerator ftfg, float dp){
@@ -143,7 +142,7 @@ public class HighScoreScreen implements Screen{
         table.row();
         table.add(submit);
         table.add(nameText).width(Gdx.graphics.getDensity()*150)
-        .height(Gdx.graphics.getDensity()*30);
+        .height(Gdx.graphics.getDensity()*40);
         table.row();
         table.add(mainMenu);
         stage.addActor(table);
