@@ -106,8 +106,28 @@ public class GameOverScreen implements Screen{
             }
         });
 
+        
+        // create High Score buton
+        highScoreButton = new TextButton("High Scores!", textButtonStyle);
+        highScoreButton.padTop(40 * Gdx.graphics.getDensity());
+        highScoreButton.padBottom(15 * Gdx.graphics.getDensity());
+        highScoreButton.padLeft(15 * Gdx.graphics.getDensity());
+        highScoreButton.padRight(15 * Gdx.graphics.getDensity());
+
+        highScoreButton.addListener(new InputListener() {
+            public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
+                return true;
+            }
+
+            public void touchUp (InputEvent event, float x, float y, int pointer, int button) {
+                game.setScreen(new HighScoreScreen(game, camera, sb));
+                dispose();
+            }
+        });
 
         table.add(gameOverButton);
+        table.row();
+        table.add(highScoreButton);
         stage.addActor(table);
 
 
