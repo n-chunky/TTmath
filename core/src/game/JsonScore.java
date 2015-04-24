@@ -12,14 +12,26 @@ import com.google.gson.JsonParser;
 
 public class JsonScore {
 
-	JsonArray array;
 	ArrayList<Score> scores;
-
-	JsonScore(){
+	
+	JsonScore(){	}
+	
+	public ArrayList<Score> getHighScoreList(){
 		try {
-			array = sendGet();
+			JsonArray array = sendGet();
 			scores = JsonArrayToScoreList(array);
 		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return scores;
+	}
+	
+	public void sendHighScore(Score score){
+		JsonObject jObj = ScoreObjectToJsonObject(score);
+		try {
+			sendPost(jObj);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
@@ -54,6 +66,32 @@ public class JsonScore {
 		return array;
 	}
 	
+	private void sendPost(JsonObject object) throws Exception {
+
+		String url = "http://107.181.168.88/send.php";
+
+		URL obj = new URL(url);
+		HttpURLConnection con = (HttpURLConnection) obj.openConnection();
+
+		con.setRequestMethod("POST");
+
+//		//add request header
+//		con.setRequestProperty("User-Agent", "user");
+//
+//		int responseCode = con.getResponseCode();
+//
+//		BufferedReader in = new BufferedReader(
+//				new InputStreamReader(con.getInputStream()));
+//		String inputLine;
+//		StringBuffer response = new StringBuffer();
+//
+//		while ((inputLine = in.readLine()) != null) {
+//			response.append(inputLine);
+//		}
+//		in.close();
+
+	}
+	
 	public ArrayList<Score> JsonArrayToScoreList(JsonArray array){
 		ArrayList<Score> scores = new ArrayList<Score>();
 		
@@ -64,13 +102,13 @@ public class JsonScore {
 		return scores;
 	}
 	
-	public JsonArray getArray() {
-		return array;
+	public JsonObject ScoreObjectToJsonObject(Score score){
+		JsonObject obj = new JsonObject();
+		JsonParser parser = new JsonParser();
+		obj.add("user", parser.parse(score.getUser()));
+		obj.add("score", parser.parse(Integer.toString(score.getScore())));
+		return obj;
 	}
 
-	public ArrayList<Score> getScores() {
-		return scores;
-	}
-	
 }
 
