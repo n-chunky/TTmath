@@ -1,7 +1,11 @@
 package game.Screen;
 
+import game.JsonScore;
+import game.Score;
 import game.TTmath;
 import game.Camera.OrthoCamera;
+
+import java.util.ArrayList;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
@@ -38,6 +42,8 @@ public class HighScoreScreen implements Screen{
 		this.game = game;
 		this.camera = camera;
 		this.sb = sb;
+		JsonScore o = new JsonScore();
+		ArrayList<Score> score = o.getHighScoreList();
 
 		FreeTypeFontGenerator TEXT_8BIT = new FreeTypeFontGenerator(Gdx.files.internal("resources/Minecraftia-Regular.ttf"));
 		createFont(TEXT_8BIT, 25);
@@ -45,10 +51,10 @@ public class HighScoreScreen implements Screen{
 		
 		createStage();
 		createLabel("High Scores!", true);
-		for(int i = 0; i < 3; i++){
+		for(int i = 0; i < score.size(); i++){
 			table.row();
-			createLabel("Player "+i+" - ",false);
-			createLabel(""+(i+100),false);
+			createLabel(score.get(i).getUser(),false);
+			createLabel(Integer.toString(score.get(i).getScore()),false);
 		}
 		createButon();
 	}

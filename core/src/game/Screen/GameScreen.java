@@ -1,18 +1,18 @@
 package game.Screen;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
-import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.maps.tiled.TiledMap;
-
+import game.TTmath;
+import game.TextureManager;
 import game.Camera.OrthoCamera;
 import game.Entity.EntityManager;
 import game.GameItems.ItemManager;
 import game.Level.LevelAnimationManager;
 import game.Level.LevelManager;
-import game.TTmath;
-import game.TextureManager;
+
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
+import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.maps.tiled.TiledMap;
 
 
 public class GameScreen implements Screen{
@@ -126,7 +126,7 @@ public class GameScreen implements Screen{
 	@Override
 	public void dispose() {
 		// TODO Auto-generated method stub
-
+		this.dispose();
 	}
 
 }
