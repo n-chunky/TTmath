@@ -5,7 +5,7 @@ public class Score {
 	String user;
 	int score;
 	
-	Score(String user, int score){
+	public Score(String user, int score){
 		this.user = user;
 		this.score = score;
 	}

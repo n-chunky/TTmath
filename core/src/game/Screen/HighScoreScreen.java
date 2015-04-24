@@ -33,8 +33,10 @@ public class HighScoreScreen implements Screen{
 	private BitmapFont text;
 	private Stage stage;
 	private TTmath game;
+	private int gameScore;
 	private OrthoCamera camera;
 	private SpriteBatch sb;
+	private JsonScore jScore;
 	private TextButton mainMenu;
 	private TextButton submit;
 	
@@ -42,8 +44,9 @@ public class HighScoreScreen implements Screen{
 		this.game = game;
 		this.camera = camera;
 		this.sb = sb;
-		JsonScore o = new JsonScore();
-		ArrayList<Score> score = o.getHighScoreList();
+		gameScore = game.getScore();
+		jScore = new JsonScore();
+		ArrayList<Score> score = jScore.getHighScoreList();
 
 		FreeTypeFontGenerator TEXT_8BIT = new FreeTypeFontGenerator(Gdx.files.internal("resources/Minecraftia-Regular.ttf"));
 		createFont(TEXT_8BIT, 25);
@@ -121,6 +124,9 @@ public class HighScoreScreen implements Screen{
 
             public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
             	// Do something here!
+            	jScore.sendHighScore(new Score("na", 2000));
+            	game.setScreen(new MenuScreen(game, camera, sb));
+            	dispose();
             }
         });
         

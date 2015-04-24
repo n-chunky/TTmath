@@ -174,7 +174,6 @@ public class ProblemScreen implements Screen{
 								game.resetAns();
 								game.resetCounter();
 								game.setScreen(new GameOverScreen(game, camera, sb));
-                                game.resetScore();
 								dispose();
 							}
 

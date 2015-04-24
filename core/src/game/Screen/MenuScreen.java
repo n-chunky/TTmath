@@ -1,5 +1,8 @@
 package game.Screen;
 
+import game.TTmath;
+import game.Camera.OrthoCamera;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
@@ -13,9 +16,6 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
-
-import game.Camera.OrthoCamera;
-import game.TTmath;
 
 public class MenuScreen implements Screen{
 
@@ -37,7 +37,7 @@ public class MenuScreen implements Screen{
 		this.camera = camera;
 		this.game = game;
 		this.sb = sb;
-
+        game.resetScore();
 		game.manageScreens(this);
 //		game.mainMenuScreen = this;
 		

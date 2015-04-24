@@ -1,6 +1,7 @@
 package game;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
@@ -16,12 +17,6 @@ public class JsonScore {
 	ArrayList<Score> scores;
 	
 	public JsonScore(){	}
-	
-	public static void main(String args[]){
-		JsonScore s = new JsonScore();
-		ArrayList<Score> sc = s.getHighScoreList();
-		System.out.println(s.getJsonArray());
-	}
 
 	public ArrayList<Score> getHighScoreList(){
 		try {
@@ -30,7 +25,8 @@ public class JsonScore {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return scores;
+		if(scores != null)	return scores;
+		else return new ArrayList<Score>();
 	}
 	
 	public void sendHighScore(Score score){
@@ -52,7 +48,9 @@ public class JsonScore {
 
 		// optional default is GET
 		con.setRequestMethod("GET");
-
+		con.setRequestProperty("Content-Type", "application/json");
+		con.setRequestProperty("Accept", "application/json");
+		
 		BufferedReader in = new BufferedReader(
 				new InputStreamReader(con.getInputStream()));
 		String inputLine;
@@ -77,6 +75,14 @@ public class JsonScore {
 
 		con.setRequestMethod("POST");
 		con.setDoOutput(true);
+		con.setRequestProperty("Content-Type", "application/json");
+		con.setRequestProperty("Accept", "application/json");
+		
+		OutputStreamWriter out= new OutputStreamWriter(con.getOutputStream());
+		out.write(object.toString());
+		System.out.println(object.toString());
+		out.flush();
+		out.close();
 
 	}
 	
