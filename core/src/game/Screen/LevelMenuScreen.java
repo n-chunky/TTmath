@@ -1,5 +1,8 @@
 package game.Screen;
 
+import game.TTmath;
+import game.Camera.OrthoCamera;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
@@ -17,9 +20,6 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
-
-import game.Camera.OrthoCamera;
-import game.TTmath;
 
 public class LevelMenuScreen implements Screen{
 	private BitmapFont text;
@@ -159,7 +159,6 @@ public class LevelMenuScreen implements Screen{
 	@Override
 	public void dispose() {
 		// TODO Auto-generated method stub
-
 	}
 
 }

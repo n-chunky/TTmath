@@ -1,5 +1,8 @@
 package game.Screen;
 
+import game.TTmath;
+import game.Camera.OrthoCamera;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
@@ -16,9 +19,6 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
-
-import game.Camera.OrthoCamera;
-import game.TTmath;
 
 public class GameOverScreen implements Screen{
     private BitmapFont text;
@@ -62,8 +62,12 @@ public class GameOverScreen implements Screen{
         ls.font = text;
         ls.fontColor = Color.RED;
         gameOverLabel = new Label("GAME OVER", ls);
-
+        Label.LabelStyle ls2 = new Label.LabelStyle();
+        ls2.font = text;
+        ls2.fontColor = Color.GREEN;
         table.add(gameOverLabel);
+        table.row();
+        table.add(new Label(Integer.toString(game.getScore()), ls2)).height(Gdx.graphics.getDensity()*40);
         table.row();
         stage.addActor(table);
     }
@@ -162,7 +166,7 @@ public class GameOverScreen implements Screen{
 
     @Override
     public void dispose() {
-
+    	
     }
 
     @Override
